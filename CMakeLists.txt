@@ -13,5 +13,5 @@ SET (EXECUTABLE_OUTPUT_PATH
    "Single Directory for all Executables."
    )
 
-set(CMAKE_CXX_FLAGS "-g -Wall")
+set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11")
 add_subdirectory(src)
