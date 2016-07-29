@@ -2,9 +2,7 @@
 #include <vector>
 #include <fstream>
 #include <iostream>
-#include <cstdint>
-#include <cstdio>
-#include <ext/stdio_filebuf.h>
+#include <memory>
 
 namespace io {
     
@@ -43,7 +41,8 @@ namespace io {
         FileReader& operator=(FileReader const&) = delete;
 
     private:
-        std::istream * input;
+        std::shared_ptr<std::istream> input;
+        bool const wasInitializedAsCin; // there has to be a better wau
     };
 
 };

@@ -1,23 +1,26 @@
 #include "filereader.hpp"
 
 io::FileReader::FileReader(std::string const& fname)
+:   wasInitializedAsCin(false)
 {
-   this->input = new std::ifstream(fname, std::ios_base::binary);
-    //
-    // nothing more to do here right now
+   this->input = std::make_shared<std::ifstream>(fname, std::ios_base::binary);
 }
 
 io::FileReader::FileReader()
+:   wasInitializedAsCin(true)
 {
-    this->input = &std::cin;
-    //// create ISO C FILE structure from std::cin
-    //__gnu_cxx::stdio_filebuf<char> filbuf(stdin, std::ios::out);
-    //this->input.std::ios::rdbuf(&filbuf);
+    this->input = std::shared_ptr<std::istream>(&std::cin);
 }
 
 io::FileReader::~FileReader()
 {
-    if (this->input == nullptr) delete this->input;
+    // TODO: if shared pointer points to std::cin, do not delete pointer as normal
+    if (this->wasInitializedAsCin)
+    {
+        // very very ugly !!!
+        std::shared_ptr<std::istream> * dummy = new std::shared_ptr<std::istream>(this->input);
+    }
+    // nothing to do here
 }
 
 io::FileReader::operator bool () const
