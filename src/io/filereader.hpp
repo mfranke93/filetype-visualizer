@@ -3,12 +3,22 @@
 #include <fstream>
 #include <iostream>
 #include <cstdint>
+#include <cstdio>
+#include <ext/stdio_filebuf.h>
 
 namespace io {
     
     class FileReader
     {
     public:
+        /**
+         * Default constructor.
+         * Reads from stdin.
+         */
+        FileReader();
+
+        ~FileReader();
+
         /**
          * Constructor.
          * \param File name
@@ -29,12 +39,11 @@ namespace io {
         std::vector<char> getNext(size_t const&);
         
     protected:
-        FileReader() = delete;
         FileReader(FileReader const&) = delete;
         FileReader& operator=(FileReader const&) = delete;
 
     private:
-        std::ifstream input;
+        std::istream * input;
     };
 
 };

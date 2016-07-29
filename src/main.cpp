@@ -3,7 +3,7 @@
 
 int main(int argc, char ** argv)
 {
-    io::FileReader f ("/home/max/.vimrc");
+    io::FileReader f;
     std::vector<char> v = f.getNext(20);
 
     for (char const& c : v)
