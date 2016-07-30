@@ -15,3 +15,4 @@ SET (EXECUTABLE_OUTPUT_PATH
 
 set(CMAKE_CXX_FLAGS "-g -Wall -std=c++11")
 add_subdirectory(src)
+add_subdirectory(src/tests)
