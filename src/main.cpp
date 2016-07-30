@@ -1,21 +1,25 @@
-#include "io/filereader.hpp"
+#include "data/histogram.hpp"
 #include <stdio.h>
 
 int main(int argc, char ** argv)
 {
-    io::FileReader f;
-    std::vector<char> v = f.getNext(20);
-
-    for (char const& c : v)
+    data::Histogram h (4);
+    for (size_t y = 0; y < 4; ++y)
     {
-        printf("%X ", c);
+        for (size_t x = 0; x < 4; ++x)
+        {
+            h.addEntry(x, y, x+y);
+        }
     }
-    printf("     ");
-    for (char const& c : v)
-    {
-        printf("%c", c);
-    }
-    printf("\n");
 
+    data::Grid<double> normalized = h.getNormalized();
+    for (size_t y = 0; y < 4; ++y)
+    {
+        for (size_t x = 0; x < 4; ++x)
+        {
+            printf("%f ", normalized(x,y));
+        }
+        printf("\n");
+    }
     return 0;
 }
