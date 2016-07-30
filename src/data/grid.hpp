@@ -5,12 +5,14 @@ namespace data {
         class Grid
         {
             public:
+                Grid(Grid const&);
                 Grid(size_t const&);
                 Grid(size_t const&, size_t const&);
                 _T& operator() (size_t const&, size_t const&);
+                _T const& operator() (size_t const&, size_t const&) const;
+                _T getMaximum() const;
             protected:
                 Grid() = delete;
-                Grid(Grid const&) = delete;
                 Grid& operator=(Grid const&) = delete;
             private:
                 _T * data;

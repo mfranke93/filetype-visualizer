@@ -1,20 +1,25 @@
-#include "data/grid.hpp"
+#include "data/histogram.hpp"
 #include <stdio.h>
 
 int main(int argc, char ** argv)
 {
-    data::Grid<float> g (4,4);
-
-    g(1,1) = 2;
-    g(2,1) = 1.4;
-
-    for (size_t y=0; y<4; ++y)
+    data::Histogram h (4);
+    for (size_t y = 0; y < 4; ++y)
     {
-    for (size_t x=0; x<4; ++x)
-    {
-        printf("%f ", g(x,y));
+        for (size_t x = 0; x < 4; ++x)
+        {
+            h.addEntry(x, y, x+y);
+        }
+    }
 
+    data::Grid<double> normalized = h.getNormalized();
+    for (size_t y = 0; y < 4; ++y)
+    {
+        for (size_t x = 0; x < 4; ++x)
+        {
+            printf("%f ", normalized(x,y));
+        }
+        printf("\n");
     }
-    printf("\n");
-    }
+    return 0;
 }
