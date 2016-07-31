@@ -13,6 +13,7 @@ data::Grid<_T>::Grid(size_t const& x_size)
 :   x_size(x_size), y_size(x_size)
 {
     this->data = new _T [x_size * x_size];
+    for (size_t i = 0; i < x_size * y_size; ++i) this->data[i] = _T(0);
 }
 
 template <typename _T>
@@ -20,6 +21,7 @@ data::Grid<_T>::Grid(size_t const& x_size, size_t const& y_size)
 :   x_size(x_size), y_size(y_size)
 {
     this->data = new _T [x_size * y_size];
+    for (size_t i = 0; i < x_size * y_size; ++i) this->data[i] = _T(0);
 }
 
 template <typename _T>
@@ -53,4 +55,5 @@ _T data::Grid<_T>::getMaximum() const
 template class data::Grid<float>;
 template class data::Grid<double>;
 template class data::Grid<size_t>;
+template class data::Grid<int>;
 

@@ -1,5 +1,7 @@
 #include "grid.hpp"
 
+#pragma once
+
 namespace data 
 {
     class Histogram 

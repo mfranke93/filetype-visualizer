@@ -15,11 +15,14 @@ data::Grid<double> data::Histogram::getNormalized() const
 {
     size_t maximum = this->bins.getMaximum();
     Grid<double> normalized (this->numBins);
-    for (size_t x = 0; x < this->numBins; ++x)
+    if (maximum > 0)
     {
-        for (size_t y = 0; y < this->numBins; ++y)
+        for (size_t x = 0; x < this->numBins; ++x)
         {
-            normalized(x,y) = double(this->bins(x,y))/double(maximum);
+            for (size_t y = 0; y < this->numBins; ++y)
+            {
+                normalized(x,y) = double(this->bins(x,y))/double(maximum);
+            }
         }
     }
     
