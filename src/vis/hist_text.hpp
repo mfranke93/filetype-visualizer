@@ -1,5 +1,7 @@
 #include <string>
 #include <vector>
+#include <memory>
+#include <cmath>
 
 #include "../data/histogram.hpp"
 
@@ -10,7 +12,7 @@ namespace vis
     class TextHistogram
     {
         public:
-            TextHistogram(data::Histogram *);
+            TextHistogram(std::shared_ptr<data::Histogram> const&);
 
             std::vector<std::string> getHistogram() const;
         protected:
@@ -18,7 +20,7 @@ namespace vis
             TextHistogram(TextHistogram const&) = delete;
             TextHistogram& operator= (TextHistogram const&) = delete;
         private:
-            data::Histogram * histogram;
+            std::shared_ptr<data::Histogram> histogram;
     };
 }
 

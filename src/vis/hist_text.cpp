@@ -1,7 +1,6 @@
-#include <cmath>
 #include "hist_text.hpp"
 
-vis::TextHistogram::TextHistogram(data::Histogram * hist)
+vis::TextHistogram::TextHistogram(std::shared_ptr<data::Histogram> const& hist)
 : histogram(hist)
 {
     // nothing more to do here
