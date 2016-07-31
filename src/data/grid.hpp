@@ -1,5 +1,7 @@
 #include <cstddef>
 
+#pragma once
+
 namespace data {
     template<typename _T>
         class Grid
