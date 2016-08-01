@@ -12,7 +12,8 @@ namespace vis
     enum class PredefinedColormaps
     {
         RED_BLUE,
-        BLACK_BODY_HEAT
+        BLACK_BODY_HEAT,
+        DEEP_SEA
     };
 
     class StandardColormap: public Colormap
