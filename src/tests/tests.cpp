@@ -7,6 +7,5 @@
  * <code>test_foo.cpp</code>.
  */
 #define CATCH_CONFIG_MAIN
-
-#include "catch.hpp"
+#include "../third_party/catch/catch.hpp"
 
