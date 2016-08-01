@@ -13,7 +13,8 @@ namespace vis
     {
         RED_BLUE,
         BLACK_BODY_HEAT,
-        DEEP_SEA
+        DEEP_SEA,
+        dummy
     };
 
     class StandardColormap: public Colormap
