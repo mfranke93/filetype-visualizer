@@ -9,6 +9,12 @@ namespace vis
         color c;
     } locationizedColor;
 
+    enum class PredefinedColormaps
+    {
+        RED_BLUE,
+        BLACK_BODY_HEAT
+    };
+
     class StandardColormap: public Colormap
     {
         public:
@@ -19,6 +25,8 @@ namespace vis
 
             void addColor(double const&, color const&);
             void getColor(double const&, color&) const override;
+
+            static std::shared_ptr<StandardColormap const> getPredefinedColormap(PredefinedColormaps const&);
         protected:
             StandardColormap() = delete;
             StandardColormap(StandardColormap const&) = delete;
@@ -26,4 +34,6 @@ namespace vis
         private:
             std::vector<locationizedColor> colors;
     };
+
+
 }

@@ -20,7 +20,7 @@ namespace io
              * \param file name
              * \param colormap
              */
-            void write(std::string const&, std::shared_ptr<vis::Colormap>) const;
+            void write(std::string const&, std::shared_ptr<vis::Colormap const>) const;
         protected:
             BmpWriter() = delete;
             BmpWriter(BmpWriter const&) = delete;

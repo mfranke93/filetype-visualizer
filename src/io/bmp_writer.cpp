@@ -1,6 +1,6 @@
 #include "bmp_writer.hpp"
 
-void io::BmpWriter::write(std::string const& filename, std::shared_ptr<vis::Colormap> cmap) const
+void io::BmpWriter::write(std::string const& filename, std::shared_ptr<vis::Colormap const> cmap) const
 {
     // create image object
     bitmap_image image (this->widthHeight, this->widthHeight);
