@@ -1,25 +1,25 @@
 #include "data/histogram.hpp"
+#include "vis/hist_text.hpp"
 #include <stdio.h>
+#include <iostream>
 
 int main(int argc, char ** argv)
 {
-    data::Histogram h (4);
-    for (size_t y = 0; y < 4; ++y)
+    std::shared_ptr<data::Histogram> h = std::make_shared<data::Histogram>(40);
+    for (size_t y = 0; y < 40; ++y)
     {
-        for (size_t x = 0; x < 4; ++x)
+        for (size_t x = 0; x < 40; ++x)
         {
-            h.addEntry(x, y, x+y);
+            h->addEntry(x, y, 40*41 - (x-15)*(y-20) - y);
         }
     }
 
-    data::Grid<double> normalized = h.getNormalized();
-    for (size_t y = 0; y < 4; ++y)
-    {
-        for (size_t x = 0; x < 4; ++x)
-        {
-            printf("%f ", normalized(x,y));
-        }
-        printf("\n");
+    vis::TextHistogram th (h);
+    std::vector<std::string> v = th.getHistogram();
+
+    for (std::string const& s:v) {
+        std::cout << s << std::endl;
     }
+
     return 0;
 }
