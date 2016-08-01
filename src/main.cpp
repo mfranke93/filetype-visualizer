@@ -1,4 +1,6 @@
 #include "io/bmp_writer.hpp"
+#include "io/filereader.hpp"
+#include "data/standard_single_byte_transition_counter.hpp"
 #include <stdio.h>
 #include <iostream>
 #include <random>
@@ -6,26 +8,16 @@
 
 int main(int argc, char ** argv)
 {
-    std::random_device rd;
-    std::mt19937 mersenne (rd());
+    std::shared_ptr<io::FileReader> f = std::make_shared<io::FileReader>();
+    data::StandardSingleByteTransitionCounter ssbtc (f);
+
+    ssbtc.run();
 
     std::shared_ptr<vis::StandardColormap const> c = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::DEEP_SEA);
-    std::shared_ptr<std::vector<double>> data = std::make_shared<std::vector<double>>();
+    std::shared_ptr<std::vector<double>> data = ssbtc.getHistogram().getNormalized().asVector();
 
-    for (size_t x = 0; x < 512; ++x)
-    {
-        for (size_t y = 0; y < 512; ++y)
-        {
-            std::uniform_real_distribution<double> dist (double(x)/512.0, double(y)/512.0);
-            double val = dist(mersenne);
-            data->push_back(val);   
-        }
-    }
-
-    io::BmpWriter bmp (512, data);
-
+    io::BmpWriter bmp (256, data);
     std::string fname = argc>1?*++argv:"/home/max/test.bmp";
-
     bmp.write(fname, c);
 
     return 0;

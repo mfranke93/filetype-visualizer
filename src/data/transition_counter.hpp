@@ -6,7 +6,8 @@ namespace data
 {
     class TransitionCounter
     {
-        virtual void setFilereader(std::shared_ptr<io::FileReader>) = 0;
-        virtual const Histogram getHistogram() const = 0;
+        public:
+            virtual Histogram const& getHistogram() const = 0;
+            virtual void run() = 0;
     };
 }

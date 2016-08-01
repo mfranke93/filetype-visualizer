@@ -28,3 +28,10 @@ data::Grid<double> data::Histogram::getNormalized() const
     
     return normalized;
 }
+
+size_t const& 
+data::Histogram::at(size_t const& x, size_t const&y) const
+{
+    return this->bins(x,y);
+}
+

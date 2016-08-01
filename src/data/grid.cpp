@@ -51,6 +51,22 @@ _T data::Grid<_T>::getMaximum() const
     return a;
 }
 
+template <typename _T>
+std::shared_ptr<std::vector<_T>> 
+data::Grid<_T>::asVector() const
+{
+    std::shared_ptr<std::vector<_T>> vec = std::make_shared<std::vector<_T>>();
+    for (size_t y = 0; y < this->y_size; ++y)
+    {
+        for (size_t x = 0; x < this->x_size; ++x)
+        {
+            vec->push_back((*this)(x,y));
+        }
+    }
+
+    return vec;
+}
+
 /* instantiations */
 template class data::Grid<float>;
 template class data::Grid<double>;

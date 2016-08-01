@@ -4,6 +4,8 @@
 #include <iostream>
 #include <memory>
 
+#pragma once
+
 namespace io {
     
     class FileReader
