@@ -1,5 +1,6 @@
 #include "standard_colormap.hpp"
 #include <iostream>
+#include <stdexcept>
 
 void vis::StandardColormap::addColor(double const& location, color const& c)
 {
@@ -156,7 +157,11 @@ vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps const& typ
             } 
             break;
         // }}}
+        // default: throw exception {{{
         default:
-            throw -3;
+            char s [255];
+            sprintf(s, "%s: Unhandled colormap style: %d.", __PRETTY_FUNCTION__, type);
+            throw std::out_of_range(s);
+        // }}}
     }
 }
