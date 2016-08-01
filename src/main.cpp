@@ -1,10 +1,14 @@
 #include "io/bmp_writer.hpp"
 #include <stdio.h>
 #include <iostream>
+#include <random>
 #include "vis/standard_colormap.hpp"
 
 int main(int argc, char ** argv)
 {
+    std::random_device rd;
+    std::mt19937 mersenne (rd());
+
     std::shared_ptr<vis::StandardColormap const> c = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::BLACK_BODY_HEAT);
     std::shared_ptr<std::vector<double>> data = std::make_shared<std::vector<double>>();
 
@@ -12,13 +16,17 @@ int main(int argc, char ** argv)
     {
         for (size_t y = 0; y < 512; ++y)
         {
-            double val = double(x+y)/1024.0;
+            std::uniform_real_distribution<double> dist (double(x)/512.0, double(y)/512.0);
+            double val = dist(mersenne) * dist(mersenne);
             data->push_back(val);   
         }
     }
 
     io::BmpWriter bmp (512, data);
-    bmp.write("/home/max/test.bmp", c);
+
+    std::string fname = argc>1?*++argv:"/home/max/test.bmp";
+
+    bmp.write(fname, c);
 
     return 0;
 }
