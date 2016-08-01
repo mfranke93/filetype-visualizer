@@ -24,15 +24,6 @@ data::StandardSingleByteTransitionCounter::run()
             this->handleBlock(nextBlock);
         }
     }
-
-    for (size_t y = 0; y < 256; ++y)
-    {
-    for (size_t x = 0; x < 256; ++x)
-    {
-    printf("%lu ", this->getHistogram().at(x,y));
-    }
-    printf("\n");
-    }
 }
 
 void

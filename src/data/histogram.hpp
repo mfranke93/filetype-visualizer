@@ -1,4 +1,5 @@
 #include "grid.hpp"
+#include <cmath>
 
 #pragma once
 

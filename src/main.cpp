@@ -8,7 +8,7 @@
 
 int main(int argc, char ** argv)
 {
-    std::shared_ptr<io::FileReader> f = std::make_shared<io::FileReader>();
+    std::shared_ptr<io::FileReader> f = std::make_shared<io::FileReader>("../binarytest.bin");
     data::StandardSingleByteTransitionCounter ssbtc (f);
 
     ssbtc.run();
