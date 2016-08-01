@@ -4,6 +4,8 @@
 #include <iostream>
 #include <memory>
 
+#pragma once
+
 namespace io {
     
     class FileReader
@@ -34,7 +36,7 @@ namespace io {
          * \param Number of bytes (n)
          * \return vector of bytes
          */
-        std::vector<char> getNext(size_t const&);
+        std::vector<unsigned char> getNext(size_t const&);
         
     protected:
         FileReader(FileReader const&) = delete;
