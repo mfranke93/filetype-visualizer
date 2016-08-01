@@ -7,5 +7,6 @@ add_executable(main main.cpp
                     data/grid.cpp
                     data/histogram.cpp
                     vis/hist_text.cpp
+                    vis/standard_colormap.cpp
               )
 #target_link_libraries(cdemo m) #link the math library
