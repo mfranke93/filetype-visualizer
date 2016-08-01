@@ -1,25 +1,22 @@
-#include "data/histogram.hpp"
-#include "vis/hist_text.hpp"
+#include "io/bmp_writer.hpp"
 #include <stdio.h>
 #include <iostream>
 
 int main(int argc, char ** argv)
 {
-    std::shared_ptr<data::Histogram> h = std::make_shared<data::Histogram>(40);
-    for (size_t y = 0; y < 40; ++y)
+    std::shared_ptr<std::vector<double>> data = std::make_shared<std::vector<double>>();
+
+    for (size_t x = 0; x < 512; ++x)
     {
-        for (size_t x = 0; x < 40; ++x)
+        for (size_t y = 0; y < 512; ++y)
         {
-            h->addEntry(x, y, 40*41 - (x-15)*(y-20) - y);
+            double val = double(x+y)/1024.0;
+            data->push_back(val);   
         }
     }
 
-    vis::TextHistogram th (h);
-    std::vector<std::string> v = th.getHistogram();
-
-    for (std::string const& s:v) {
-        std::cout << s << std::endl;
-    }
+    io::BmpWriter b (512, data);
+    b.write("/home/max/test.bmp");
 
     return 0;
 }
