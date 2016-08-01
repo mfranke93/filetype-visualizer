@@ -1,10 +1,17 @@
-/**
- * typedef for one channel of an RGB pixel value.
- */
-typedef unsigned char channel;
+#pragma once
 
 namespace vis 
 {
+    /**
+     * typedef for one channel of an RGB pixel value.
+     */
+    typedef unsigned char channel;
+    typedef struct {
+        channel R;
+        channel G;
+        channel B;
+    } color;
+
     /**
      * Class for colormaps.
      *
@@ -18,10 +25,8 @@ namespace vis
              * Get color for one value.
              *
              * \param   Value between 0 and 1 to be mapped to color
-             * \param   Red channel value
-             * \param   Green channel value
-             * \param   Blue channel value
+             * \param   Red, green, blue channel values as color struct
              */
-            void getColor(double const&, channel&, channel&, channel&) const;
+            virtual void getColor(double const&, color&) const = 0;
     };
 }

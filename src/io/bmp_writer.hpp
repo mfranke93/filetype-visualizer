@@ -2,6 +2,7 @@
 #include <memory>
 #include <string>
 #include "../third_party/bitmap/bitmap_image.hpp"
+#include "../vis/colormap.hpp"
 
 #pragma once
 
@@ -17,8 +18,9 @@ namespace io
             /**
              * Export to file.
              * \param file name
+             * \param colormap
              */
-            void write(std::string const&) const;
+            void write(std::string const&, std::shared_ptr<vis::Colormap>) const;
         protected:
             BmpWriter() = delete;
             BmpWriter(BmpWriter const&) = delete;
