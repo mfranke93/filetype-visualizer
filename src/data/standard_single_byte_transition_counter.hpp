@@ -9,12 +9,12 @@ namespace data
             Histogram const& getHistogram() const override;
             void run() override;
         private:
-            void handleBlock(std::vector<char> const&);
-            void nextChar(char const&);
+            void handleBlock(std::vector<unsigned char> const&);
+            void nextChar(unsigned char const&);
 
             Histogram histogram;
             std::shared_ptr<io::FileReader> fileReader;
             bool started = false;
-            char last = 0x00;
+            unsigned char last = 0x00;
     };
 }
