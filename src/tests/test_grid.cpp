@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include "../third_party/catch/catch.hpp"
 #include <cmath>
 #include "../data/grid.hpp"
 

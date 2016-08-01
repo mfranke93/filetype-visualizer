@@ -1,4 +1,4 @@
-#include "catch.hpp"
+#include "../third_party/catch/catch.hpp"
 #include <random>
 #include "../vis/hist_text.hpp"
 
