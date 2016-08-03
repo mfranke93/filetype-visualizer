@@ -8,9 +8,11 @@ data::LinearNormalizer<_T>::LinearNormalizer()
 
 template<typename _T>
 data::LinearNormalizer<_T>::LinearNormalizer(_T const& minimum, _T const& maximum)
-: minimumValue(minimum<maximum?minimum:maximum), maximumValue(minimum>maximum?minimum:maximum)
+:   initialized(true),
+    minimumValue(minimum<maximum?minimum:maximum),
+    maximumValue(minimum>maximum?minimum:maximum)
 {
-    // ctor
+    this->calculateNewLinearParameters();
 }
 
 template<typename _T>
