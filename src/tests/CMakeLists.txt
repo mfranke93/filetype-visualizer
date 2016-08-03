@@ -5,8 +5,10 @@ add_executable(tests tests.cpp
                     test_grid.cpp 
                     test_histogram.cpp
                     test_hist_text.cpp
+                    test_linear_normalizer.cpp
                     ../data/grid.cpp
                     ../data/histogram.cpp
+                    ../data/linear_normalizer.cpp
                     ../vis/hist_text.cpp
               )
 #target_link_libraries(cdemo m) #link the math library
