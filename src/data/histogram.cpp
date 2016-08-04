@@ -3,7 +3,7 @@
 data::Histogram::Histogram(size_t const& numBins)
 : numBins(numBins), bins(numBins)
 {
-    // nothing to do here
+    this->normalizer = std::make_shared<data::LinearNormalizer<size_t>>();
 }
 
 void data::Histogram::addEntry(size_t const& x, size_t const& y, size_t const& amount)

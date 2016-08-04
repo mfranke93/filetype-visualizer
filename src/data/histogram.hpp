@@ -1,5 +1,6 @@
 #include "grid.hpp"
 #include "normalizer.hpp"
+#include "linear_normalizer.hpp"
 #include <cmath>
 
 #pragma once
