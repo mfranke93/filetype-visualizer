@@ -81,11 +81,40 @@ SCENARIO ("Histogram on predefined values", "")
         }
     }
 
-    GIVEN("A histogram where all entries are one")
+    GIVEN("A histogram with linear normalizer where all entries are one")
     {
         data::Histogram h (4);
         std::shared_ptr<data::LinearNormalizer<size_t>> linNorm = std::make_shared<data::LinearNormalizer<size_t>>();
         h.setNormalizer(linNorm);
+        for (size_t x = 0; x < 4; ++x)
+        {
+            for (size_t y = 0; y < 4; ++y)
+            {
+                h.addEntry(x,y);
+            }
+        }
+
+        WHEN ("nothing else is done")
+        {
+            THEN ("all entries in the histogram should be zero")
+            {
+                data::Grid<double> g = h.getNormalized();
+
+                for (size_t x = 0; x < 4; ++x)
+                {
+                    for (size_t y = 0; y < 4; ++y)
+                    {
+                        REQUIRE(g(x,y) == Approx(0.0));
+                    }
+                }
+            }
+        }
+    }
+    GIVEN("A histogram with log+1 normalizer where all entries are one")
+    {
+        data::Histogram h (4);
+        std::shared_ptr<data::LogarithmicPlusOneNormalizer> logNorm = std::make_shared<data::LogarithmicPlusOneNormalizer>();
+        h.setNormalizer(logNorm);
         for (size_t x = 0; x < 4; ++x)
         {
             for (size_t y = 0; y < 4; ++y)
@@ -119,10 +148,58 @@ SCENARIO ("Histogram with pseudorandom entries", "")
     std::mt19937 mersenne (rd());
     std::uniform_int_distribution<size_t> dist (0, 123456564);
 
-    GIVEN ("A histogram with pseudorandom entries")
+    GIVEN ("A histogram with linear normalizer and pseudorandom entries")
     {
         data::Histogram h (20);
         std::shared_ptr<data::LinearNormalizer<size_t>> linNorm = std::make_shared<data::LinearNormalizer<size_t>>();
+        h.setNormalizer(linNorm);
+        for (size_t x = 0; x < 20; ++x)
+        {
+            for (size_t y = 0; y < 20; ++y)
+            {
+                h.addEntry(x,y,dist(mersenne));
+            }
+        }
+
+        WHEN ("normalizing")
+        {
+            data::Grid<double> g = h.getNormalized();
+
+            THEN ("all entries should be between zero and one")
+            {
+                for (size_t x = 0; x < 20; ++x)
+                {
+                    for (size_t y = 0; y < 20; ++y)
+                    {
+                        REQUIRE(g(x,y) >= 0.0);
+                        REQUIRE(g(x,y) <= 1.0);
+                    }
+                }
+            }
+
+            THEN ("at least one entry must be exactly one")
+            {
+                bool exactly_one = false;
+                for (size_t x = 0; x < 20; ++x)
+                {
+                    for (size_t y = 0; y < 20; ++y)
+                    {
+                        if (g(x,y) == Approx(1.0))
+                        {
+                            exactly_one = true;
+                        }
+                    }
+                }
+
+                REQUIRE(exactly_one);
+            }
+        }
+    }
+
+    GIVEN ("A histogram with log+1 normalizer and pseudorandom entries")
+    {
+        data::Histogram h (20);
+        std::shared_ptr<data::LogarithmicPlusOneNormalizer> linNorm = std::make_shared<data::LogarithmicPlusOneNormalizer>();
         h.setNormalizer(linNorm);
         for (size_t x = 0; x < 20; ++x)
         {
