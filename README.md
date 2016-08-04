@@ -12,11 +12,11 @@ could point me to the talk in question.
 
 # Example
 Using a _log+1_ normalizer, we visualize the byte to byte transitions of all
-.cpp files from this project:
+.cpp files from this project:  
 ![cppfiles](doc/cpp_code.bmp)
 
-The `main` binary file:
+The `main` binary file:  
 ![mainbinary](doc/main_binary.bmp)
 
-An arbitrary PNG file:
+An arbitrary PNG file:  
 ![pngfile](doc/png_file.bmp)
