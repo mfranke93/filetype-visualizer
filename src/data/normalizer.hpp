@@ -1,6 +1,8 @@
 #include <cmath>
 #include <stdexcept>
 
+#pragma once
+
 namespace data
 {
     template<typename _T>

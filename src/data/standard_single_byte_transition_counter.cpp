@@ -1,10 +1,10 @@
 #include "standard_single_byte_transition_counter.hpp"
-#include <cstdio>
 
 data::StandardSingleByteTransitionCounter::StandardSingleByteTransitionCounter(std::shared_ptr<io::FileReader> fileReader)
 :   histogram(256), fileReader(fileReader)
 {
     // ctor
+    this->histogram.setNormalizer(std::make_shared<data::LogarithmicPlusOneNormalizer>());
 }
 
 data::Histogram const&

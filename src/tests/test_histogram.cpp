@@ -2,6 +2,8 @@
 #include <random>
 #include "../data/grid.hpp"
 #include "../data/histogram.hpp"
+#include "../data/linear_normalizer.hpp"
+#include "../data/logarithmic_plus_one_normalizer.hpp"
 
 // Test Histogram {{{
 SCENARIO ("Histogram on predefined values", "")
@@ -9,6 +11,8 @@ SCENARIO ("Histogram on predefined values", "")
     GIVEN ("A Histogram where all entries are zero")
     {
         data::Histogram h (4);
+        std::shared_ptr<data::LinearNormalizer<size_t>> linNorm = std::make_shared<data::LinearNormalizer<size_t>>();
+        h.setNormalizer(linNorm);
         
         WHEN ("no assignments have been done")
         {
@@ -20,7 +24,7 @@ SCENARIO ("Histogram on predefined values", "")
                 {
                     for (size_t y = 0; y < 4; ++y)
                     {
-                        REQUIRE(g(x,y) == 0.0);
+                        REQUIRE(g(x,y) == Approx(0.0));
                     }
                 }
             }
@@ -40,11 +44,11 @@ SCENARIO ("Histogram on predefined values", "")
                     {
                         if (x == 1 && y == 2)
                         {
-                            REQUIRE(g(x,y) == 1.0);
+                            REQUIRE(g(x,y) == Approx(1.0));
                         }
                         else
                         {
-                            REQUIRE(g(x,y) == 0.0);
+                            REQUIRE(g(x,y) == Approx(0.0));
                         }
                     }
                 }
@@ -70,7 +74,7 @@ SCENARIO ("Histogram on predefined values", "")
                     for (size_t y = 0; y < 4; ++y)
                     {
                         double should_be = static_cast<double>(x+y)/6.0;
-                        REQUIRE(g(x,y) == should_be);
+                        REQUIRE(g(x,y) == Approx(should_be));
                     }
                 }
             }
@@ -80,6 +84,8 @@ SCENARIO ("Histogram on predefined values", "")
     GIVEN("A histogram where all entries are one")
     {
         data::Histogram h (4);
+        std::shared_ptr<data::LinearNormalizer<size_t>> linNorm = std::make_shared<data::LinearNormalizer<size_t>>();
+        h.setNormalizer(linNorm);
         for (size_t x = 0; x < 4; ++x)
         {
             for (size_t y = 0; y < 4; ++y)
@@ -90,7 +96,7 @@ SCENARIO ("Histogram on predefined values", "")
 
         WHEN ("nothing else is done")
         {
-            THEN ("all entries in the histogram should be one")
+            THEN ("all entries in the histogram should be zero")
             {
                 data::Grid<double> g = h.getNormalized();
 
@@ -98,7 +104,7 @@ SCENARIO ("Histogram on predefined values", "")
                 {
                     for (size_t y = 0; y < 4; ++y)
                     {
-                        REQUIRE(g(x,y) == 1.0);
+                        REQUIRE(g(x,y) == Approx(0.0));
                     }
                 }
             }
@@ -116,6 +122,8 @@ SCENARIO ("Histogram with pseudorandom entries", "")
     GIVEN ("A histogram with pseudorandom entries")
     {
         data::Histogram h (20);
+        std::shared_ptr<data::LinearNormalizer<size_t>> linNorm = std::make_shared<data::LinearNormalizer<size_t>>();
+        h.setNormalizer(linNorm);
         for (size_t x = 0; x < 20; ++x)
         {
             for (size_t y = 0; y < 20; ++y)
@@ -147,7 +155,7 @@ SCENARIO ("Histogram with pseudorandom entries", "")
                 {
                     for (size_t y = 0; y < 20; ++y)
                     {
-                        if (g(x,y) == 1.0)
+                        if (g(x,y) == Approx(1.0))
                         {
                             exactly_one = true;
                         }

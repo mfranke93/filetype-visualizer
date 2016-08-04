@@ -1,5 +1,7 @@
 #include "normalizer.hpp"
 
+#pragma once
+
 namespace data
 {
     template<typename _T>

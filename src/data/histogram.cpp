@@ -13,21 +13,20 @@ void data::Histogram::addEntry(size_t const& x, size_t const& y, size_t const& a
 
 data::Grid<double> data::Histogram::getNormalized() const
 {
-    size_t maximum = this->bins.getMaximum();
-    // log maximum
-    double lMax = log(double(maximum)) + 1.0;
     Grid<double> normalized (this->numBins);
-    size_t v;
-    if (maximum > 0)
+    for (size_t x = 0; x < this->numBins; ++x)
     {
-        for (size_t x = 0; x < this->numBins; ++x)
+        for (size_t y = 0; y < this->numBins; ++y)
         {
-            for (size_t y = 0; y < this->numBins; ++y)
-            {
-                v = this->bins(x,y);
-                if (v == 0) normalized(x,y) = 0.0;
-                else normalized(x,y) = (log(double(v))+1)/lMax;
-            }
+            this->normalizer->seed(this->bins(x,y));
+        }
+    }
+
+    for (size_t x = 0; x < this->numBins; ++x)
+    {
+        for (size_t y = 0; y < this->numBins; ++y)
+        {
+            normalized(x,y) = this->normalizer->normalize(this->bins(x,y));
         }
     }
     
@@ -40,3 +39,8 @@ data::Histogram::at(size_t const& x, size_t const&y) const
     return this->bins(x,y);
 }
 
+void
+data::Histogram::setNormalizer(std::shared_ptr<data::Normalizer<size_t>> const& norm)
+{
+    this->normalizer = norm;
+}

@@ -1,5 +1,7 @@
 #include "normalizer.hpp"
 
+#pragma once
+
 namespace data
 {
     class LogarithmicPlusOneNormalizer : public Normalizer<size_t>

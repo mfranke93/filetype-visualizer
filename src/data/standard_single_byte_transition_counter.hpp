@@ -1,4 +1,5 @@
 #include "transition_counter.hpp"
+#include "../data/logarithmic_plus_one_normalizer.hpp"
 
 namespace data
 {
