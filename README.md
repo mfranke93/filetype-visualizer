@@ -12,7 +12,9 @@ could point me to the talk in question.
 
 # Example
 Using a _log+1_ normalizer, we visualize the byte to byte transitions of all
-.cpp files from this project:  
+.cpp files from this project. As can be seen, the transitions mostly exist
+between characters in the lower seven bits, which is naturally the case for
+text files:  
 ![cppfiles](doc/cpp_code.bmp)
 
 The `main` binary file:  
