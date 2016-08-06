@@ -44,7 +44,5 @@ namespace io {
 
     private:
         std::shared_ptr<std::istream> input;
-        bool const wasInitializedAsCin; // there has to be a better wau
     };
-
 };
