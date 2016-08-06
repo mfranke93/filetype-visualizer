@@ -33,7 +33,7 @@ int main(int argc, char ** argv)
     std::shared_ptr<std::vector<double>> data = ssbtc.getHistogram().getNormalized().asVector();
 
     io::BmpWriter bmp (256, data);
-    bmp.write(i.getOutputFile(), c);
+    bmp.write(i.getOutputFile(), c, i.getUpscaleFactor());
 
     return SUCCESS;
 }

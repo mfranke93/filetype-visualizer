@@ -55,6 +55,11 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
         {
             this->useCin = true;
         }
+
+        if (vm["upscale"].as<size_t>() == 0)
+        {
+            throw 1416; // TODO: better error
+        }
     }
     catch (std::exception& e)
     {
