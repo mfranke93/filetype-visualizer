@@ -9,17 +9,18 @@ io::FileReader::FileReader(std::string const& fname)
 io::FileReader::FileReader()
 :   wasInitializedAsCin(true)
 {
-    this->input = std::shared_ptr<std::istream>(&std::cin);
+    /*
+     * Initialize this smart pointer with a custom deallocator lambda.
+     * This lambda does nothing, which removes the necissity to keep a smart
+     * pointer of std::cin in head at program termination to avoid an illegal
+     * delete call.
+     */
+    this->input = std::shared_ptr<std::istream>(&std::cin, [](std::istream * ptr) { /* do nothing */ });
 }
 
 io::FileReader::~FileReader()
 {
-    // TODO: if shared pointer points to std::cin, do not delete pointer as normal
-    if (this->wasInitializedAsCin)
-    {
-        // very very ugly !!!
-        std::shared_ptr<std::istream> * dummy = new std::shared_ptr<std::istream>(this->input);
-    }
+    // dtor
     // nothing to do here
 }
 
