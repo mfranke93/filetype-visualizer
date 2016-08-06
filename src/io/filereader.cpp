@@ -1,13 +1,11 @@
 #include "filereader.hpp"
 
 io::FileReader::FileReader(std::string const& fname)
-:   wasInitializedAsCin(false)
 {
    this->input = std::make_shared<std::ifstream>(fname, std::ios_base::binary);
 }
 
 io::FileReader::FileReader()
-:   wasInitializedAsCin(true)
 {
     /*
      * Initialize this smart pointer with a custom deallocator lambda.
