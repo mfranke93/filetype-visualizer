@@ -5,10 +5,26 @@
 #include <iostream>
 #include <random>
 #include "vis/standard_colormap.hpp"
+#include "cmdline/options.hpp"
 
 int main(int argc, char ** argv)
 {
-    std::shared_ptr<io::FileReader> f = std::make_shared<io::FileReader>("../binarytest.bin");
+    cmdline::CommandlineInterface i;
+    size_t ret = i.store(argc, argv);
+    if (ret != SUCCESS)
+    {
+        return ret;
+    }
+
+    std::shared_ptr<io::FileReader> f;
+    if (i.getUseCin())
+    {
+        f = std::make_shared<io::FileReader>();
+    }
+    else
+    {
+        f = std::make_shared<io::FileReader>(i.getInputFile());
+    }
     data::StandardSingleByteTransitionCounter ssbtc (f);
 
     ssbtc.run();
@@ -17,8 +33,7 @@ int main(int argc, char ** argv)
     std::shared_ptr<std::vector<double>> data = ssbtc.getHistogram().getNormalized().asVector();
 
     io::BmpWriter bmp (256, data);
-    std::string fname = argc>1?*++argv:"/home/max/test.bmp";
-    bmp.write(fname, c);
+    bmp.write(i.getOutputFile(), c);
 
-    return 0;
+    return SUCCESS;
 }
