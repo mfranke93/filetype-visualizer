@@ -29,7 +29,7 @@ int main(int argc, char ** argv)
 
     ssbtc.run();
 
-    std::shared_ptr<vis::StandardColormap const> c = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::DEEP_SEA);
+    std::shared_ptr<vis::StandardColormap const> c = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::BLACK_BODY_HEAT);
     std::shared_ptr<std::vector<double>> data = ssbtc.getHistogram().getNormalized().asVector();
 
     io::BmpWriter bmp (256, data);

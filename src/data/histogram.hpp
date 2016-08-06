@@ -1,4 +1,6 @@
 #include "grid.hpp"
+#include "normalizer.hpp"
+#include "linear_normalizer.hpp"
 #include <cmath>
 
 #pragma once
@@ -13,6 +15,7 @@ namespace data
             Grid<double> getNormalized() const;
             size_t getNumBins() const { return this->numBins; }
             size_t const& at(size_t const&, size_t const&) const;
+            void setNormalizer(std::shared_ptr<data::Normalizer<size_t>> const&);
         protected:
             Histogram() = delete;
             Histogram(Histogram const&) = delete;
@@ -20,5 +23,6 @@ namespace data
         private:
             size_t const numBins;
             Grid<size_t> bins;
+            std::shared_ptr<data::Normalizer<size_t>> normalizer;
     };
 };
