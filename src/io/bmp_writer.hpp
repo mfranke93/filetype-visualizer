@@ -1,6 +1,8 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <sstream>
+#include <exception>
 #include "../third_party/bitmap/bitmap_image.hpp"
 #include "../vis/colormap.hpp"
 
@@ -19,8 +21,9 @@ namespace io
              * Export to file.
              * \param file name
              * \param colormap
+             * \param upscale value
              */
-            void write(std::string const&, std::shared_ptr<vis::Colormap const>) const;
+            void write(std::string const&, std::shared_ptr<vis::Colormap const>, size_t const& = 1) const;
         protected:
             BmpWriter() = delete;
             BmpWriter(BmpWriter const&) = delete;
