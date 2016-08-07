@@ -7,10 +7,13 @@ add_executable(tests tests.cpp
                     test_hist_text.cpp
                     test_linear_normalizer.cpp
                     test_logarithmic_plus_one_normalizer.cpp
+                    test_image.cpp
                     ../data/grid.cpp
                     ../data/histogram.cpp
                     ../data/linear_normalizer.cpp
                     ../data/logarithmic_plus_one_normalizer.cpp
                     ../vis/hist_text.cpp
+                    ../vis/image.cpp
+                    ../vis/image_builder.cpp
               )
 #target_link_libraries(cdemo m) #link the math library
