@@ -58,7 +58,11 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
 
         if (vm["upscale"].as<size_t>() == 0)
         {
-            throw 1416; // TODO: better error
+            throw except::upscale_exception("Cannot scale by 0");
+        }
+        else if (vm["upscale"].as<size_t>() > 7)
+        {
+            throw except::upscale_exception("May not scale by more than 7");
         }
     }
     catch (std::exception& e)

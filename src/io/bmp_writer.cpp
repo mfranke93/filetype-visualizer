@@ -5,11 +5,6 @@ io::BmpWriter::write(std::string const& filename,
                      std::shared_ptr<vis::Colormap const> cmap,
                      size_t const& upscale) const
 {
-    if (upscale == 0)
-    {
-        throw 1416; // TODO: better error
-    }
-
     // create image object
     bitmap_image image (this->widthHeight * upscale, this->widthHeight * upscale);
 

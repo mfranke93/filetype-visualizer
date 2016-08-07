@@ -1,6 +1,8 @@
 #include <vector>
 #include <memory>
 #include <string>
+#include <sstream>
+#include <exception>
 #include "../third_party/bitmap/bitmap_image.hpp"
 #include "../vis/colormap.hpp"
 
