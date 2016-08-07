@@ -5,6 +5,7 @@
 #include <iostream>
 #include <random>
 #include "vis/standard_colormap.hpp"
+#include "vis/image_builder.hpp"
 #include "cmdline/options.hpp"
 
 int main(int argc, char ** argv)
@@ -31,9 +32,10 @@ int main(int argc, char ** argv)
 
     std::shared_ptr<vis::StandardColormap const> c = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::BLACK_BODY_HEAT);
     std::shared_ptr<std::vector<double>> data = ssbtc.getHistogram().getNormalized().asVector();
+    std::shared_ptr<vis::Image> img = vis::ImageBuilder::buildImageFromData(256, 256, data, c);
 
-    io::BmpWriter bmp (256, data);
-    bmp.write(i.getOutputFile(), c, i.getUpscaleFactor());
+    io::BmpWriter bmp (img);
+    bmp.write(i.getOutputFile(), i.getUpscaleFactor());
 
     return SUCCESS;
 }

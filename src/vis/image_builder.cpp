@@ -1,0 +1,21 @@
+#include "image_builder.hpp"
+
+std::shared_ptr<vis::Image>
+vis::ImageBuilder::buildImageFromData(size_t const& width,
+                                      size_t const& height,
+                                      std::shared_ptr<std::vector<double>> const& normalizedValues,
+                                      std::shared_ptr<vis::Colormap const> const& colormap)
+{
+    std::shared_ptr<vis::Image> img = std::make_shared<vis::Image>(width, height);
+    for (size_t x = 0; x < width; ++x)
+    {
+        for (size_t y = 0; y < height; ++y)
+        {
+            color c;
+            colormap->getColor(normalizedValues->at(x+width*y), c);
+            (*img)(x, y) = c;
+        }
+    }
+
+    return img;
+}
