@@ -14,6 +14,8 @@ add_executable(main main.cpp
                     data/logarithmic_plus_one_normalizer.cpp
                     vis/hist_text.cpp
                     vis/standard_colormap.cpp
+                    vis/image.cpp
+                    vis/image_builder.cpp
                     cmdline/options.cpp
               )
 TARGET_LINK_LIBRARIES(main ${Boost_LIBRARIES})

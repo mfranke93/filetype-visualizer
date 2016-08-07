@@ -2,18 +2,16 @@
 
 void 
 io::BmpWriter::write(std::string const& filename,
-                     std::shared_ptr<vis::Colormap const> cmap,
                      size_t const& upscale) const
 {
     // create image object
-    bitmap_image image (this->widthHeight * upscale, this->widthHeight * upscale);
+    bitmap_image image (this->image->getWidth() * upscale, this->image->getHeight() * upscale);
 
-    vis::color c;
-    for (size_t x = 0; x < this->widthHeight; x++)
+    for (size_t x = 0; x < this->image->getWidth(); x++)
     {
-        for (size_t y = 0; y < this->widthHeight; y++)
+        for (size_t y = 0; y < this->image->getHeight(); y++)
         {
-            cmap->getColor(this->data->at(x + this->widthHeight * y), c);
+            vis::color const c = (*this->image)(x,y);
             
             for (size_t w = 0; w < upscale; ++w)
             {

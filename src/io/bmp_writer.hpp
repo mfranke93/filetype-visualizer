@@ -5,40 +5,41 @@
 #include <exception>
 #include "../third_party/bitmap/bitmap_image.hpp"
 #include "../vis/colormap.hpp"
+#include "../vis/image.hpp"
 
 #pragma once
 
 namespace io
 {
+    /**
+     * Class to write image data to a Bitmap file.
+     */
     class BmpWriter
     {
         public:
-            BmpWriter(size_t const& widthHeight, std::shared_ptr<std::vector<double>> data)
-                : widthHeight(widthHeight), data(data) 
+            /**
+             * Constructor.
+             *
+             * \param image Image object containing pixel values
+             */
+            BmpWriter(std::shared_ptr<vis::Image> image)
+                : image(image) 
             {}
 
             /**
              * Export to file.
              * \param file name
-             * \param colormap
              * \param upscale value
              */
-            void write(std::string const&, std::shared_ptr<vis::Colormap const>, size_t const& = 1) const;
+            void write(std::string const&, size_t const& = 1) const;
         protected:
             BmpWriter() = delete;
             BmpWriter(BmpWriter const&) = delete;
             BmpWriter& operator= (BmpWriter const&) = delete;
         private:
             /**
-             * Width and height of image.
+             * Reference to pixel data.
              */
-            size_t const widthHeight;
-
-            /**
-             * Vector containing the data.
-             * Row-major.
-             * Assumed to be normalized.
-             */
-            std::shared_ptr<std::vector<double>> const data;
+            std::shared_ptr<vis::Image> image;
     };
 }
