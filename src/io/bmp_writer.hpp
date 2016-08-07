@@ -11,9 +11,17 @@
 
 namespace io
 {
+    /**
+     * Class to write image data to a Bitmap file.
+     */
     class BmpWriter
     {
         public:
+            /**
+             * Constructor.
+             *
+             * \param image Image object containing pixel values
+             */
             BmpWriter(std::shared_ptr<vis::Image> image)
                 : image(image) 
             {}
@@ -21,7 +29,6 @@ namespace io
             /**
              * Export to file.
              * \param file name
-             * \param colormap
              * \param upscale value
              */
             void write(std::string const&, size_t const& = 1) const;
@@ -30,6 +37,9 @@ namespace io
             BmpWriter(BmpWriter const&) = delete;
             BmpWriter& operator= (BmpWriter const&) = delete;
         private:
+            /**
+             * Reference to pixel data.
+             */
             std::shared_ptr<vis::Image> image;
     };
 }
