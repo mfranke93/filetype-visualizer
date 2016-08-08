@@ -2,6 +2,7 @@
 #include <vector>
 #include "colormap.hpp"
 #include "image.hpp"
+#include "../except/illegal_size_exception.hpp"
 
 #pragma once
 
@@ -27,6 +28,7 @@ namespace vis
             static std::shared_ptr<Image> buildImageFromData(size_t const& width,
                                                              size_t const& height,
                                                              std::shared_ptr<std::vector<double>> const& normalizedValues,
-                                                             std::shared_ptr<Colormap const> const& colormap);
+                                                             std::shared_ptr<Colormap const> const& colormap)
+                throw(std::length_error, except::illegal_size);
     };
 }

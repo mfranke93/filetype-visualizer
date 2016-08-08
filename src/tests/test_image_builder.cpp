@@ -2,6 +2,7 @@
 #include "../vis/image.hpp"
 #include "../vis/image_builder.hpp"
 #include "../vis/standard_colormap.hpp"
+#include "../except/illegal_size_exception.hpp"
 
 SCENARIO ("Building an Image from data")
 {
@@ -53,6 +54,43 @@ SCENARIO ("Building an Image from data")
                 REQUIRE(reference.R == compare.R);
                 REQUIRE(reference.G == compare.G);
                 REQUIRE(reference.B == compare.B);
+            }
+        }
+    }
+}
+
+SCENARIO ("Building an Image from data, illegal width or height")
+{
+    GIVEN ("A vector of normalized values and a colormap")
+    {
+        std::shared_ptr<std::vector<double>> values = std::make_shared<std::vector<double>>();
+        values->push_back(0.0);
+        values->push_back(0.5);
+        values->push_back(0.5);
+        values->push_back(1.0);
+        std::shared_ptr<vis::Colormap const> colormap = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::RED_BLUE);
+
+        WHEN ("Building an image from this with width 0")
+        {
+            THEN ("an exception should be thrown")
+            {
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(0, 4, values, colormap), except::illegal_size);
+            }
+        }
+
+        WHEN ("Building an image from this with height 0")
+        {
+            THEN ("an exception should be thrown")
+            {
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(4, 0, values, colormap), except::illegal_size);
+            }
+        }
+
+        WHEN ("Building an image from this with width and height such that too few values are given")
+        {
+            THEN ("an exception should be thrown")
+            {
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(4, 4, values, colormap), except::illegal_size);
             }
         }
     }
