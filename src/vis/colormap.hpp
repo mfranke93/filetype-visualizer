@@ -6,11 +6,23 @@ namespace vis
      * typedef for one channel of an RGB pixel value.
      */
     typedef unsigned char channel;
-    typedef struct {
+    struct color {
+        color()
+        :   R(0), G(0), B(0)
+        {
+            // ctor
+        }
+
+        color(channel const& r, channel const& g, channel const& b)
+        :   R(r), G(g), B(b)
+        {
+            // ctor
+        }
+
         channel R;
         channel G;
         channel B;
-    } color;
+    };
 
     /**
      * Class for colormaps.

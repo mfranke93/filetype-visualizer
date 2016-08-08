@@ -2,14 +2,9 @@
 
 vis::Image::Image(size_t const& widthHeight)
 throw(std::length_error)
-:   width(widthHeight),
-    height(widthHeight)
+:   vis::Image::Image(widthHeight, widthHeight)
 {
-    if (width == 0 || height == 0)
-    {
-        throw std::length_error("Width and height of image must be greater than zero.");
-    }
-    this->pixels = new color [ this->width * this->height ];
+    // ctor
 }
 
 vis::Image::Image(size_t const& w, size_t const& h)
