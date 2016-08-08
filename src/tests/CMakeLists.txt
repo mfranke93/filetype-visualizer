@@ -8,6 +8,7 @@ add_executable(tests tests.cpp
                     test_linear_normalizer.cpp
                     test_logarithmic_plus_one_normalizer.cpp
                     test_image.cpp
+                    test_image_builder.cpp
                     ../data/grid.cpp
                     ../data/histogram.cpp
                     ../data/linear_normalizer.cpp
@@ -15,5 +16,6 @@ add_executable(tests tests.cpp
                     ../vis/hist_text.cpp
                     ../vis/image.cpp
                     ../vis/image_builder.cpp
+                    ../vis/standard_colormap.cpp
               )
 #target_link_libraries(cdemo m) #link the math library
