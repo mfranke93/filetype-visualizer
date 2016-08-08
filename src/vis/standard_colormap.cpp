@@ -15,8 +15,13 @@ void vis::StandardColormap::addColor(double const& location, color const& c)
     this->colors.insert(it, lc);
 }
 
-void vis::StandardColormap::getColor(double const& location, color& c) const
+void vis::StandardColormap::getColor(double const& location, color& c) const throw(except::normalizer_exception)
 {
+    if (location < 0.0 || location > 1.0)
+    {
+        throw except::normalizer_exception("Value is not in range [0;1].");
+    }
+
     // find interval
     std::vector<vis::locationizedColor>::const_iterator it = this->colors.begin();
     while ((it+1)->location < location) ++it;
@@ -38,33 +43,14 @@ vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps const& typ
         // red through white to blue color map {{{
         case vis::PredefinedColormaps::RED_BLUE:
             {
-                vis::color a;
-                a.R = 255;
-                a.G = 0;
-                a.B = 0;
+                vis::color a (255, 0, 0);
+                vis::color b (0, 0, 255);
+                vis::color middle (255, 255, 255);
 
-                vis::color b;
-                b.R = 0;
-                b.G = 0;
-                b.B = 255;
-
-                vis::color middle;
-                middle.R = 255;
-                middle.G = 255;
-                middle.B = 255;
-
-                vis::locationizedColor c0;
-                c0.location = 0.0;
-                c0.c = a;
-                vis::locationizedColor c1;
-                c1.location = 0.475;
-                c1.c = middle;
-                vis::locationizedColor c2;
-                c2.location = 0.525;
-                c2.c = middle;
-                vis::locationizedColor c3;
-                c3.location = 1.0;
-                c3.c = b;
+                vis::locationizedColor c0 (0.0, a);
+                vis::locationizedColor c1 (0.475, middle);
+                vis::locationizedColor c2 (0.525, middle);
+                vis::locationizedColor c3 (1.0, b);
 
                 std::vector<vis::locationizedColor> locCol;
                 locCol.push_back(c0);

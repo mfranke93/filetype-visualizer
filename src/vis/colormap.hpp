@@ -1,3 +1,5 @@
+#include "../except/normalizer_exception.hpp"
+
 #pragma once
 
 namespace vis 
@@ -6,11 +8,23 @@ namespace vis
      * typedef for one channel of an RGB pixel value.
      */
     typedef unsigned char channel;
-    typedef struct {
+    struct color {
+        color()
+        :   color(0, 0, 0)
+        {
+            // ctor
+        }
+
+        color(channel const& r, channel const& g, channel const& b)
+        :   R(r), G(g), B(b)
+        {
+            // ctor
+        }
+
         channel R;
         channel G;
         channel B;
-    } color;
+    };
 
     /**
      * Class for colormaps.
@@ -26,7 +40,8 @@ namespace vis
              *
              * \param   Value between 0 and 1 to be mapped to color
              * \param   Red, green, blue channel values as color struct
+             * \throw   except::normalizer_exception if value not in range [0;1]
              */
-            virtual void getColor(double const&, color&) const = 0;
+            virtual void getColor(double const&, color&) const throw(except::normalizer_exception) = 0;
     };
 }

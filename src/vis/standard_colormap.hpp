@@ -4,10 +4,22 @@
 
 namespace vis
 {
-    typedef struct {
+    struct locationizedColor {
+        locationizedColor(double const& location, color color)
+        :   location(location), c(color)
+        {
+            // ctor
+        }
+
+        locationizedColor()
+        :   location(0.0), c()
+        {
+            // ctor
+        }
+
         double location;
         color c;
-    } locationizedColor;
+    };
 
     enum class PredefinedColormaps
     {
@@ -26,7 +38,7 @@ namespace vis
             ~StandardColormap() = default;
 
             void addColor(double const&, color const&);
-            void getColor(double const&, color&) const override;
+            void getColor(double const&, color&) const throw(except::normalizer_exception) override;
 
             static std::shared_ptr<StandardColormap const> getPredefinedColormap(PredefinedColormaps const&);
         protected:

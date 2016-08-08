@@ -5,10 +5,10 @@
 
 namespace except
 {
-    class upscale_exception : public std::logic_error
+    class illegal_size : public std::logic_error
     {
         public:
-            explicit upscale_exception(std::string const& what_arg)
+            explicit illegal_size(std::string const& what_arg)
             : std::logic_error(what_arg)
             {}
     };

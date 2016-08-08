@@ -26,7 +26,7 @@ namespace vis
              *
              * \param Width and height
              */
-            explicit Image(size_t const&);
+            explicit Image(size_t const&) throw(std::length_error);
 
             /**
              * Constructor.
@@ -34,7 +34,7 @@ namespace vis
              * \param Width
              * \param Height
              */
-            explicit Image(size_t const&, size_t const&);
+            explicit Image(size_t const&, size_t const&) throw(std::length_error);
 
             /**
              * Destructor.
