@@ -1,6 +1,8 @@
 #include <string>
 #include <exception>
 
+#pragma once
+
 namespace except
 {
     class illegal_size : public std::logic_error

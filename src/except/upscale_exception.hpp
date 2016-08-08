@@ -1,6 +1,8 @@
 #include <string>
 #include <exception>
 
+#pragma once
+
 namespace except
 {
     class upscale_exception : public std::logic_error
