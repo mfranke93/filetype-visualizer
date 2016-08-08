@@ -4,10 +4,22 @@
 
 namespace vis
 {
-    typedef struct {
+    struct locationizedColor {
+        locationizedColor(double const& location, color color)
+        :   location(location), c(color)
+        {
+            // ctor
+        }
+
+        locationizedColor()
+        :   location(0.0), c()
+        {
+            // ctor
+        }
+
         double location;
         color c;
-    } locationizedColor;
+    };
 
     enum class PredefinedColormaps
     {
