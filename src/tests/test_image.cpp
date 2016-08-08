@@ -27,7 +27,18 @@ SCENARIO ("An image with illegal width or height")
 
     GIVEN ("An image with illegal width and height")
     {
-        WHEN ("Calling the constructor")
+        WHEN ("Calling the one parameter constructor")
+        {
+            THEN ("An exception should be thrown")
+            {
+                REQUIRE_THROWS_AS(vis::Image i (0), std::length_error);
+            }
+        }
+    }
+
+    GIVEN ("An image with illegal width and height")
+    {
+        WHEN ("Calling the two parameter constructor")
         {
             THEN ("An exception should be thrown")
             {
@@ -83,10 +94,7 @@ SCENARIO ("An image with legal width and height")
 
         WHEN ("Having written one value")
         {
-            vis::color c;
-            c.R = 255;
-            c.B = 0;
-            c.G = 127;
+            vis::color c (255, 0, 127);
             img(100, 150) = c;
 
             THEN ("This value should be correct")
