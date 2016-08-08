@@ -8,7 +8,7 @@ namespace vis
     typedef unsigned char channel;
     struct color {
         color()
-        :   R(0), G(0), B(0)
+        :   color(0, 0, 0)
         {
             // ctor
         }
