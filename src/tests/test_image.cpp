@@ -130,3 +130,18 @@ SCENARIO ("An image with legal width and height")
         }
     }
 }
+
+SCENARIO ("Deleting an Image object")
+{
+    GIVEN ("An initialized Image object in the heap")
+    {
+        vis::Image * img = new vis::Image(200);
+        WHEN ("Deleting the object")
+        {
+            THEN ("No double free should occur")
+            {
+                REQUIRE_NOTHROW(delete img);
+            }
+        }
+    }
+}
