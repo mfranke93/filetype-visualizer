@@ -9,17 +9,17 @@ throw(std::length_error, except::illegal_size, except::normalizer_exception)
 {
     if (normalizedValues->size() != width*height)
     {
-        char buf [256];
+        char buf [1024];
         sprintf(buf, "%s: Method expects %lu x %lu = %lu values, but %lu given.", __func__, width, height, width*height, normalizedValues->size());
         throw except::illegal_size(buf);
     }
 
     std::shared_ptr<vis::Image> img = std::make_shared<vis::Image>(width, height);
+    color c;
     for (size_t x = 0; x < width; ++x)
     {
         for (size_t y = 0; y < height; ++y)
         {
-            color c;
             colormap->getColor(normalizedValues->at(x+width*y), c);
             (*img)(x, y) = c;
         }
