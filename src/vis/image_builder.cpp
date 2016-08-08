@@ -5,7 +5,7 @@ vis::ImageBuilder::buildImageFromData(size_t const& width,
                                       size_t const& height,
                                       std::shared_ptr<std::vector<double>> const& normalizedValues,
                                       std::shared_ptr<vis::Colormap const> const& colormap)
-throw(std::length_error, except::illegal_size)
+throw(std::length_error, except::illegal_size, except::normalizer_exception)
 {
     if (normalizedValues->size() != width*height)
     {

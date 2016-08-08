@@ -15,8 +15,13 @@ void vis::StandardColormap::addColor(double const& location, color const& c)
     this->colors.insert(it, lc);
 }
 
-void vis::StandardColormap::getColor(double const& location, color& c) const
+void vis::StandardColormap::getColor(double const& location, color& c) const throw(except::normalizer_exception)
 {
+    if (location < 0.0 || location > 1.0)
+    {
+        throw except::normalizer_exception("Value is not in range [0;1].");
+    }
+
     // find interval
     std::vector<vis::locationizedColor>::const_iterator it = this->colors.begin();
     while ((it+1)->location < location) ++it;

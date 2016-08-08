@@ -1,3 +1,5 @@
+#include "../except/normalizer_exception.hpp"
+
 #pragma once
 
 namespace vis 
@@ -38,7 +40,8 @@ namespace vis
              *
              * \param   Value between 0 and 1 to be mapped to color
              * \param   Red, green, blue channel values as color struct
+             * \throw   except::normalizer_exception if value not in range [0;1]
              */
-            virtual void getColor(double const&, color&) const = 0;
+            virtual void getColor(double const&, color&) const throw(except::normalizer_exception) = 0;
     };
 }

@@ -38,7 +38,7 @@ namespace vis
             ~StandardColormap() = default;
 
             void addColor(double const&, color const&);
-            void getColor(double const&, color&) const override;
+            void getColor(double const&, color&) const throw(except::normalizer_exception) override;
 
             static std::shared_ptr<StandardColormap const> getPredefinedColormap(PredefinedColormaps const&);
         protected:

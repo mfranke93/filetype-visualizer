@@ -93,5 +93,52 @@ SCENARIO ("Building an Image from data, illegal width or height")
                 REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(4, 4, values, colormap), except::illegal_size);
             }
         }
+
+        WHEN ("Building an image from this with width and height such that too many values are given")
+        {
+            THEN ("an exception should be thrown")
+            {
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(2, 1, values, colormap), except::illegal_size);
+            }
+        }
+    }
+}
+
+SCENARIO ("Unnormalized data passed to ImageBuilder")
+{
+    GIVEN ("A vector of normalized values with one value larger 1.0 and a colormap")
+    {
+        std::shared_ptr<std::vector<double>> values = std::make_shared<std::vector<double>>();
+        values->push_back(0.0);
+        values->push_back(0.5);
+        values->push_back(0.5);
+        values->push_back(1.0000001);
+        std::shared_ptr<vis::Colormap const> colormap = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::RED_BLUE);
+
+        WHEN ("trying to get an image from this")
+        {
+            THEN ("a normalizer error should occur")
+            {
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(2, 2, values, colormap), except::normalizer_exception);
+            }
+        }
+    }
+
+    GIVEN ("A vector of normalized values with one value smaller than 0.0 and a colormap")
+    {
+        std::shared_ptr<std::vector<double>> values = std::make_shared<std::vector<double>>();
+        values->push_back(-0.00001);
+        values->push_back(0.5);
+        values->push_back(0.5);
+        values->push_back(1.0);
+        std::shared_ptr<vis::Colormap const> colormap = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::RED_BLUE);
+
+        WHEN ("trying to get an image from this")
+        {
+            THEN ("a normalizer error should occur")
+            {
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(2, 2, values, colormap), except::normalizer_exception);
+            }
+        }
     }
 }

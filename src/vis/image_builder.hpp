@@ -29,6 +29,6 @@ namespace vis
                                                              size_t const& height,
                                                              std::shared_ptr<std::vector<double>> const& normalizedValues,
                                                              std::shared_ptr<Colormap const> const& colormap)
-                throw(std::length_error, except::illegal_size);
+                throw(std::length_error, except::illegal_size, except::normalizer_exception);
     };
 }
