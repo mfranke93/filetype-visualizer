@@ -1,9 +1,13 @@
 #include <boost/program_options.hpp>
 #include <iostream>
 #include <string>
+#include <memory>
 #include <algorithm>
 #include "../except/upscale_exception.hpp"
 #include "../vis/standard_colormap.hpp"
+#include "../data/linear_normalizer.hpp"
+#include "../data/logarithmic_plus_one_normalizer.hpp"
+#include "../data/normalizer.hpp"
 
 #pragma once
 
@@ -75,7 +79,20 @@ namespace cmdline
              */
             vis::PredefinedColormaps const& getColormap() const { return this->cmap; };
 
+            /**
+             * Get the normalizer type.
+             */
+            data::NormalizerType const& getNormalizerType() const { return this->normalizerType; };
+
         private:
+            /**
+             * Method to get the normalizer type from the command line string.
+             * 
+             * \param Command line string ('log'/'lin')
+             * \return enum member describing the normalizer type
+             */
+            static data::NormalizerType getNormalizerTypeFromString(std::string) throw(std::invalid_argument);
+
             /**
              * Use std::cin or file for input?
              */
@@ -105,5 +122,10 @@ namespace cmdline
              * Command line options description.
              */
             po::options_description desc;
+
+            /**
+             * Type of normalizer to use.
+             */
+            data::NormalizerType normalizerType;
     };
 }

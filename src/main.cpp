@@ -26,8 +26,23 @@ int main(int argc, char ** argv)
     {
         f = std::make_shared<io::FileReader>(i.getInputFile());
     }
+
     data::StandardSingleByteTransitionCounter ssbtc (f);
 
+    std::shared_ptr<data::Normalizer<size_t>> norm;
+    switch (i.getNormalizerType())
+    {
+        case data::NormalizerType::LOGARITHMIC_PLUS_ONE:
+            norm = std::make_shared<data::LogarithmicPlusOneNormalizer>();
+            break;
+        case data::NormalizerType::LINEAR:
+            norm = std::make_shared<data::LinearNormalizer<size_t>>();
+            break;
+        default:
+            return ERROR_IN_COMMANDLINE;
+    }
+
+    ssbtc.setNormalizer(norm);
     ssbtc.run();
 
     std::shared_ptr<vis::StandardColormap const> c = vis::StandardColormap::getPredefinedColormap(i.getColormap());

@@ -9,6 +9,7 @@ cmdline::CommandlineInterface::CommandlineInterface()
         ("out,o", po::value<std::string>(&outputFile)->default_value("out.bmp"), "Output file")
         ("upscale,s", po::value<size_t>(&upscaleFactor)->default_value(1), "Size scaling of output image. May not be 0")
         ("cmap,c", po::value<std::string>(), "Colormap to use. Defaults to heat map. Options are: RdBu, heat, deepsea")
+        ("normalizer,n", po::value<std::string>()->default_value("log"), "Normalizer to use. Defaults to logarithmic. Options are: log, lin")
         ;
 }
 
@@ -74,6 +75,15 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
         {
             this->cmap = vis::PredefinedColormaps::BLACK_BODY_HEAT;
         }
+
+        if (vm.count("normalizer"))
+        {
+            this->normalizerType = cmdline::CommandlineInterface::getNormalizerTypeFromString(vm["normalizer"].as<std::string>());
+        }
+        else
+        {
+            this->normalizerType = data::NormalizerType::LOGARITHMIC_PLUS_ONE;
+        }
     }
     catch (std::exception& e)
     {
@@ -84,3 +94,25 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
 
     return SUCCESS;
 }
+
+data::NormalizerType 
+cmdline::CommandlineInterface::getNormalizerTypeFromString(std::string name)
+throw(std::invalid_argument)
+{
+    // lower case
+    std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+    if (name == "lin")
+    {
+        return data::NormalizerType::LINEAR;
+    }
+    else if (name == "log")
+    {
+        return data::NormalizerType::LOGARITHMIC_PLUS_ONE;
+    }
+    else
+    {
+        char buf [256];
+        sprintf(buf, "No such color map: %s", name.c_str());
+        throw std::invalid_argument(buf);
+    }
+};
