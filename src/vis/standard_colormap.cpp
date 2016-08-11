@@ -1,6 +1,4 @@
 #include "standard_colormap.hpp"
-#include <iostream>
-#include <stdexcept>
 
 void vis::StandardColormap::addColor(double const& location, color const& c)
 {
@@ -37,6 +35,7 @@ void vis::StandardColormap::getColor(double const& location, color& c) const thr
 
 std::shared_ptr<vis::StandardColormap const> 
 vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps const& type)
+throw(std::out_of_range)
 {
     switch (type)
     {
@@ -149,5 +148,32 @@ vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps const& typ
             sprintf(s, "%s: Unhandled colormap style: %d.", __PRETTY_FUNCTION__, type);
             throw std::out_of_range(s);
         // }}}
+    }
+}
+
+vis::PredefinedColormaps
+vis::getPredefinedColormapType(std::string type)
+throw(std::invalid_argument)
+{
+    // lower case
+    std::transform(type.begin(), type.end(), type.begin(), ::tolower);
+
+    if (type == "rdbu")
+    {
+        return vis::PredefinedColormaps::RED_BLUE;
+    }
+    else if (type == "heat")
+    {
+        return vis::PredefinedColormaps::BLACK_BODY_HEAT;
+    }
+    else if (type == "deepsea")
+    {
+        return vis::PredefinedColormaps::DEEP_SEA;
+    }
+    else
+    {
+        char buf [256];
+        sprintf(buf, "No such color map: %s", type.c_str());
+        throw std::invalid_argument(buf);
     }
 }

@@ -1,6 +1,9 @@
 #include "colormap.hpp"
 #include <vector>
 #include <memory>
+#include <iostream>
+#include <stdexcept>
+#include <algorithm>
 
 #pragma once
 
@@ -36,6 +39,14 @@ namespace vis
         DEEP_SEA,
         dummy
     };
+
+    /**
+     * Build and get a predefined color map.
+     *
+     * \param color map type as string
+     * \return color map
+     */
+    PredefinedColormaps getPredefinedColormapType(std::string) throw(std::invalid_argument);
 
     /**
      * Class for linear colormaps.
@@ -79,7 +90,7 @@ namespace vis
              * \param color map type
              * \return color map
              */
-            static std::shared_ptr<StandardColormap const> getPredefinedColormap(PredefinedColormaps const&);
+            static std::shared_ptr<StandardColormap const> getPredefinedColormap(PredefinedColormaps const&) throw(std::out_of_range);
         protected:
             StandardColormap() = delete;
             StandardColormap(StandardColormap const&) = delete;
@@ -90,6 +101,4 @@ namespace vis
              */
             std::vector<locationizedColor> colors;
     };
-
-
 }

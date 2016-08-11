@@ -68,27 +68,7 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
 
         if (vm.count("cmap"))
         {
-            std::string name = vm["cmap"].as<std::string>();
-            std::transform(name.begin(), name.end(), name.begin(), ::tolower);
-
-            if (name == "rdbu")
-            {
-                this->cmap = vis::PredefinedColormaps::RED_BLUE;
-            }
-            else if (name == "heat")
-            {
-                this->cmap = vis::PredefinedColormaps::BLACK_BODY_HEAT;
-            }
-            else if (name == "deepsea")
-            {
-                this->cmap = vis::PredefinedColormaps::DEEP_SEA;
-            }
-            else
-            {
-                char buf [256];
-                sprintf(buf, "No such color map: %s", vm["cmap"].as<std::string>().c_str());
-                throw std::invalid_argument(buf);
-            }
+            this->cmap = vis::getPredefinedColormapType(vm["cmap"].as<std::string>());
         }
         else
         {
