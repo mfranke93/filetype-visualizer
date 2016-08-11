@@ -30,7 +30,7 @@ int main(int argc, char ** argv)
 
     ssbtc.run();
 
-    std::shared_ptr<vis::StandardColormap const> c = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::BLACK_BODY_HEAT);
+    std::shared_ptr<vis::StandardColormap const> c = vis::StandardColormap::getPredefinedColormap(i.getColormap());
     std::shared_ptr<std::vector<double>> data = ssbtc.getHistogram().getNormalized().asVector();
     std::shared_ptr<vis::Image> img = vis::ImageBuilder::buildImageFromData(256, 256, data, c);
 

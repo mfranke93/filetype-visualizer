@@ -8,6 +8,7 @@ cmdline::CommandlineInterface::CommandlineInterface()
         ("in,i", po::value<std::string>(&inputFile), "Input file")
         ("out,o", po::value<std::string>(&outputFile)->default_value("out.bmp"), "Output file")
         ("upscale,s", po::value<size_t>(&upscaleFactor)->default_value(1), "Size scaling of output image. May not be 0")
+        ("cmap,c", po::value<std::string>(), "Colormap to use. Defaults to heat map. Options are: RdBu, heat, deepsea")
         ;
 }
 
@@ -63,6 +64,15 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
         else if (vm["upscale"].as<size_t>() > 7)
         {
             throw except::upscale_exception("May not scale by more than 7");
+        }
+
+        if (vm.count("cmap"))
+        {
+            this->cmap = vis::getPredefinedColormapType(vm["cmap"].as<std::string>());
+        }
+        else
+        {
+            this->cmap = vis::PredefinedColormaps::BLACK_BODY_HEAT;
         }
     }
     catch (std::exception& e)
