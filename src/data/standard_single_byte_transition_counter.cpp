@@ -27,6 +27,12 @@ data::StandardSingleByteTransitionCounter::run()
 }
 
 void
+data::StandardSingleByteTransitionCounter::setNormalizer(std::shared_ptr<data::Normalizer<size_t>> const& norm)
+{
+    this->histogram.setNormalizer(norm);
+}
+
+void
 data::StandardSingleByteTransitionCounter::handleBlock(std::vector<unsigned char> const& block)
 {
     for (unsigned char const& c : block)
