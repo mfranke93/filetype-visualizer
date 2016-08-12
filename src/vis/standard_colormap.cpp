@@ -142,6 +142,24 @@ throw(std::out_of_range)
             } 
             break;
         // }}}
+        // black to white grayscale color map {{{
+        case vis::PredefinedColormaps::GRAYSCALE:
+            {
+                vis::color a (0, 0, 0);
+                vis::color b (255, 255, 255);
+
+                vis::locationizedColor c0 (0.0, a);
+                vis::locationizedColor c1 (1.0, b);
+
+                std::vector<vis::locationizedColor> locCol;
+                locCol.push_back(c0);
+                locCol.push_back(c1);
+
+                std::shared_ptr<vis::StandardColormap> c = std::make_shared<vis::StandardColormap> (locCol);
+                return c;
+            }
+            break;
+        // }}}
         // default: throw exception {{{
         default:
             char s [255];
@@ -169,6 +187,10 @@ throw(std::invalid_argument)
     else if (type == "deepsea")
     {
         return vis::PredefinedColormaps::DEEP_SEA;
+    }
+    else if (type == "gray" || type == "grey")
+    {
+        return vis::PredefinedColormaps::GRAYSCALE;
     }
     else
     {

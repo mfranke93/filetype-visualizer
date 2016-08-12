@@ -8,7 +8,7 @@ cmdline::CommandlineInterface::CommandlineInterface()
         ("in,i", po::value<std::string>(&inputFile), "Input file")
         ("out,o", po::value<std::string>(&outputFile)->default_value("out.bmp"), "Output file")
         ("upscale,s", po::value<size_t>(&upscaleFactor)->default_value(1), "Size scaling of output image. May not be 0")
-        ("cmap,c", po::value<std::string>(), "Colormap to use. Defaults to heat map. Options are: RdBu, heat, deepsea")
+        ("cmap,c", po::value<std::string>(), "Colormap to use. Defaults to heat map. Options are: RdBu, heat, deepsea, gray/grey")
         ("normalizer,n", po::value<std::string>()->default_value("log"), "Normalizer to use. Defaults to logarithmic. Options are: log, lin")
         ("ascii,a", po::bool_switch(&useAscii), "Use ASCII (7 bit charset) only")
         ;
