@@ -27,7 +27,15 @@ int main(int argc, char ** argv)
         f = std::make_shared<io::FileReader>(i.getInputFile());
     }
 
-    data::StandardSingleByteTransitionCounter ssbtc (f);
+    std::shared_ptr<data::TransitionCounter> transitionCounter;
+    if (i.getUseAscii())
+    {
+        transitionCounter = std::make_shared<data::AsciiTransitionCounter>(f);
+    }
+    else
+    {
+        transitionCounter = std::make_shared<data::ByteTransitionCounter>(f);
+    }
 
     std::shared_ptr<data::Normalizer<size_t>> norm;
     switch (i.getNormalizerType())
@@ -42,12 +50,13 @@ int main(int argc, char ** argv)
             return ERROR_IN_COMMANDLINE;
     }
 
-    ssbtc.setNormalizer(norm);
-    ssbtc.run();
+    transitionCounter->setNormalizer(norm);
+    transitionCounter->run();
 
     std::shared_ptr<vis::StandardColormap const> c = vis::StandardColormap::getPredefinedColormap(i.getColormap());
-    std::shared_ptr<std::vector<double>> data = ssbtc.getHistogram().getNormalized().asVector();
-    std::shared_ptr<vis::Image> img = vis::ImageBuilder::buildImageFromData(256, 256, data, c);
+    std::shared_ptr<std::vector<double>> data = transitionCounter->getHistogram().getNormalized().asVector();
+    size_t const size = transitionCounter->getHistogram().getNumBins();
+    std::shared_ptr<vis::Image> img = vis::ImageBuilder::buildImageFromData(size, size, data, c);
 
     io::BmpWriter bmp (img);
     bmp.write(i.getOutputFile(), i.getUpscaleFactor());

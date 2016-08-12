@@ -10,6 +10,7 @@ cmdline::CommandlineInterface::CommandlineInterface()
         ("upscale,s", po::value<size_t>(&upscaleFactor)->default_value(1), "Size scaling of output image. May not be 0")
         ("cmap,c", po::value<std::string>(), "Colormap to use. Defaults to heat map. Options are: RdBu, heat, deepsea")
         ("normalizer,n", po::value<std::string>()->default_value("log"), "Normalizer to use. Defaults to logarithmic. Options are: log, lin")
+        ("ascii,a", po::bool_switch(&useAscii), "Use ASCII (7 bit charset) only")
         ;
 }
 
