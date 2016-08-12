@@ -37,7 +37,7 @@ namespace vis
         RED_BLUE,
         BLACK_BODY_HEAT,
         DEEP_SEA,
-        dummy
+        GRAYSCALE
     };
 
     /**
