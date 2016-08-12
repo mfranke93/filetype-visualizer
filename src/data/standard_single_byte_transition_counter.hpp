@@ -5,20 +5,71 @@
 
 namespace data
 {
+    /**
+     * Class for a standard byte for byte transition counter.
+     */
     class StandardSingleByteTransitionCounter: public TransitionCounter
     {
         public:
+            /**
+             * Constructor.
+             * 
+             * \param A FileReader reference
+             */
             StandardSingleByteTransitionCounter(std::shared_ptr<io::FileReader>);
+
+            /**
+             * Get a const reference to the histogram.
+             *
+             * \return histogram
+             */
             Histogram const& getHistogram() const override;
+
+            /**
+             * Run the counter.
+             */
             void run() override;
+
+            /**
+             * Set which normalizer to use.
+             * 
+             * \param Normalizer
+             */
             void setNormalizer(std::shared_ptr<data::Normalizer<size_t>> const&) override;
         private:
+            /**
+             * Handle a block of bytes.
+             *
+             * \param vector of byte values
+             */
             void handleBlock(std::vector<unsigned char> const&);
+
+            /**
+             * Handle the next char.
+             *
+             * \param next char
+             */
             void nextChar(unsigned char const&);
 
+            /**
+             * Histogram.
+             */
             Histogram histogram;
+
+            /**
+             * Input file reader.
+             */
             std::shared_ptr<io::FileReader> fileReader;
+
+            /**
+             * Flag that states whether the file read process has started.
+             * This is needed as there is no transition to the first byte.
+             */
             bool started = false;
+
+            /**
+             * Last char.
+             */
             unsigned char last = 0x00;
     };
 }
