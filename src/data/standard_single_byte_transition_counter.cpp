@@ -2,7 +2,7 @@
 
 template<unsigned char _value_range>
 data::StandardSingleByteTransitionCounter<_value_range>::StandardSingleByteTransitionCounter(std::shared_ptr<io::FileReader> fileReader)
-:   histogram(_value_range), fileReader(fileReader)
+:   histogram(_value_range+1), fileReader(fileReader)
 {
     // ctor
     this->histogram.setNormalizer(std::make_shared<data::LogarithmicPlusOneNormalizer>());
@@ -52,9 +52,10 @@ data::StandardSingleByteTransitionCounter<_value_range>::nextChar(unsigned char 
 {
     if (c > _value_range)
     {
-        std::cerr << "Value " << c 
-            << " is out of range for data::StandardSingleByteTransitionCounter<" 
-            << _value_range << ">." << std::endl;
+        // TODO: need to do something sensible here. Maybe not throw an exception
+        //std::cerr << "Value " << c 
+        //    << " is out of range for data::StandardSingleByteTransitionCounter<" 
+        //    << _value_range << ">." << std::endl;
         return;
     }
 

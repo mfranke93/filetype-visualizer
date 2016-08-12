@@ -73,6 +73,13 @@ namespace cmdline
             std::string const& getOutputFile() const { return this->outputFile; };
 
             /**
+             * Get whether to use ASCII only.
+             *
+             * \return ascii only
+             */
+            bool const& getUseAscii() const { return this->useAscii; };
+
+            /**
              * Get the colormap.
              *
              * \return cmap
@@ -102,6 +109,11 @@ namespace cmdline
              * Factor for scaling output image.
              */
             size_t upscaleFactor;
+
+            /**
+             * Use 7 or 8 bit file input transition counter.
+             */
+            bool useAscii;
 
             /**
              * Input file name.
