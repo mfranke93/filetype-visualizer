@@ -27,7 +27,7 @@ int main(int argc, char ** argv)
         f = std::make_shared<io::FileReader>(i.getInputFile());
     }
 
-    data::StandardSingleByteTransitionCounter ssbtc (f);
+    data::ByteTransitionCounter ssbtc (f);
 
     std::shared_ptr<data::Normalizer<size_t>> norm;
     switch (i.getNormalizerType())

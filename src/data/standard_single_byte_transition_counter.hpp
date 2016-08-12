@@ -1,3 +1,4 @@
+#include <iostream>
 #include "transition_counter.hpp"
 #include "../data/logarithmic_plus_one_normalizer.hpp"
 
@@ -8,6 +9,7 @@ namespace data
     /**
      * Class for a standard byte for byte transition counter.
      */
+    template<unsigned char _value_range>
     class StandardSingleByteTransitionCounter: public TransitionCounter
     {
         public:
@@ -72,4 +74,10 @@ namespace data
              */
             unsigned char last = 0x00;
     };
+
+    template class StandardSingleByteTransitionCounter<127>;
+    template class StandardSingleByteTransitionCounter<255>;
+
+    typedef StandardSingleByteTransitionCounter<127> AsciiTransitionCounter;
+    typedef StandardSingleByteTransitionCounter<255> ByteTransitionCounter;
 }
