@@ -1,10 +1,22 @@
 #include <cmath>
 #include <stdexcept>
+#include <string>
+#include <stdexcept>
+#include <algorithm>
 
 #pragma once
 
 namespace data
 {
+    /**
+     * This describes all types of normalizers existing.
+     */
+    enum class NormalizerType
+    {
+        LINEAR,
+        LOGARITHMIC_PLUS_ONE
+    };
+
     template<typename _T>
     class Normalizer
     {
