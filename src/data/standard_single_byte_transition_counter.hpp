@@ -4,6 +4,9 @@
 
 #pragma once
 
+// maximum of errors shown before additional errors are suppressed
+#define MAXIMUM_ERRORS_SHOWN 10
+
 namespace data
 {
     /**
@@ -73,6 +76,11 @@ namespace data
              * Last char.
              */
             unsigned char last = 0x00;
+
+            /**
+             * Error count.
+             */
+            size_t errorCount = 0;
     };
 
     template class StandardSingleByteTransitionCounter<127>;
