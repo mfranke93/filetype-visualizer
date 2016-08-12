@@ -27,6 +27,12 @@ data::StandardSingleByteTransitionCounter<_value_range>::run()
             this->handleBlock(nextBlock);
         }
     }
+
+    if (this->errorCount > MAXIMUM_ERRORS_SHOWN)
+    {
+        std::cerr << " ... " << (this->errorCount - MAXIMUM_ERRORS_SHOWN)
+            << " more out of range errors suppressed." << std::endl;
+    }
 }
 
 template<unsigned char _value_range>
@@ -52,10 +58,11 @@ data::StandardSingleByteTransitionCounter<_value_range>::nextChar(unsigned char 
 {
     if (c > _value_range)
     {
-        // TODO: need to do something sensible here. Maybe not throw an exception
-        //std::cerr << "Value " << c 
-        //    << " is out of range for data::StandardSingleByteTransitionCounter<" 
-        //    << _value_range << ">." << std::endl;
+        ++(this->errorCount);
+        if (this->errorCount <= MAXIMUM_ERRORS_SHOWN)
+        {
+            fprintf(stderr, "Value 0x%X is out of range for data::StandardSingleByteTransitionCounter<0x%X>.\n", c, _value_range);
+        }
         return;
     }
 
