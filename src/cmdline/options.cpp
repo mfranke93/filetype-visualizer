@@ -70,7 +70,18 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
 
         if (vm.count("cmap"))
         {
-            this->cmap = vis::getPredefinedColormapType(vm["cmap"].as<std::string>());
+            std::string s = vm["cmap"].as<std::string>();
+            std::transform(s.begin(), s.end(), s.begin(), ::tolower);
+            try
+            {
+                this->cmap = config::colormaps.at(s);
+            }
+            catch (std::out_of_range& e)
+            {
+                char buf [256];
+                sprintf(buf, "No such color map: %s", s.c_str());
+                throw std::invalid_argument(buf);
+            }
         }
         else
         {
@@ -79,7 +90,19 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
 
         if (vm.count("normalizer"))
         {
-            this->normalizerType = cmdline::CommandlineInterface::getNormalizerTypeFromString(vm["normalizer"].as<std::string>());
+            std::string name = vm["normalizer"].as<std::string>();
+            // lower case
+            std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+            try
+            {
+                this->normalizerType = config::normalizers.at(name);
+            }
+            catch (std::out_of_range& e)
+            {
+                char buf [256];
+                sprintf(buf, "No such normalizer: %s", name.c_str());
+                throw std::invalid_argument(buf);
+            }
         }
         else
         {
@@ -95,25 +118,3 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
 
     return SUCCESS;
 }
-
-data::NormalizerType 
-cmdline::CommandlineInterface::getNormalizerTypeFromString(std::string name)
-throw(std::invalid_argument)
-{
-    // lower case
-    std::transform(name.begin(), name.end(), name.begin(), ::tolower);
-    if (name == "lin")
-    {
-        return data::NormalizerType::LINEAR;
-    }
-    else if (name == "log")
-    {
-        return data::NormalizerType::LOGARITHMIC_PLUS_ONE;
-    }
-    else
-    {
-        char buf [256];
-        sprintf(buf, "No such color map: %s", name.c_str());
-        throw std::invalid_argument(buf);
-    }
-};
