@@ -11,6 +11,7 @@ cmdline::CommandlineInterface::CommandlineInterface()
         ("cmap,c", po::value<std::string>(), "Colormap to use. Defaults to heat map. Options are: RdBu, heat, deepsea, gray/grey")
         ("normalizer,n", po::value<std::string>()->default_value("log"), "Normalizer to use. Defaults to logarithmic. Options are: log, lin")
         ("ascii,a", po::bool_switch(&useAscii), "Use ASCII (7 bit charset) only")
+        ("force-size", po::bool_switch(&forceSizeOverride), "Force a larger size for image than normally allowed")
         ;
 }
 
@@ -65,7 +66,10 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
         }
         else if (vm["upscale"].as<size_t>() > 7)
         {
-            throw except::upscale_exception("May not scale by more than 7");
+            if (!this->forceSizeOverride)
+            {
+                throw except::upscale_exception("May not scale by more than 7");
+            }
         }
 
         if (vm.count("cmap"))

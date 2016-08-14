@@ -99,6 +99,11 @@ namespace cmdline
             bool useCin;
 
             /**
+             * Force size override.
+             */
+            bool forceSizeOverride;
+
+            /**
              * Factor for scaling output image.
              */
             size_t upscaleFactor;
