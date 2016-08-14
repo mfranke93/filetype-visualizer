@@ -41,14 +41,6 @@ namespace vis
     };
 
     /**
-     * Build and get a predefined color map.
-     *
-     * \param color map type as string
-     * \return color map
-     */
-    PredefinedColormaps getPredefinedColormapType(std::string) throw(std::invalid_argument);
-
-    /**
      * Class for linear colormaps.
      */
     class StandardColormap: public Colormap
