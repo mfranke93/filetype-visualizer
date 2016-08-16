@@ -1,6 +1,7 @@
 #include "../third_party/catch/catch.hpp"
 #include "../vis/image.hpp"
 
+// vis::Image::Image {{{
 SCENARIO ("vis::Image::Image")
 {
     GIVEN ("An image with illegal width")
@@ -60,7 +61,8 @@ SCENARIO ("vis::Image::Image")
         }
     }
 }
-
+// }}}
+// vis::Image::operator() {{{}
 SCENARIO ("vis::Image::operator()")
 {
     GIVEN ("An image with legal width and height")
@@ -166,7 +168,8 @@ SCENARIO ("vis::Image::operator()")
         }
     }
 }
-
+// }}}
+// vis::Image::~Image {{{}
 SCENARIO ("vis::Image::~Image")
 {
     GIVEN ("An initialized Image object in the heap")
@@ -181,7 +184,8 @@ SCENARIO ("vis::Image::~Image")
         }
     }
 }
-
+// }}}
+// vis::Image::getWidth {{{}
 SCENARIO ("vis::Image::getWidth")
 {
     GIVEN ("An image object")
@@ -196,7 +200,8 @@ SCENARIO ("vis::Image::getWidth")
         }
     }
 }
-
+// }}}
+// vis::Image::getHeight {{{}
 SCENARIO ("vis::Image::getHeight")
 {
     GIVEN ("An image object")
@@ -211,3 +216,4 @@ SCENARIO ("vis::Image::getHeight")
         }
     }
 }
+// }}}
