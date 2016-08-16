@@ -13,6 +13,7 @@ see file `LICENSE` in this directory or follow link.
  * vis
     * Image : 100%
     * ImageBuilder : 100%
+    * StandardColormap : 100%
 
 ## Missing tests
 Tests for the following classes are missing:  

@@ -15,13 +15,11 @@ throw(std::length_error, except::illegal_size, except::normalizer_exception)
     }
 
     std::shared_ptr<vis::Image> img = std::make_shared<vis::Image>(width, height);
-    color c;
     for (size_t x = 0; x < width; ++x)
     {
         for (size_t y = 0; y < height; ++y)
         {
-            colormap->getColor(normalizedValues->at(x+width*y), c);
-            (*img)(x, y) = c;
+            (*img)(x, y) = colormap->getColor(normalizedValues->at(x+width*y));
         }
     }
 
