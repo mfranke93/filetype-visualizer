@@ -20,41 +20,42 @@ namespace data
              * Constructor.
              * 
              * \param A FileReader reference
+             * \throw on empty smart pointer
              */
-            StandardSingleByteTransitionCounter(std::shared_ptr<io::FileReader>);
+            StandardSingleByteTransitionCounter(std::shared_ptr<io::FileReader>) throw(except::uninitialized);
 
             /**
              * Get a const reference to the histogram.
              *
              * \return histogram
              */
-            Histogram const& getHistogram() const override;
+            Histogram const& getHistogram() const noexcept override;
 
             /**
              * Run the counter.
              */
-            void run() override;
+            void run() noexcept override;
 
             /**
              * Set which normalizer to use.
              * 
              * \param Normalizer
              */
-            void setNormalizer(std::shared_ptr<data::Normalizer<size_t>> const&) override;
+            void setNormalizer(std::shared_ptr<data::Normalizer<size_t>> const&) throw(except::uninitialized) override;
         private:
             /**
              * Handle a block of bytes.
              *
              * \param vector of byte values
              */
-            void handleBlock(std::vector<unsigned char> const&);
+            void handleBlock(std::vector<unsigned char> const&) noexcept;
 
             /**
              * Handle the next char.
              *
              * \param next char
              */
-            void nextChar(unsigned char const&);
+            void nextChar(unsigned char const&) noexcept;
 
             /**
              * Histogram.

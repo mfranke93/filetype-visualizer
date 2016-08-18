@@ -22,11 +22,7 @@ see file `LICENSE` in this directory or follow link.
 
 ## Missing tests
 Tests for the following classes are missing:  
- * standard_colormap
  * options
  * AsciiTransitionCounter
  * ByteTransitionCounter
  * FileReader
-
-## Missing test cases
-*TODO*: Have one test scenario for each method of a class.

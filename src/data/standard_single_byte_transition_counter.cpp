@@ -2,8 +2,13 @@
 
 template<unsigned char _value_range>
 data::StandardSingleByteTransitionCounter<_value_range>::StandardSingleByteTransitionCounter(std::shared_ptr<io::FileReader> fileReader)
+throw(except::uninitialized)
 :   histogram(_value_range+1), fileReader(fileReader)
 {
+    if (!fileReader)
+    {
+        throw except::uninitialized("Smart pointer to file reader must not be empty.");
+    }
     // ctor
     this->histogram.setNormalizer(std::make_shared<data::LogarithmicPlusOneNormalizer>());
 }
@@ -11,6 +16,7 @@ data::StandardSingleByteTransitionCounter<_value_range>::StandardSingleByteTrans
 template<unsigned char _value_range>
 data::Histogram const&
 data::StandardSingleByteTransitionCounter<_value_range>::getHistogram() const
+noexcept
 {
     return this->histogram;
 }
@@ -18,6 +24,7 @@ data::StandardSingleByteTransitionCounter<_value_range>::getHistogram() const
 template<unsigned char _value_range>
 void
 data::StandardSingleByteTransitionCounter<_value_range>::run()
+noexcept
 {
     if (this->fileReader) // smart pointer filled
     {
@@ -38,13 +45,19 @@ data::StandardSingleByteTransitionCounter<_value_range>::run()
 template<unsigned char _value_range>
 void
 data::StandardSingleByteTransitionCounter<_value_range>::setNormalizer(std::shared_ptr<data::Normalizer<size_t>> const& norm)
+throw(except::uninitialized)
 {
+    if (!norm)
+    {
+        throw except::uninitialized("Smart pointer to normalizer not initialized.");
+    }
     this->histogram.setNormalizer(norm);
 }
 
 template<unsigned char _value_range>
 void
 data::StandardSingleByteTransitionCounter<_value_range>::handleBlock(std::vector<unsigned char> const& block)
+noexcept
 {
     for (unsigned char const& c : block)
     {
@@ -55,6 +68,7 @@ data::StandardSingleByteTransitionCounter<_value_range>::handleBlock(std::vector
 template<unsigned char _value_range>
 void
 data::StandardSingleByteTransitionCounter<_value_range>::nextChar(unsigned char const& c)
+noexcept
 {
     if (c > _value_range)
     {
