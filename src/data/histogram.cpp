@@ -1,7 +1,7 @@
 #include "histogram.hpp"
 
 data::Histogram::Histogram(size_t const& numBins)
-noexcept
+throw (except::illegal_size)
 : numBins(numBins), bins(numBins)
 {
     this->normalizer = std::make_shared<data::LinearNormalizer<size_t>>();

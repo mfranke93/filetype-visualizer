@@ -1,6 +1,7 @@
 #include "grid.hpp"
 #include "normalizer.hpp"
 #include "linear_normalizer.hpp"
+#include "../except/illegal_size_exception.hpp"
 #include <cmath>
 
 #pragma once
@@ -18,7 +19,7 @@ namespace data
              *
              * \param Size in x and y direction.
              */
-            Histogram(size_t const&) noexcept;
+            Histogram(size_t const&) throw(except::illegal_size);
 
             /**
              * Add an entry.

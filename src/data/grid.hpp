@@ -2,6 +2,8 @@
 #include <memory>
 #include <vector>
 
+#include "../except/illegal_size_exception.hpp"
+
 #pragma once
 
 // TODO: add doc
@@ -13,10 +15,10 @@ namespace data {
         {
             public:
                 Grid(Grid const&);
-                Grid(size_t const&);
-                Grid(size_t const&, size_t const&);
-                _T& operator() (size_t const&, size_t const&);
-                _T const& operator() (size_t const&, size_t const&) const;
+                Grid(size_t const&) throw (except::illegal_size);
+                Grid(size_t const&, size_t const&) throw (except::illegal_size);
+                _T& operator() (size_t const&, size_t const&) throw(std::out_of_range);
+                _T const& operator() (size_t const&, size_t const&) const throw(std::out_of_range);
                 _T getMaximum() const;
                 std::shared_ptr<std::vector<_T>> asVector() const;
             protected:
