@@ -1,7 +1,71 @@
 #include "../third_party/catch/catch.hpp"
 #include "../data/logarithmic_plus_one_normalizer.hpp"
+#include <random>
 
-SCENARIO ("LogarithmicPlusOneNormalizer")
+
+SCENARIO ("data::LogarithmicPlusOneNormalizer::LogarithmicPlusOneNormalizer()")
+{
+    GIVEN ("a log+1 normalizer with no initial values")
+    {
+        WHEN ("calling the constructor")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(data::LogarithmicPlusOneNormalizer logNorm);
+            }
+        }
+    }
+}
+
+SCENARIO ("data::LogarithmicPlusOneNormalizer::LogarithmicPlusOneNormalizer(size_t const&, size_t const&)")
+{
+    GIVEN ("a log+1 normalizer with initial values in the right order")
+    {
+        WHEN ("calling the constructor")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(data::LogarithmicPlusOneNormalizer logNorm (10, 20));
+            }
+        }
+    }
+
+    GIVEN ("a log+1 normalizer with initial values in the wrong order")
+    {
+        WHEN ("calling the constructor")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(data::LogarithmicPlusOneNormalizer logNorm (20, 10));
+            }
+        }
+    }
+}
+
+SCENARIO ("data::LogarithmicPlusOneNormalizer::seed")
+{
+    std::random_device rd;
+    std::mt19937 mersenne (rd());
+    std::uniform_int_distribution<size_t> dist (0, 123456564);
+
+    GIVEN ("an uninitialized log+1 normalizer")
+    {
+        data::LogarithmicPlusOneNormalizer logNorm;
+
+        WHEN ("adding (random) values to the seed")
+        {
+            THEN ("no exception is thrown")
+            {
+                for (size_t i = 0; i < 200; ++i)
+                {
+                    REQUIRE_NOTHROW(logNorm.seed(dist(mersenne)));
+                }
+            }
+        }
+    }
+}
+
+SCENARIO ("data::LogarithmicPlusOneNormalizer::normalize")
 {
     GIVEN ("a log+1 normalizer with no initial values")
     {
@@ -9,9 +73,9 @@ SCENARIO ("LogarithmicPlusOneNormalizer")
 
         WHEN ("attempting to normalize")
         {
-            THEN ("std::out_of_range is thrown")
+            THEN ("except::normalizer_exception is thrown")
             {
-                REQUIRE_THROWS_AS(logNorm.normalize(12), std::out_of_range);
+                REQUIRE_THROWS_AS(logNorm.normalize(12), except::uninitialized);
             }
         }
 
@@ -23,13 +87,13 @@ SCENARIO ("LogarithmicPlusOneNormalizer")
             {
                 REQUIRE(logNorm.normalize(12) == Approx(0.0));
             }
-            THEN ("normalizing a lower value gives a std::out_of_range")
+            THEN ("normalizing a lower value gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(logNorm.normalize(11), std::out_of_range);
+                REQUIRE_THROWS_AS(logNorm.normalize(11), except::normalizer_exception);
             }
-            THEN ("normalizing a higher value gives a std::out_of_range")
+            THEN ("normalizing a higher value gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(logNorm.normalize(13), std::out_of_range);
+                REQUIRE_THROWS_AS(logNorm.normalize(13), except::normalizer_exception);
             }
         }
 
@@ -46,13 +110,13 @@ SCENARIO ("LogarithmicPlusOneNormalizer")
             {
                 REQUIRE(logNorm.normalize(15) == Approx(1.0));
             }
-            THEN ("normalizing one lower than the lower one gives a std::out_of_range")
+            THEN ("normalizing one lower than the lower one gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(logNorm.normalize(9), std::out_of_range);
+                REQUIRE_THROWS_AS(logNorm.normalize(9), except::normalizer_exception);
             }
-            THEN ("normalizing one higher than the lower one gives a std::out_of_range")
+            THEN ("normalizing one higher than the lower one gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(logNorm.normalize(16), std::out_of_range);
+                REQUIRE_THROWS_AS(logNorm.normalize(16), except::normalizer_exception);
             }
         }
     }
@@ -71,13 +135,13 @@ SCENARIO ("LogarithmicPlusOneNormalizer")
             {
                 REQUIRE(logNorm.normalize(15) == Approx(1.0));
             }
-            THEN ("normalizing one lower than the lower one gives a std::out_of_range")
+            THEN ("normalizing one lower than the lower one gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(logNorm.normalize(9), std::out_of_range);
+                REQUIRE_THROWS_AS(logNorm.normalize(9), except::normalizer_exception);
             }
-            THEN ("normalizing one higher than the lower one gives a std::out_of_range")
+            THEN ("normalizing one higher than the lower one gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(logNorm.normalize(16), std::out_of_range);
+                REQUIRE_THROWS_AS(logNorm.normalize(16), except::normalizer_exception);
             }
         }
     }
