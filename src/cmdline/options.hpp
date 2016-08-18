@@ -18,7 +18,7 @@ namespace
     size_t const ERROR_IN_COMMANDLINE = 1;
     size_t const ERROR_UNHANDLED_EXCEPTION = 2;
 
-    size_t const SHOWED_HELP_NOW_PLEASE_EXIT = 999;
+    size_t const SHOWED_HELP_NOW_PLEASE_EXIT = 255;
 }
 
 namespace po = boost::program_options;
