@@ -19,6 +19,7 @@ data::LogarithmicPlusOneNormalizer::LogarithmicPlusOneNormalizer(size_t const& m
     
 void
 data::LogarithmicPlusOneNormalizer::seed(size_t const& value)
+noexcept
 {
     if (!this->initialized)
     {
@@ -47,13 +48,18 @@ data::LogarithmicPlusOneNormalizer::seed(size_t const& value)
 }
 
 double
-data::LogarithmicPlusOneNormalizer::normalize(size_t const& value) const throw(std::out_of_range)
+data::LogarithmicPlusOneNormalizer::normalize(size_t const& value) const
+throw(except::normalizer_exception, except::uninitialized)
 {
+    if (!this->initialized)
+    {
+        throw except::uninitialized("Object not yet initialized!");
+    }
     if (value > this->maximumValue || value < this->minimumValue)
     {
         char buf [256];
         sprintf(buf, "Value %lu not in range [%lu;%lu].", value, this->minimumValue, this->maximumValue);
-        throw std::out_of_range(buf);
+        throw except::normalizer_exception(buf);
     }
 
     double a = log(double(value) + 1.0) - this->offset;

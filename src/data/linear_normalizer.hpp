@@ -11,8 +11,8 @@ namespace data
             LinearNormalizer();
             LinearNormalizer(_T const&, _T const&);
 
-            void seed(_T const&) override;
-            double normalize(_T const&) const throw(std::out_of_range) override;
+            void seed(_T const&) noexcept override;
+            double normalize(_T const&) const throw(except::normalizer_exception, except::uninitialized) override;
         protected:
             LinearNormalizer(LinearNormalizer const&) = delete;
             LinearNormalizer& operator= (LinearNormalizer const&) = delete;

@@ -3,6 +3,8 @@
 #include <string>
 #include <stdexcept>
 #include <algorithm>
+#include "../except/normalizer_exception.hpp"
+#include "../except/uninitialized.hpp"
 
 #pragma once
 
@@ -17,6 +19,12 @@ namespace data
         LOGARITHMIC_PLUS_ONE
     };
 
+    /**
+     * Class for normalizers.
+     *
+     * A normalizer does a mapping
+     *      $$ \mathbb{R} \supseteq S \rightarrow [0;1] $$
+     */
     template<typename _T>
     class Normalizer
     {
@@ -29,7 +37,7 @@ namespace data
              *
              * \param Value to add to normalizer initialization.
              */
-            virtual void seed(_T const&) = 0;
+            virtual void seed(_T const&) noexcept = 0;
 
             /**
              * Normalize a value.
@@ -42,6 +50,6 @@ namespace data
              *        This usually means the value is larger or smaller than any value
              *        passed to seed function.
              */
-            virtual double normalize(_T const&) const throw(std::out_of_range) = 0;
+            virtual double normalize(_T const&) const throw(except::normalizer_exception, except::uninitialized) = 0;
     };
 }
