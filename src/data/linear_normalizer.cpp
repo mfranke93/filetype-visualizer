@@ -46,7 +46,6 @@ template<typename _T>
 void
 data::LinearNormalizer<_T>::calculateNewLinearParameters()
 {
-    // TODO
     // if min=max, every return value should be 0
     if (this->minimumValue == this->maximumValue)
     {
