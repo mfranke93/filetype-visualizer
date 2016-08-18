@@ -4,6 +4,9 @@
 
 #pragma once
 
+// TODO: add doc
+// TODO: add exceptions
+
 namespace data {
     template<typename _T>
         class Grid
