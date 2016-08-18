@@ -14,6 +14,7 @@ see file `LICENSE` in this directory or follow link.
     * Image : 100%
     * ImageBuilder : 100%
     * StandardColormap : 100%
+    * TextHistogram : 100%
 
 ## Missing tests
 Tests for the following classes are missing:  

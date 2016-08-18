@@ -2,7 +2,36 @@
 #include <random>
 #include "../vis/hist_text.hpp"
 
-SCENARIO ("Text histogram")
+SCENARIO ("vis::TextHistogram::TextHistogram")
+{
+    GIVEN ("a histogram")
+    {
+        std::shared_ptr<data::Histogram> hist = std::make_shared<data::Histogram>(5);
+
+        WHEN ("constructing a TextHistogram")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(vis::TextHistogram th (hist));
+            }
+        }
+    }
+
+    GIVEN ("an empty std::shared_ptr")
+    {
+        std::shared_ptr<data::Histogram> hist;
+
+        WHEN ("constructing a TextHistogram")
+        {
+            THEN ("an exception is thrown")
+            {
+                REQUIRE_THROWS_AS(vis::TextHistogram th (hist), std::invalid_argument);
+            }
+        }
+    }
+}
+
+SCENARIO ("vis::TextHistogram::getHistogram")
 {
     GIVEN ("A histogram with all zero values")
     {
@@ -11,6 +40,11 @@ SCENARIO ("Text histogram")
 
         WHEN ("nothing more is done")
         {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW( std::vector<std::string> v = th.getHistogram(););
+            }
+
             THEN ("all values should be ' '")
             {
                 std::vector<std::string> v = th.getHistogram();
