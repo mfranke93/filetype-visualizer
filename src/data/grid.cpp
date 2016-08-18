@@ -1,7 +1,15 @@
 #include "grid.hpp"
 
 template <typename _T>
+data::Grid<_T>::~Grid()
+noexcept
+{
+    if (this->data == nullptr) delete [] data;
+}
+
+template <typename _T>
 data::Grid<_T>::Grid(Grid<_T> const& other)
+noexcept
 :   x_size(other.x_size), y_size(other.y_size)
 {
     this->data = new _T [x_size * y_size];
@@ -61,6 +69,7 @@ throw(std::out_of_range)
 
 template <typename _T>
 _T data::Grid<_T>::getMaximum() const
+noexcept
 {
     _T a = this->data[0];
     for (size_t i = 0; i < this->x_size * this->y_size; ++i)
@@ -77,6 +86,7 @@ _T data::Grid<_T>::getMaximum() const
 template <typename _T>
 std::shared_ptr<std::vector<_T>> 
 data::Grid<_T>::asVector() const
+noexcept
 {
     std::shared_ptr<std::vector<_T>> vec = std::make_shared<std::vector<_T>>();
     for (size_t y = 0; y < this->y_size; ++y)

@@ -8,6 +8,7 @@ see file `LICENSE` in this directory or follow link.
 ## Code coverage
  * cmdline
  * data
+    * Grid : 100%
     * Histogram : 100%
     * LinearNormalizer : 100%
     * LogarithmicPlusOneNormalizer : 100%
