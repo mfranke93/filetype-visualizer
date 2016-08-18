@@ -8,6 +8,7 @@ see file `LICENSE` in this directory or follow link.
 ## Code coverage
  * cmdline
  * data
+    * LogarithmicPlusOneNormalizer : 100%
  * except
  * io
  * vis
