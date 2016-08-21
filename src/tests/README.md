@@ -17,6 +17,7 @@ see file `LICENSE` in this directory or follow link.
         * ByteTransitionCounter: 100%
  * except
  * io
+    * FileReader : 100%
  * vis
     * Image : 100%
     * ImageBuilder : 100%
@@ -26,4 +27,4 @@ see file `LICENSE` in this directory or follow link.
 ## Missing tests
 Tests for the following classes are missing:  
  * options
- * FileReader
+ * BmpWriter

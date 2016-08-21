@@ -11,6 +11,7 @@ add_executable(tests tests.cpp
                     test_image_builder.cpp
                     test_standard_colormap.cpp
                     test_standard_single_byte_transition_counter.cpp
+                    test_filereader.cpp
                     ../data/grid.cpp
                     ../data/histogram.cpp
                     ../data/linear_normalizer.cpp
