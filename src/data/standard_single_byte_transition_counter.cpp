@@ -82,6 +82,15 @@ noexcept
 
     if (this->started)
     {
+        /*
+         * Just to make this clear:
+         * The histogram looks like this:
+         *  There is a value at position x,y which indicates
+         *  how often a transition y->x has occured. This
+         *  may seem the wrong way around, but actually is
+         *  more consistent with the reading order: How often
+         *  does character ... get followed by ... .
+         */
         size_t x = static_cast<size_t>(c);
         size_t y = static_cast<size_t>(this->last);
         this->histogram.addEntry(x,y);

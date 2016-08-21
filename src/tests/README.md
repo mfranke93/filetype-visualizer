@@ -12,6 +12,9 @@ see file `LICENSE` in this directory or follow link.
     * Histogram : 100%
     * LinearNormalizer : 100%
     * LogarithmicPlusOneNormalizer : 100%
+    * StandardSingleByteTransitionCounter
+        * AsciiTransitionCounter: 100%
+        * ByteTransitionCounter: 100%
  * except
  * io
  * vis
@@ -23,6 +26,4 @@ see file `LICENSE` in this directory or follow link.
 ## Missing tests
 Tests for the following classes are missing:  
  * options
- * AsciiTransitionCounter
- * ByteTransitionCounter
  * FileReader
