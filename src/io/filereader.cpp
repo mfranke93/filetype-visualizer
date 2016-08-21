@@ -1,11 +1,18 @@
 #include "filereader.hpp"
 
-io::FileReader::FileReader(std::string const& fname)
+    io::FileReader::FileReader(std::string const& fname)
+throw (std::invalid_argument)
 {
-   this->input = std::make_shared<std::ifstream>(fname, std::ios_base::binary);
+    this->input = std::make_shared<std::ifstream>(fname, std::ios_base::binary);
+    if (!(this->input->good()))
+    {
+        std::string s = "File " + fname + " does not exist.";
+        throw std::invalid_argument(s);
+    }
 }
 
 io::FileReader::FileReader()
+    noexcept
 {
     /*
      * Initialize this smart pointer with a custom deallocator lambda.
@@ -17,17 +24,30 @@ io::FileReader::FileReader()
 }
 
 io::FileReader::~FileReader()
+    noexcept
 {
     // dtor
     // nothing to do here
 }
 
 io::FileReader::operator bool () const
+noexcept
 {
-    return bool(*(this->input)); // evaluate badness of stream
+    char c;
+    if (!this->input->get(c))
+    {
+        return false;
+    }
+    else
+    {
+        this->input->putback(c);
+        return true;
+    }
 }
 
-std::vector<unsigned char> io::FileReader::getNext(size_t const& numberBytes)
+std::vector<unsigned char>
+io::FileReader::getNext(size_t const& numberBytes)
+noexcept
 {
     std::vector<unsigned char> v;
     char c;

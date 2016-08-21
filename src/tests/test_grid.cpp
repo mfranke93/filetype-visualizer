@@ -2,279 +2,371 @@
 #include <cmath>
 #include "../data/grid.hpp"
 
-// Test Grid<float> {{{
-SCENARIO ( "Grid of type float", "" )
+// data::Grid<float>::Grid(Grid const&) {{{
+SCENARIO ( "data::Grid<float>::Grid(Grid const&)", "" )
 {
     GIVEN ("A Grid with no set entries")
     {
         data::Grid<float> g (3,3);
 
-        WHEN ("no assignments have been done")
+        WHEN ("copy-constructoring this into a new grid")
         {
-            THEN ("all grid elements should be zero") 
+            THEN ("no exceptions should be thrown") 
             {
-                for (size_t y = 0; y < 3; ++y)
-                {
-                    for (size_t x = 0; x < 3; ++x)
-                    {
-                        REQUIRE(g(x,y) == 0.0f );
-                    }
-                }
-            }
-
-            THEN ("the maximum should be zero")
-            {
-                REQUIRE(g.getMaximum() == 0.0f);
-            }
-        }
-
-        WHEN ("an element is set to 1.0f") 
-        {
-            g(1, 2) = 1.0f;
-
-            THEN ("all other elements are still 0.0f")
-            {
-                for (size_t y = 0; y < 3; ++y)
-                {
-                    for (size_t x = 0; x < 3; ++x)
-                    {
-                        if (x != 1 || y != 2) 
-                        {
-                            REQUIRE(g(x,y) == 0.0f );
-                        }
-                        else
-                        {
-                            REQUIRE(g(x,y) == 1.0f );
-                        }
-                    }
-                }
-            }
-
-            THEN ("the maximum value should be 1.0f")
-            {
-                REQUIRE(g.getMaximum() == 1.0f);
-            }
-        }
-
-        WHEN ("an element is set to 5.0f") 
-        {
-            g(0,2) = 5.0f;
-
-            THEN ("the maximum value should be 5.0f")
-            {
-                REQUIRE(g.getMaximum() == 5.0f);
-            }
-        }
-
-        WHEN ("an element is set to -0.001f") 
-        {
-            g(0,0) = -0.001f;
-
-            THEN ("the maximum value should be 0.0f") 
-            {
-                REQUIRE(g.getMaximum() == 0.0f);
-            }
-        }
-    }
-
-    GIVEN ("A Grid with all entries set to their Manhattan norm") 
-    {
-        data::Grid<float> g (3,3);
-        for (size_t y = 0; y < 3; ++y)
-        {
-            for (size_t x = 0; x < 3; ++x)
-            {
-                g(x,y) = float(x+y);
-            }
-        }
-
-        WHEN ("the getMaximum function is called on this") 
-        {
-            THEN ("the maximum should be the last element, which is 4f") 
-            {
-                REQUIRE(g.getMaximum() == 4.0f);
+                REQUIRE_NOTHROW(data::Grid<float> h (g));
             }
         }
     }
 }
 // }}}
-// Test Grid<int> {{{
-SCENARIO ("Grid of type int", "") 
+// data::Grid<float>::Grid(size_t const&) {{{
+SCENARIO ("data::Grid<float>::Grid(size_t const&)")
 {
-    GIVEN ("A Grid with no set entries")
+    GIVEN ("an empty Grid")
     {
-        data::Grid<int> g (3,3);
-
-        WHEN ("no assignments have been done")
+        WHEN ("calling the constructor with a legal size value")
         {
-            THEN ("all grid elements should be zero") 
+            THEN ("no exception should be thrown")
             {
-                for (size_t y = 0; y < 3; ++y)
-                {
-                    for (size_t x = 0; x < 3; ++x)
-                    {
-                        REQUIRE(g(x,y) == 0 );
-                    }
-                }
-            }
-
-            THEN ("the maximum should be zero")
-            {
-                REQUIRE(g.getMaximum() == 0);
+                REQUIRE_NOTHROW(data::Grid<float> g (2));
             }
         }
 
-        WHEN ("an element is set to 1") 
+        WHEN ("calling the constructor with an illegal size value")
         {
-            g(1, 2) = 1;
-
-            THEN ("all other elements are still 0")
+            THEN ("an exception should be thrown")
             {
-                for (size_t y = 0; y < 3; ++y)
-                {
-                    for (size_t x = 0; x < 3; ++x)
-                    {
-                        if (x != 1 || y != 2) 
-                        {
-                            REQUIRE(g(x,y) == 0 );
-                        }
-                        else
-                        {
-                            REQUIRE(g(x,y) == 1 );
-                        }
-                    }
-                }
-            }
-
-            THEN ("the maximum value should be 1")
-            {
-                REQUIRE(g.getMaximum() == 1);
-            }
-        }
-
-        WHEN ("an element is set to 5") 
-        {
-            g(0,2) = 5;
-
-            THEN ("the maximum value should be 5")
-            {
-                REQUIRE(g.getMaximum() == 5);
-            }
-        }
-
-        WHEN ("an element is set to -1") 
-        {
-            g(0,0) = -1;
-
-            THEN ("the maximum value should be 0") 
-            {
-                REQUIRE(g.getMaximum() == 0);
-            }
-        }
-    }
-
-    GIVEN ("A Grid with all entries set to their Manhattan norm") 
-    {
-        data::Grid<float> g (3,3);
-        for (size_t y = 0; y < 3; ++y)
-        {
-            for (size_t x = 0; x < 3; ++x)
-            {
-                g(x,y) = x+y;
-            }
-        }
-
-        WHEN ("the getMaximum function is called on this") 
-        {
-            THEN ("the maximum should be the last element, which is 4") 
-            {
-                REQUIRE(g.getMaximum() == 4);
+                REQUIRE_THROWS_AS(data::Grid<float> g (0), except::illegal_size);
             }
         }
     }
 }
 // }}}
-// Test Grid<size_t> {{{
-SCENARIO ("Grid of type size_t", "") 
+// data::Grid<float>::Grid(size_t const&, size_t const&) {{{
+SCENARIO ("data::Grid<float>::Grid(size_t const&, size_t const&)")
 {
-    GIVEN ("A Grid with no set entries")
+    GIVEN ("an empty Grid")
     {
-        data::Grid<size_t> g (3,3);
-
-        WHEN ("no assignments have been done")
+        WHEN ("calling the constructor with two legal size values")
         {
-            THEN ("all grid elements should be zero") 
+            THEN ("no exception should be thrown")
             {
-                for (size_t y = 0; y < 3; ++y)
-                {
-                    for (size_t x = 0; x < 3; ++x)
-                    {
-                        REQUIRE(g(x,y) == 0 );
-                    }
-                }
-            }
-
-            THEN ("the maximum should be zero")
-            {
-                REQUIRE(g.getMaximum() == 0);
+                REQUIRE_NOTHROW(data::Grid<float> g (2,2));
             }
         }
 
-        WHEN ("an element is set to 1") 
+        WHEN ("calling the constructor with one or two illegal size value")
         {
-            g(1, 2) = 1;
-
-            THEN ("all other elements are still 0")
+            THEN ("an exception should be thrown")
             {
-                for (size_t y = 0; y < 3; ++y)
-                {
-                    for (size_t x = 0; x < 3; ++x)
-                    {
-                        if (x != 1 || y != 2) 
-                        {
-                            REQUIRE(g(x,y) == 0 );
-                        }
-                        else
-                        {
-                            REQUIRE(g(x,y) == 1 );
-                        }
-                    }
-                }
+                REQUIRE_THROWS_AS(data::Grid<float> g (0, 2), except::illegal_size);
             }
-
-            THEN ("the maximum value should be 1")
+            THEN ("an exception should be thrown")
             {
-                REQUIRE(g.getMaximum() == 1);
+                REQUIRE_THROWS_AS(data::Grid<float> g (2, 0), except::illegal_size);
+            }
+            THEN ("an exception should be thrown")
+            {
+                REQUIRE_THROWS_AS(data::Grid<float> g (0, 0), except::illegal_size);
             }
         }
+    }
+}
+// }}}
+// data::Grid<float>::~Grid {{{
+SCENARIO ("data::Grid<float>::~Grid")
+{
+    GIVEN ("an empty Grid")
+    {
+        data::Grid<float> * g = new data::Grid<float> (10);
 
-        WHEN ("an element is set to 5") 
+        WHEN ("calling the destructor")
         {
-            g(0,2) = 5;
-
-            THEN ("the maximum value should be 5")
+            THEN ("no exception should be thrown")
             {
-                REQUIRE(g.getMaximum() == 5);
+                REQUIRE_NOTHROW(delete g);
             }
         }
     }
 
-    GIVEN ("A Grid with all entries set to their Manhattan norm") 
+    GIVEN ("a filled Grid")
+    {
+        data::Grid<float> * g = new data::Grid<float> (10);
+
+        (*g)(2, 4) = 2.2f;
+        (*g)(3, 4) = 2.2f;
+        (*g)(2, 5) = 2.2f;
+        (*g)(4, 6) = 2.2f;
+        (*g)(4, 7) = 2.2f;
+
+        WHEN ("calling the destructor")
+        {
+            THEN ("no exception should be thrown")
+            {
+                REQUIRE_NOTHROW(delete g);
+            }
+        }
+    }
+}
+// }}}
+// data::Grid<float>::operator() {{{
+SCENARIO ("data::Grid<float>::operator()")
+{
+    GIVEN ("an empty Grid")
     {
         data::Grid<float> g (3,3);
-        for (size_t y = 0; y < 3; ++y)
+        WHEN ("writing to it")
         {
-            for (size_t x = 0; x < 3; ++x)
+            THEN ("no exceptions are thrown")
             {
-                g(x,y) = x+y;
+                REQUIRE_NOTHROW(g(1,1) = 2.2f);
+            }
+            THEN ("no exceptions are thrown")
+            {
+                REQUIRE_NOTHROW(g(0,0) = 2.2f);
+            }
+            THEN ("no exceptions are thrown")
+            {
+                REQUIRE_NOTHROW(g(2,2) = 2.2f);
+            }
+            THEN ("no exceptions are thrown")
+            {
+                REQUIRE_NOTHROW(g(2,1) = 2.2f);
             }
         }
 
-        WHEN ("the getMaximum function is called on this") 
+        WHEN ("writing outside of it")
         {
-            THEN ("the maximum should be the last element, which is 4") 
+            THEN ("an exception is thrown")
             {
-                REQUIRE(g.getMaximum() == 4);
+                REQUIRE_THROWS_AS(g(3,0) = 2.2f, std::out_of_range);
+            }
+            THEN ("an exception is thrown")
+            {
+                REQUIRE_THROWS_AS(g(0,3) = 2.2f, std::out_of_range);
+            }
+            THEN ("an exception is thrown")
+            {
+                REQUIRE_THROWS_AS(g(3,3) = 2.2f, std::out_of_range);
+            }
+            THEN ("an exception is thrown")
+            {
+                REQUIRE_THROWS_AS(g(1,23) = 2.2f, std::out_of_range);
+            }
+            THEN ("an exception is thrown")
+            {
+                REQUIRE_THROWS_AS(g(332,2) = 2.2f, std::out_of_range);
+            }
+        }
+    }
+}
+// }}}
+// data::Grid<float>::operator() const {{{
+SCENARIO ("data::Grid<float>::operator() const")
+{
+    GIVEN ("a filled Grid")
+    {
+        data::Grid<float> g (10);
+
+        g(2, 4) = 2.2f;
+        g(3, 4) = 2.2f;
+        g(2, 5) = 2.2f;
+        g(4, 6) = 2.2f;
+        g(4, 7) = 2.2f;
+
+        data::Grid<float> const h (g);
+
+        WHEN ("accessing a value inside")
+        {
+            THEN ("no exception is thrown")
+            {
+                for (size_t x = 0; x < 10; ++x)
+                {
+                    for (size_t y = 0; y < 10; ++y)
+                    {
+                        REQUIRE_NOTHROW(float const f = h(x,y));
+                    }
+                }
+            }
+
+            THEN ("it will be correct")
+            {
+                REQUIRE(h(0,0) == 0.0f);
+            }
+            THEN ("it will be correct")
+            {
+                REQUIRE(h(2,2) == 0.0f);
+            }
+            THEN ("it will be correct")
+            {
+                REQUIRE(h(2,5) == 2.2f);
+            }
+        }
+
+        WHEN ("accessing a value outside the Grid")
+        {
+            THEN ("an exception is thrown")
+            {
+                REQUIRE_THROWS_AS(float const f = h(10, 5), std::out_of_range);
+            }
+            THEN ("an exception is thrown")
+            {
+                REQUIRE_THROWS_AS(float const f = h(1, 10), std::out_of_range);
+            }
+            THEN ("an exception is thrown")
+            {
+                REQUIRE_THROWS_AS(float const f = h(10, 10), std::out_of_range);
+            }
+            THEN ("an exception is thrown")
+            {
+                REQUIRE_THROWS_AS(float const f = h(11, 5), std::out_of_range);
+            }
+            THEN ("an exception is thrown")
+            {
+                REQUIRE_THROWS_AS(float const f = h(9, 35), std::out_of_range);
+            }
+            THEN ("an exception is thrown")
+            {
+                REQUIRE_THROWS_AS(float const f = h(132, 25), std::out_of_range);
+            }
+        }
+    }
+}
+// }}}
+// data::Grid<float>::getMaximum {{{
+SCENARIO ("data::Grid<float>::getMaximum")
+{
+    GIVEN ("an empty Grid")
+    {
+        data::Grid<float> g (5);
+
+        WHEN ("calling the getMaximum function")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(float const f = g.getMaximum());
+            }
+
+            THEN ("the value 0 is returned")
+            {
+                REQUIRE(g.getMaximum() == 0.0f);
+            }
+        }
+    }
+
+    GIVEN ("a non-empty grid")
+    {
+        data::Grid<float> g (5);
+        g(1,1) = 12.0f;
+        g(3,2) = -16.0f;
+        g(2,1) = 3.441;
+        g(4,4) = 0.0001;
+
+        WHEN ("calling the getMaximum function")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(float const f = g.getMaximum());
+            }
+
+            THEN ("the maximum is returned")
+            {
+                REQUIRE(g.getMaximum() == 12.0f);
+            }
+        }
+    }
+}
+// }}}
+// data::Grid<float>::asVector {{{
+SCENARIO ("data::Grid<float>::asVector")
+{
+    GIVEN ("an empty Grid")
+    {
+        data::Grid<float> g (5);
+
+        WHEN ("calling the asVector function")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(std::shared_ptr<std::vector<float>> vec = g.asVector());
+            }
+        }
+
+        WHEN ("calling the asVector function")
+        {
+            std::shared_ptr<std::vector<float>> vec = g.asVector();
+            THEN ("the shared pointer is not empty")
+            {
+                REQUIRE(vec);
+            }
+            THEN ("the length of the vector is correct")
+            {
+                REQUIRE(vec->size() == 25);
+            }
+            THEN ("the elements are correctly all zero")
+            {
+                for (float const& f : *vec)
+                {
+                    CHECK(f == 0.0f);
+                }
+            }
+        }
+    }
+
+    GIVEN ("a non-empty grid")
+    {
+        data::Grid<float> g (5);
+        g(1,1) = 12.0f;
+        g(3,2) = -16.0f;
+        g(2,1) = 3.441;
+        g(4,4) = 0.0001;
+
+        WHEN ("calling the asVector function")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(std::shared_ptr<std::vector<float>> vec = g.asVector());
+            }
+        }
+
+        WHEN ("calling the asVector function")
+        {
+            std::shared_ptr<std::vector<float>> vec = g.asVector();
+            THEN ("the shared pointer is not empty")
+            {
+                REQUIRE(vec);
+            }
+            THEN ("the length of the vector is correct")
+            {
+                REQUIRE(vec->size() == 25);
+            }
+            THEN ("the elements are all correctly set in row-major")
+            {
+                CHECK(vec->at(0+5*0) == 0.0f);
+                CHECK(vec->at(1+5*0) == 0.0f);
+                CHECK(vec->at(2+5*0) == 0.0f);
+                CHECK(vec->at(3+5*0) == 0.0f);
+                CHECK(vec->at(4+5*0) == 0.0f);
+                CHECK(vec->at(0+5*1) == 0.0f);
+                CHECK(vec->at(1+5*1) == 12.0f);
+                CHECK(vec->at(2+5*1) == 3.441f);
+                CHECK(vec->at(3+5*1) == 0.0f);
+                CHECK(vec->at(4+5*1) == 0.0f);
+                CHECK(vec->at(0+5*2) == 0.0f);
+                CHECK(vec->at(1+5*2) == 0.0f);
+                CHECK(vec->at(2+5*2) == 0.0f);
+                CHECK(vec->at(3+5*2) == -16.0f);
+                CHECK(vec->at(4+5*2) == 0.0f);
+                CHECK(vec->at(0+5*3) == 0.0f);
+                CHECK(vec->at(1+5*3) == 0.0f);
+                CHECK(vec->at(2+5*3) == 0.0f);
+                CHECK(vec->at(3+5*3) == 0.0f);
+                CHECK(vec->at(4+5*3) == 0.0f);
+                CHECK(vec->at(0+5*4) == 0.0f);
+                CHECK(vec->at(1+5*4) == 0.0f);
+                CHECK(vec->at(2+5*4) == 0.0f);
+                CHECK(vec->at(3+5*4) == 0.0f);
+                CHECK(vec->at(4+5*4) == 0.0001f);
             }
         }
     }

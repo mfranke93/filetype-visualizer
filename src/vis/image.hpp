@@ -68,13 +68,13 @@ namespace vis
              * Get height of image.
              * \return Height
              */
-            size_t const& getHeight() { return this->height; }
+            size_t const& getHeight() const noexcept { return this->height; }
 
             /**
              * Get width of image.
              * \return Width
              */
-            size_t const& getWidth() { return this->width; }
+            size_t const& getWidth() const noexcept { return this->width; }
         protected:
             Image() = delete;
             Image(Image const&) = delete;

@@ -1,6 +1,8 @@
 #include "standard_colormap.hpp"
 
-void vis::StandardColormap::addColor(double const& location, color const& c)
+void 
+vis::StandardColormap::addColor(double const& location, color const& c) 
+noexcept
 {
     // find index at which to add
     std::vector<vis::locationizedColor>::iterator it = this->colors.begin();
@@ -10,15 +12,19 @@ void vis::StandardColormap::addColor(double const& location, color const& c)
     vis::locationizedColor lc;
     lc.location = location;
     lc.c = c;
-    this->colors.insert(it, lc);
+    this->colors.insert(it+1, lc);
 }
 
-void vis::StandardColormap::getColor(double const& location, color& c) const throw(except::normalizer_exception)
+vis::color
+vis::StandardColormap::getColor(double const& location) const 
+throw(except::normalizer_exception)
 {
     if (location < 0.0 || location > 1.0)
     {
         throw except::normalizer_exception("Value is not in range [0;1].");
     }
+
+    color c;
 
     // find interval
     std::vector<vis::locationizedColor>::const_iterator it = this->colors.begin();
@@ -31,6 +37,8 @@ void vis::StandardColormap::getColor(double const& location, color& c) const thr
     c.R = channel( (double(b.c.R) * (location - a.location) + double(a.c.R) * (b.location - location))/(b.location - a.location));
     c.G = channel( (double(b.c.G) * (location - a.location) + double(a.c.G) * (b.location - location))/(b.location - a.location));
     c.B = channel( (double(b.c.B) * (location - a.location) + double(a.c.B) * (b.location - location))/(b.location - a.location));
+
+    return c;
 }
 
 std::shared_ptr<vis::StandardColormap const> 

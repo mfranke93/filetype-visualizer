@@ -3,7 +3,7 @@
 #include "../data/linear_normalizer.hpp"
 
 // Test LinearNormalizer<size_t> {{{
-SCENARIO ("A LinearNormalizer<size_t>")
+SCENARIO ("data::LinearNormalizer<size_t>::normalize")
 {
     GIVEN ("A normalizer with no values set")
     {
@@ -13,7 +13,7 @@ SCENARIO ("A LinearNormalizer<size_t>")
         {
             THEN ("we get an exception")
             {
-                REQUIRE_THROWS_AS (double d = linNorm.normalize(12), std::out_of_range);
+                REQUIRE_THROWS_AS (double d = linNorm.normalize(12), except::uninitialized);
             }
         }
 
@@ -25,9 +25,9 @@ SCENARIO ("A LinearNormalizer<size_t>")
                 REQUIRE(linNorm.normalize(12) == Approx(0.0));
             }
 
-            THEN ("normalizing value 13 should result in a std::out_of_range")
+            THEN ("normalizing value 13 should result in a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(13), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(13), except::normalizer_exception);
             }
         }
 
@@ -50,14 +50,14 @@ SCENARIO ("A LinearNormalizer<size_t>")
                 REQUIRE(linNorm.normalize(14) == Approx(1.0));
             }
 
-            THEN ("normalizing 15 should throw std::out_of_range")
+            THEN ("normalizing 15 should throw except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(15), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(15), except::normalizer_exception);
             }
 
-            THEN ("normalizing 11 should throw std::out_of_range")
+            THEN ("normalizing 11 should throw except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(11), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(11), except::normalizer_exception);
             }
         }
     }
@@ -80,13 +80,13 @@ SCENARIO ("A LinearNormalizer<size_t>")
             {
                 REQUIRE(linNorm.normalize(15) == Approx(1.0));
             }
-            THEN ("normalizing 5 gives a std::out_of_range")
+            THEN ("normalizing 5 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(5), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(5), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
 
@@ -106,13 +106,13 @@ SCENARIO ("A LinearNormalizer<size_t>")
             {
                 REQUIRE(linNorm.normalize(15) == Approx(1.0));
             }
-            THEN ("normalizing 5 gives a std::out_of_range")
+            THEN ("normalizing 5 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(5), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(5), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
 
@@ -133,13 +133,13 @@ SCENARIO ("A LinearNormalizer<size_t>")
                 CHECK_NOTHROW(linNorm.normalize(8));
                 REQUIRE(linNorm.normalize(8) == Approx(0.3));
             }
-            THEN ("normalizing 4 gives a std::out_of_range")
+            THEN ("normalizing 4 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(4), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(4), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
 
@@ -160,20 +160,20 @@ SCENARIO ("A LinearNormalizer<size_t>")
                 CHECK_NOTHROW(linNorm.normalize(17));
                 REQUIRE(linNorm.normalize(17) == Approx(0.5));
             }
-            THEN ("normalizing 6 gives a std::out_of_range")
+            THEN ("normalizing 6 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(6), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(6), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
     }
 }
 // }}}
 // Test LinearNormalizer<int> {{{
-SCENARIO ("A LinearNormalizer<int>")
+SCENARIO ("data::LinearNormalizer<int>::normalize")
 {
     GIVEN ("A normalizer with no values set")
     {
@@ -183,7 +183,7 @@ SCENARIO ("A LinearNormalizer<int>")
         {
             THEN ("we get an exception")
             {
-                REQUIRE_THROWS_AS (double d = linNorm.normalize(12), std::out_of_range);
+                REQUIRE_THROWS_AS (double d = linNorm.normalize(12), except::uninitialized);
             }
         }
 
@@ -195,9 +195,9 @@ SCENARIO ("A LinearNormalizer<int>")
                 REQUIRE(linNorm.normalize(12) == Approx(0.0));
             }
 
-            THEN ("normalizing value 13 should result in a std::out_of_range")
+            THEN ("normalizing value 13 should result in a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(13), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(13), except::normalizer_exception);
             }
         }
 
@@ -220,14 +220,14 @@ SCENARIO ("A LinearNormalizer<int>")
                 REQUIRE(linNorm.normalize(14) == Approx(1.0));
             }
 
-            THEN ("normalizing 15 should throw std::out_of_range")
+            THEN ("normalizing 15 should throw except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(15), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(15), except::normalizer_exception);
             }
 
-            THEN ("normalizing 11 should throw std::out_of_range")
+            THEN ("normalizing 11 should throw except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(11), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(11), except::normalizer_exception);
             }
         }
 
@@ -250,14 +250,14 @@ SCENARIO ("A LinearNormalizer<int>")
                 REQUIRE(linNorm.normalize(5) == Approx(1.0));
             }
 
-            THEN ("normalizing 15 should throw std::out_of_range")
+            THEN ("normalizing 15 should throw except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(15), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(15), except::normalizer_exception);
             }
 
-            THEN ("normalizing -6 should throw std::out_of_range")
+            THEN ("normalizing -6 should throw except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(-6), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(-6), except::normalizer_exception);
             }
         }
 
@@ -280,19 +280,19 @@ SCENARIO ("A LinearNormalizer<int>")
                 REQUIRE(linNorm.normalize(-3) == Approx(1.0));
             }
 
-            THEN ("normalizing 15 should throw std::out_of_range")
+            THEN ("normalizing 15 should throw except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(15), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(15), except::normalizer_exception);
             }
 
-            THEN ("normalizing -2 should throw std::out_of_range")
+            THEN ("normalizing -2 should throw except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(-2), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(-2), except::normalizer_exception);
             }
 
-            THEN ("normalizing -6 should throw std::out_of_range")
+            THEN ("normalizing -6 should throw except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(-6), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(-6), except::normalizer_exception);
             }
         }
     }
@@ -315,13 +315,13 @@ SCENARIO ("A LinearNormalizer<int>")
             {
                 REQUIRE(linNorm.normalize(15) == Approx(1.0));
             }
-            THEN ("normalizing 5 gives a std::out_of_range")
+            THEN ("normalizing 5 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(5), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(5), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
 
@@ -341,13 +341,13 @@ SCENARIO ("A LinearNormalizer<int>")
             {
                 REQUIRE(linNorm.normalize(15) == Approx(1.0));
             }
-            THEN ("normalizing 5 gives a std::out_of_range")
+            THEN ("normalizing 5 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(5), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(5), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
 
@@ -368,13 +368,13 @@ SCENARIO ("A LinearNormalizer<int>")
                 CHECK_NOTHROW(linNorm.normalize(8));
                 REQUIRE(linNorm.normalize(8) == Approx(0.3));
             }
-            THEN ("normalizing 4 gives a std::out_of_range")
+            THEN ("normalizing 4 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(4), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(4), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
 
@@ -405,13 +405,13 @@ SCENARIO ("A LinearNormalizer<int>")
                 CHECK_NOTHROW(linNorm.normalize(-5));
                 REQUIRE(linNorm.normalize(-5) == Approx(0.0));
             }
-            THEN ("normalizing -12 gives a std::out_of_range")
+            THEN ("normalizing -12 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(-12), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(-12), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
 
@@ -432,13 +432,13 @@ SCENARIO ("A LinearNormalizer<int>")
                 CHECK_NOTHROW(linNorm.normalize(17));
                 REQUIRE(linNorm.normalize(17) == Approx(0.5));
             }
-            THEN ("normalizing 6 gives a std::out_of_range")
+            THEN ("normalizing 6 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(6), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(6), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
     }
@@ -461,13 +461,13 @@ SCENARIO ("A LinearNormalizer<int>")
             {
                 REQUIRE(linNorm.normalize(5) == Approx(1.0));
             }
-            THEN ("normalizing -10 gives a std::out_of_range")
+            THEN ("normalizing -10 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(-10), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(-10), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
 
@@ -487,13 +487,13 @@ SCENARIO ("A LinearNormalizer<int>")
             {
                 REQUIRE(linNorm.normalize(5) == Approx(1.0));
             }
-            THEN ("normalizing -10 gives a std::out_of_range")
+            THEN ("normalizing -10 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(-10), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(-10), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
 
@@ -514,13 +514,13 @@ SCENARIO ("A LinearNormalizer<int>")
                 CHECK_NOTHROW(linNorm.normalize(-8));
                 REQUIRE(linNorm.normalize(-8) == Approx(0.35));
             }
-            THEN ("normalizing -16 gives a std::out_of_range")
+            THEN ("normalizing -16 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(-16), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(-16), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
 
@@ -541,13 +541,13 @@ SCENARIO ("A LinearNormalizer<int>")
                 CHECK_NOTHROW(linNorm.normalize(17));
                 REQUIRE(linNorm.normalize(17) == Approx(22.0/29.0));
             }
-            THEN ("normalizing -6 gives a std::out_of_range")
+            THEN ("normalizing -6 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(-6), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(-6), except::normalizer_exception);
             }
-            THEN ("normalizing 34 gives a std::out_of_range")
+            THEN ("normalizing 34 gives a except::normalizer_exception")
             {
-                REQUIRE_THROWS_AS(linNorm.normalize(34), std::out_of_range);
+                REQUIRE_THROWS_AS(linNorm.normalize(34), except::normalizer_exception);
             }
         }
     }
@@ -576,10 +576,60 @@ SCENARIO ("A LinearNormalizer<int>")
     }
 }
 // }}}
-// Test initialization with max<min {{{
-SCENARIO ("Minimum seed value is larger than maximum seed value")
+// Test constructor {{{
+SCENARIO ("data::LinearNormalizer<int>::LinearNormalizer()")
 {
-    GIVEN ("A LinearNormalizer<int>")
+    GIVEN ("a LinearNormalizer<int>")
+    {
+        WHEN ("constructing")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(data::LinearNormalizer<int> linNorm);
+            }
+        }
+    }
+}
+
+SCENARIO ("data::LinearNormalizer<size_t>::LinearNormalizer()")
+{
+    GIVEN ("a LinearNormalizer<size_t>")
+    {
+        WHEN ("constructing")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(data::LinearNormalizer<size_t> linNorm);
+            }
+        }
+    }
+}
+
+SCENARIO ("data::LinearNormalizer<int>::LinearNormalizer(int const&, int const&)")
+{
+    GIVEN ("A LinearNormalizer<int> with mixed min and max")
+    {
+        WHEN ("constructing")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(data::LinearNormalizer<int> linNorm (-10, -101));
+            }
+        }
+    }
+
+    GIVEN ("A LinearNormalizer<int> with min and max")
+    {
+        WHEN ("constructing")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(data::LinearNormalizer<int> linNorm (-10, 101));
+            }
+        }
+    }
+
+    GIVEN ("A LinearNormalizer<int> with mixed up min and max")
     {
         data::LinearNormalizer<int> linNorm (10, -10);
         WHEN ("normalizing the minimum value")
@@ -587,6 +637,50 @@ SCENARIO ("Minimum seed value is larger than maximum seed value")
             THEN ("the result should be 0.0, not 1.0")
             {
                 REQUIRE(linNorm.normalize(-10) == Approx(0.0));
+            }
+        }
+        WHEN ("normalizing the maximum value")
+        {
+            THEN ("the result should be 1.0, not 0.0")
+            {
+                REQUIRE(linNorm.normalize(10) == Approx(1.0));
+            }
+        }
+    }
+}
+
+SCENARIO ("data::LinearNormalizer<size_t>::LinearNormalizer(size_t const&, size_t const&)")
+{
+    GIVEN ("A LinearNormalizer<size_t> with mixed min and max")
+    {
+        WHEN ("constructing")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(data::LinearNormalizer<size_t> linNorm (10, 1));
+            }
+        }
+    }
+
+    GIVEN ("A LinearNormalizer<size_t> with min and max")
+    {
+        WHEN ("constructing")
+        {
+            THEN ("no exception is thrown")
+            {
+                REQUIRE_NOTHROW(data::LinearNormalizer<size_t> linNorm (10, 101));
+            }
+        }
+    }
+
+    GIVEN ("A LinearNormalizer<size_t> with garbled min and max")
+    {
+        data::LinearNormalizer<size_t> linNorm (10, 0);
+        WHEN ("normalizing the minimum value")
+        {
+            THEN ("the result should be 0.0, not 1.0")
+            {
+                REQUIRE(linNorm.normalize(0) == Approx(0.0));
             }
         }
         WHEN ("normalizing the maximum value")

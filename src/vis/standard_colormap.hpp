@@ -14,9 +14,13 @@ namespace vis
      */
     struct locationizedColor {
         locationizedColor(double const& location, color color)
+        throw (std::out_of_range)
         :   location(location), c(color)
         {
-            // ctor
+            if (location < 0.0 || location > 1.0)
+            {
+                throw std::out_of_range("location must be in range [0;1]");
+            }
         }
 
         locationizedColor()
@@ -51,9 +55,18 @@ namespace vis
              *
              * \param locCol Vector of locationizedColor:s
              */
-            StandardColormap(std::vector<locationizedColor> const& locCol)
+            explicit StandardColormap(std::vector<locationizedColor> const& locCol)
+            throw (std::invalid_argument)
                 : colors(locCol)
-            {}
+            {
+                if (locCol.empty()) throw std::invalid_argument("Location col array may not be empty!");
+                if (locCol.front().location != 0.0) throw std::invalid_argument("Location col array's first entry must have location 0.0!");
+                if (locCol.back().location != 1.0) throw std::invalid_argument("Location col array's last entry must have location 1.0!");
+                for (auto it = locCol.begin(); it < locCol.end()-1; ++it)
+                {
+                    if (it->location >= (it+1)->location) throw std::invalid_argument("Location col array must be sorted!");
+                }
+            }
             /**
              * Destructor.
              */
@@ -65,16 +78,16 @@ namespace vis
              * \param location
              * \param color
              */
-            void addColor(double const&, color const&);
+            void addColor(double const&, color const&) noexcept;
 
             /**
              * Get color at location.
              *
              * \param location
-             * \param color as reference
+             * \return color
              * \throw normalizer exception if location not in range [0;1]
              */
-            void getColor(double const&, color&) const throw(except::normalizer_exception) override;
+            color getColor(double const&) const throw(except::normalizer_exception) override;
 
             /**
              * Build and get a predefined color map.
