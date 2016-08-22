@@ -35,6 +35,7 @@ namespace vis
     class Colormap
     {
         public:
+            virtual ~Colormap() = default;
             /**
              * Get color for one value.
              *
@@ -42,6 +43,6 @@ namespace vis
              * \param   Red, green, blue channel values as color struct
              * \throw   except::normalizer_exception if value not in range [0;1]
              */
-            virtual void getColor(double const&, color&) const throw(except::normalizer_exception) = 0;
+            virtual color getColor(double const&) const throw(except::normalizer_exception) = 0;
     };
 }

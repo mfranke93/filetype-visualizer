@@ -4,7 +4,8 @@
 #include "../vis/standard_colormap.hpp"
 #include "../except/illegal_size_exception.hpp"
 
-SCENARIO ("Building an Image from data")
+// vis::ImageBuilder::buildImageFromData {{{}
+SCENARIO ("vis::ImageBuilder::buildImageFromData")
 {
     GIVEN ("A vector of normalized values and a colormap")
     {
@@ -57,10 +58,7 @@ SCENARIO ("Building an Image from data")
             }
         }
     }
-}
 
-SCENARIO ("Building an Image from data, illegal width or height")
-{
     GIVEN ("A vector of normalized values and a colormap")
     {
         std::shared_ptr<std::vector<double>> values = std::make_shared<std::vector<double>>();
@@ -102,10 +100,7 @@ SCENARIO ("Building an Image from data, illegal width or height")
             }
         }
     }
-}
 
-SCENARIO ("Unnormalized data passed to ImageBuilder")
-{
     GIVEN ("A vector of normalized values with one value larger 1.0 and a colormap")
     {
         std::shared_ptr<std::vector<double>> values = std::make_shared<std::vector<double>>();
@@ -142,3 +137,4 @@ SCENARIO ("Unnormalized data passed to ImageBuilder")
         }
     }
 }
+// }}}

@@ -18,6 +18,7 @@ data::LinearNormalizer<_T>::LinearNormalizer(_T const& minimum, _T const& maximu
 template<typename _T>
 void
 data::LinearNormalizer<_T>::seed(_T const& value)
+noexcept
 {
     if (!this->initialized)
     {
@@ -45,7 +46,6 @@ template<typename _T>
 void
 data::LinearNormalizer<_T>::calculateNewLinearParameters()
 {
-    // TODO
     // if min=max, every return value should be 0
     if (this->minimumValue == this->maximumValue)
     {
@@ -61,17 +61,18 @@ data::LinearNormalizer<_T>::calculateNewLinearParameters()
 
 template<typename _T>
 double
-data::LinearNormalizer<_T>::normalize(_T const& value) const throw(std::out_of_range)
+data::LinearNormalizer<_T>::normalize(_T const& value) const 
+throw(except::normalizer_exception, except::uninitialized)
 {
     if (!this->initialized)
     {
-        throw std::out_of_range("This data::LinearNormalizer was not yet initialized.");
+        throw except::uninitialized("This data::LinearNormalizer was not yet initialized.");
     }
     if (value > this->maximumValue || value < this->minimumValue)
     {
         char buf [256];
         sprintf(buf, "Value %d is not in range [%d; %d].", int(value), int(this->minimumValue), int(this->maximumValue));
-        throw std::out_of_range(buf);
+        throw except::normalizer_exception(buf);
     }
 
     return scalingFactor*(double(value) - this->offset);

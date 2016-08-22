@@ -2,8 +2,13 @@
 #include "../data/linear_normalizer.hpp"
 
 vis::TextHistogram::TextHistogram(std::shared_ptr<data::Histogram> const& hist)
+throw (std::invalid_argument)
 : histogram(hist)
 {
+    if (!hist)
+    {
+        throw std::invalid_argument("Histogram pointer must not be null.");
+    }
     hist->setNormalizer(std::make_shared<data::LinearNormalizer<size_t>>());
 }
 

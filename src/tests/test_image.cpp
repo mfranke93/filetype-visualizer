@@ -1,7 +1,8 @@
 #include "../third_party/catch/catch.hpp"
 #include "../vis/image.hpp"
 
-SCENARIO ("An image with illegal width or height")
+// vis::Image::Image {{{
+SCENARIO ("vis::Image::Image")
 {
     GIVEN ("An image with illegal width")
     {
@@ -46,9 +47,23 @@ SCENARIO ("An image with illegal width or height")
             }
         }
     }
-}
 
-SCENARIO ("An image with legal width and height")
+    GIVEN ("An image with legal with and height")
+    {
+        THEN ("no exception should be thrown (vis::Image::Image(size_t const&))")
+        {
+            REQUIRE_NOTHROW(vis::Image i (200));
+        }
+
+        THEN ("no exception should be thrown (vis::Image::Image(size_t const&, size_t const&))")
+        {
+            REQUIRE_NOTHROW(vis::Image i (200, 200));
+        }
+    }
+}
+// }}}
+// vis::Image::operator() {{{}
+SCENARIO ("vis::Image::operator()")
 {
     GIVEN ("An image with legal width and height")
     {
@@ -97,9 +112,17 @@ SCENARIO ("An image with legal width and height")
             vis::color c (255, 0, 127);
             img(100, 150) = c;
 
-            THEN ("This value should be correct")
+            THEN ("This value should be correct (const accessor)")
             {
                 vis::color const d = img(100, 150);
+                REQUIRE( c.R == d.R );
+                REQUIRE( c.G == d.G );
+                REQUIRE( c.B == d.B );
+            }
+
+            THEN ("This value should be correct (non-const accessor)")
+            {
+                vis::color d = img(100, 150);
                 REQUIRE( c.R == d.R );
                 REQUIRE( c.G == d.G );
                 REQUIRE( c.B == d.B );
@@ -108,30 +131,46 @@ SCENARIO ("An image with legal width and height")
 
         WHEN ("Accessing an x coordinate out of range")
         {
-            THEN ("an exception is thrown")
+            THEN ("an exception is thrown (non-const accessor)")
             {
-                REQUIRE_THROWS_AS(img(300, 300), std::out_of_range);
+                REQUIRE_THROWS_AS(vis::color d = img(300, 300), std::out_of_range);
+            }
+
+            THEN ("an exception is thrown (const accessor)")
+            {
+                REQUIRE_THROWS_AS(vis::color const d = img(300, 300), std::out_of_range);
             }
         }
 
         WHEN ("Accessing an y coordinate out of range")
         {
-            THEN ("an exception is thrown")
+            THEN ("an exception is thrown (non-const accessor)")
             {
-                REQUIRE_THROWS_AS(img(100, 500), std::out_of_range);
+                REQUIRE_THROWS_AS(vis::color d = img(100, 500), std::out_of_range);
+            }
+
+            THEN ("an exception is thrown (const accessor)")
+            {
+                REQUIRE_THROWS_AS(vis::color const d = img(100, 500), std::out_of_range);
             }
         }
         WHEN ("Accessing an x and y coordinate out of range")
         {
-            THEN ("an exception is thrown")
+            THEN ("an exception is thrown (non-const accessor)")
             {
-                REQUIRE_THROWS_AS(img(600, 500), std::out_of_range);
+                REQUIRE_THROWS_AS(vis::color d = img(600, 500), std::out_of_range);
+            }
+
+            THEN ("an exception is thrown (const accessor)")
+            {
+                REQUIRE_THROWS_AS(vis::color const d = img(600, 500), std::out_of_range);
             }
         }
     }
 }
-
-SCENARIO ("Deleting an Image object")
+// }}}
+// vis::Image::~Image {{{}
+SCENARIO ("vis::Image::~Image")
 {
     GIVEN ("An initialized Image object in the heap")
     {
@@ -145,3 +184,36 @@ SCENARIO ("Deleting an Image object")
         }
     }
 }
+// }}}
+// vis::Image::getWidth {{{}
+SCENARIO ("vis::Image::getWidth")
+{
+    GIVEN ("An image object")
+    {
+        vis::Image i (200);
+        WHEN ("comparing getWidth with given width")
+        {
+            THEN ("both should be equal")
+            {
+                REQUIRE (i.getWidth() == 200);
+            }
+        }
+    }
+}
+// }}}
+// vis::Image::getHeight {{{}
+SCENARIO ("vis::Image::getHeight")
+{
+    GIVEN ("An image object")
+    {
+        vis::Image i (200);
+        WHEN ("comparing getHeight with given height")
+        {
+            THEN ("both should be equal")
+            {
+                REQUIRE (i.getHeight() == 200);
+            }
+        }
+    }
+}
+// }}}
