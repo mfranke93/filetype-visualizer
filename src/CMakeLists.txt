@@ -12,6 +12,7 @@ add_executable(main main.cpp
                     data/standard_single_byte_transition_counter.cpp
                     data/linear_normalizer.cpp
                     data/logarithmic_plus_one_normalizer.cpp
+                    data/chargroup_transition_counter.cpp
                     vis/hist_text.cpp
                     vis/standard_colormap.cpp
                     vis/image.cpp
