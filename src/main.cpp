@@ -7,6 +7,7 @@
 #include "vis/standard_colormap.hpp"
 #include "vis/image_builder.hpp"
 #include "cmdline/options.hpp"
+#include "data/chargroup_transition_counter.hpp"
 
 int main(int argc, char ** argv)
 {
@@ -28,14 +29,21 @@ int main(int argc, char ** argv)
     }
 
     std::shared_ptr<data::TransitionCounter> transitionCounter;
-    if (i.getUseAscii())
-    {
-        transitionCounter = std::make_shared<data::AsciiTransitionCounter>(f);
-    }
-    else
-    {
-        transitionCounter = std::make_shared<data::ByteTransitionCounter>(f);
-    }
+    //if (i.getUseAscii())
+    //{
+    //    transitionCounter = std::make_shared<data::AsciiTransitionCounter>(f);
+    //}
+    //else
+    //{
+    //    transitionCounter = std::make_shared<data::ByteTransitionCounter>(f);
+    //}
+    std::vector<std::vector<unsigned char>> vec = {
+        {'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z' },
+        {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'},
+        {'.', '>', ',', '<', '/', '?', '#', '~', '@', ':', ';', '\\', '|', '\"', '=', '+', '-', '_', '(', ')', '[', ']', '{', '}' }
+    };
+
+    transitionCounter = std::make_shared<data::ChargroupTransitionCounter>(f, vec);
 
     std::shared_ptr<data::Normalizer<size_t>> norm;
     switch (i.getNormalizerType())

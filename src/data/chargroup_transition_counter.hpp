@@ -25,10 +25,56 @@ namespace data
              * \param initializer list
              * \throw if a character is in more than one group
              */
+            template<typename ITERABLE_CHARS>
             ChargroupTransitionCounter(
-                    std::shared_ptr<io::FileReader>,
-                    std::initializer_list<std::string> const&)
-                throw(std::invalid_argument, except::uninitialized);
+                    std::shared_ptr<io::FileReader> const& f,
+                    std::vector<ITERABLE_CHARS> const& groups)
+                throw(std::invalid_argument, except::uninitialized)
+            : fileReader(f)
+            {
+                if (!f) throw except::uninitialized("File reader must be initialized.");
+                /**
+                 * map
+                 */
+                std::unordered_map<unsigned char, size_t> m;
+                size_t i = 0;
+                
+                for (auto it = groups.begin(); it != groups.end(); ++i, ++it)
+                {
+                    ITERABLE_CHARS group = *it;
+                    for (unsigned char const& c : group)
+                    {
+                        if (m.count(c) != 0)
+                        {
+                            char buf [256];
+                            sprintf(buf, "Character '%c' (0x%02X) occured more than once.", c, c);
+                            throw std::invalid_argument(buf);
+                        }
+
+                        m[c] = i;
+                    }
+                }
+                
+                bool hasUnmentioned = false;
+                // fill unmentioned
+                for (size_t c = 0; c <= 255; ++c)
+                {
+                    if (m.count(static_cast<unsigned char>(c)) == 0)
+                    {
+                        m[c] = groups.size();
+                        hasUnmentioned = true;
+                    }
+                }
+
+                // fill to LUT
+                for (size_t c = 0; c < 256; ++c)
+                {
+                    this->lookupTable[c] = m[static_cast<unsigned char>(c)];
+                }
+
+                this->numGroups = hasUnmentioned ? groups.size()+1 : groups.size();
+                this->histogram = std::make_shared<data::Histogram>(this->numGroups);
+            }
     
             /**
              * Set the normalizer.
@@ -55,7 +101,7 @@ namespace data
              * index is in O(1) instead of O(c) (for c number char groups,
              * where it would actually be O(c log 256)).
              */
-            size_t * lookupTable;
+            size_t lookupTable [256];
 
             /**
              * Number of groups.
