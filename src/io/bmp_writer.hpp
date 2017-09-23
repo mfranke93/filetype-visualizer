@@ -4,8 +4,7 @@
 #include <sstream>
 #include <exception>
 #include "../third_party/bitmap/bitmap_image.hpp"
-#include "../vis/colormap.hpp"
-#include "../vis/image.hpp"
+#include "file_writer.hpp"
 
 #pragma once
 
@@ -14,7 +13,7 @@ namespace io
     /**
      * Class to write image data to a Bitmap file.
      */
-    class BmpWriter
+    class BmpWriter : public FileWriter
     {
         public:
             /**
@@ -23,8 +22,8 @@ namespace io
              * \param image Image object containing pixel values
              */
             BmpWriter(std::shared_ptr<vis::Image> image)
-                : image(image) 
-            {}
+                : FileWriter(image) 
+            {};
 
             /**
              * Export to file.
@@ -32,14 +31,5 @@ namespace io
              * \param upscale value
              */
             void write(std::string const&, size_t const& = 1) const;
-        protected:
-            BmpWriter() = delete;
-            BmpWriter(BmpWriter const&) = delete;
-            BmpWriter& operator= (BmpWriter const&) = delete;
-        private:
-            /**
-             * Reference to pixel data.
-             */
-            std::shared_ptr<vis::Image> image;
     };
 }

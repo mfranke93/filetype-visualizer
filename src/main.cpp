@@ -1,4 +1,5 @@
 #include "io/bmp_writer.hpp"
+#include "io/ppm_writer.hpp"
 #include "io/filereader.hpp"
 #include "data/standard_single_byte_transition_counter.hpp"
 #include <stdio.h>
@@ -58,8 +59,8 @@ int main(int argc, char ** argv)
     size_t const size = transitionCounter->getHistogram().getNumBins();
     std::shared_ptr<vis::Image> img = vis::ImageBuilder::buildImageFromData(size, size, data, c);
 
-    io::BmpWriter bmp (img);
-    bmp.write(i.getOutputFile(), i.getUpscaleFactor());
+    std::shared_ptr<io::FileWriter> writer = std::make_shared<io::PpmWriter>(img);
+    writer->write(i.getOutputFile(), i.getUpscaleFactor());
 
     return SUCCESS;
 }
