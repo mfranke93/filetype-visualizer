@@ -13,13 +13,13 @@ io::PpmWriter::write(std::string const& fname, size_t const& size) const
 
     auto file = std::fopen(fname.c_str(), "w");
 
-    // PPM header
-    std::fprintf(file, "P6\n%lu %lu\n255\n", width, height);
-
     if (file == nullptr)
     {
         throw std::runtime_error("Could not open output file for writing!");
     }
+
+    // PPM header
+    std::fprintf(file, "P6\n%lu %lu\n255\n", width, height);
 
     // iterate rows
     for (size_t row = 0; row < height; ++row)
@@ -30,10 +30,7 @@ io::PpmWriter::write(std::string const& fname, size_t const& size) const
             size_t const x = col / size;
             size_t const y = row / size;
             vis::color const& c = (*image)(x, y);
-            std::fprintf(file, "%c%c%c", 
-                    static_cast<vis::channel>(c.R), 
-                    static_cast<vis::channel>(c.G), 
-                    static_cast<vis::channel>(c.B));
+            std::fprintf(file, "%c%c%c", c.R, c.G, c.B);
         }
     }
 
