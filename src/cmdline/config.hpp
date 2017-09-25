@@ -2,6 +2,8 @@
 #include <string>
 #include "../data/normalizer.hpp"
 #include "../vis/standard_colormap.hpp"
+#include "../io/ppm_writer.hpp"
+#include "../io/png_writer.hpp"
 
 #pragma once
 
@@ -36,5 +38,19 @@ namespace config
                                                                         
         { "deepsea"     , vis::PredefinedColormaps::DEEP_SEA            },
         { "ocean"       , vis::PredefinedColormaps::DEEP_SEA            }
+    };
+
+    /**
+     * Map "factory" for image outputs.
+     */
+    std::map<std::string, std::function<std::shared_ptr<io::FileWriter>(std::shared_ptr<vis::Image>)>> const filewriters = {
+        { "ppm"         , [](std::shared_ptr<vis::Image> img) -> std::shared_ptr<io::FileWriter>
+            {
+                return std::make_shared<io::PpmWriter>(img);
+            }},
+        { "png"         , [](std::shared_ptr<vis::Image> img) -> std::shared_ptr<io::FileWriter>
+            {
+                return std::make_shared<io::PngWriter>(img);
+            }}
     };
 }

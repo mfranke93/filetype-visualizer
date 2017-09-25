@@ -18,7 +18,6 @@ data::LinearNormalizer<_T>::LinearNormalizer(_T const& minimum, _T const& maximu
 template<typename _T>
 void
 data::LinearNormalizer<_T>::seed(_T const& value)
-noexcept
 {
     if (!this->initialized)
     {
@@ -62,7 +61,6 @@ data::LinearNormalizer<_T>::calculateNewLinearParameters()
 template<typename _T>
 double
 data::LinearNormalizer<_T>::normalize(_T const& value) const 
-throw(except::normalizer_exception, except::uninitialized)
 {
     if (!this->initialized)
     {

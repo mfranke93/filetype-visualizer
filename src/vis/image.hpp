@@ -26,7 +26,7 @@ namespace vis
              *
              * \param Width and height
              */
-            explicit Image(size_t const&) throw(std::length_error);
+            explicit Image(size_t const&);
 
             /**
              * Constructor.
@@ -34,7 +34,7 @@ namespace vis
              * \param Width
              * \param Height
              */
-            explicit Image(size_t const&, size_t const&) throw(std::length_error);
+            explicit Image(size_t const&, size_t const&);
 
             /**
              * Destructor.
@@ -51,7 +51,7 @@ namespace vis
              * \throw std::logic_error if image data pointer uninitialized
              * \return reference to pixel color value at coordinates
              */
-            color& operator() (size_t const&, size_t const&) throw(std::out_of_range, std::logic_error);
+            color& operator() (size_t const&, size_t const&);
 
             /**
              * const access operator to one pixel value.
@@ -62,19 +62,19 @@ namespace vis
              * \throw std::logic_error if image data pointer uninitialized
              * \return const reference to pixel color value at coordinates
              */
-            color const& operator() (size_t const&, size_t const&) const throw(std::out_of_range, std::logic_error);
+            color const& operator() (size_t const&, size_t const&) const;
 
             /**
              * Get height of image.
              * \return Height
              */
-            size_t const& getHeight() const noexcept { return this->height; }
+            size_t const& getHeight() const { return this->height; }
 
             /**
              * Get width of image.
              * \return Width
              */
-            size_t const& getWidth() const noexcept { return this->width; }
+            size_t const& getWidth() const { return this->width; }
         protected:
             Image() = delete;
             Image(Image const&) = delete;

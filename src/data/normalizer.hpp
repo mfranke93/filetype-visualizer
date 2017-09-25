@@ -37,7 +37,7 @@ namespace data
              *
              * \param Value to add to normalizer initialization.
              */
-            virtual void seed(_T const&) noexcept = 0;
+            virtual void seed(_T const&) = 0;
 
             /**
              * Normalize a value.
@@ -50,6 +50,6 @@ namespace data
              *        This usually means the value is larger or smaller than any value
              *        passed to seed function.
              */
-            virtual double normalize(_T const&) const throw(except::normalizer_exception, except::uninitialized) = 0;
+            virtual double normalize(_T const&) const = 0;
     };
 }

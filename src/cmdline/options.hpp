@@ -81,6 +81,14 @@ namespace cmdline
             bool const& getUseAscii() const { return this->useAscii; };
 
             /**
+             * Get output file writer.
+             *
+             * \return file writer
+             */
+            std::shared_ptr<io::FileWriter> getOutputFilewriter(std::shared_ptr<vis::Image> img) const 
+            { return this->outputFilewriterGenerator(img); };
+
+            /**
              * Get the colormap.
              *
              * \return cmap
@@ -122,6 +130,11 @@ namespace cmdline
              * Output file name.
              */
             std::string outputFile;
+
+            /**
+             * Output file writer generator.
+             */
+            std::function<std::shared_ptr<io::FileWriter>(std::shared_ptr<vis::Image>)> outputFilewriterGenerator;
 
             /**
              * Colormap to use.

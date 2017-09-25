@@ -41,7 +41,7 @@ namespace data
              *
              * \param value to seed
              */
-            void seed(size_t const&) noexcept override;
+            void seed(size_t const&) override;
 
             /**
              * Normalize the value.
@@ -50,7 +50,7 @@ namespace data
              * \return normalized value
              * \throw if value not in range or uninitialized
              */
-            double normalize(size_t const&) const throw(except::normalizer_exception, except::uninitialized) override;
+            double normalize(size_t const&) const override;
         protected:
             LogarithmicPlusOneNormalizer(LogarithmicPlusOneNormalizer const&) = delete;
             LogarithmicPlusOneNormalizer& operator= (LogarithmicPlusOneNormalizer const&) = delete;

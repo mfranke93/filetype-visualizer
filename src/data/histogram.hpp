@@ -19,7 +19,7 @@ namespace data
              *
              * \param Size in x and y direction.
              */
-            Histogram(size_t const&) throw(except::illegal_size);
+            Histogram(size_t const&);
 
             /**
              * Add an entry.
@@ -28,19 +28,19 @@ namespace data
              * \param y position
              * \param amount to add, default 1
              */
-            void addEntry(size_t const&, size_t const&, size_t const& amount = 1) throw(std::out_of_range);
+            void addEntry(size_t const&, size_t const&, size_t const& amount = 1);
 
             /**
              * Get a grid of normalized values.
              * \return grid
              */
-            Grid<double> getNormalized() const noexcept;
+            Grid<double> getNormalized() const;
 
             /**
              * Get width or height
              * \return grid size
              */
-            size_t getNumBins() const noexcept { return this->numBins; }
+            size_t getNumBins() const { return this->numBins; }
 
             /**
              * Get value at.
@@ -49,13 +49,13 @@ namespace data
              * \param y position
              * \return const reference to value at position
              */
-            size_t const& at(size_t const&, size_t const&) const throw(std::out_of_range);
+            size_t const& at(size_t const&, size_t const&) const;
 
             /**
              * Set normalizer to use.
              * \param normalizer
              */
-            void setNormalizer(std::shared_ptr<data::Normalizer<size_t>> const&) throw(except::uninitialized);
+            void setNormalizer(std::shared_ptr<data::Normalizer<size_t>> const&);
         protected:
             Histogram() = delete;
             Histogram(Histogram const&) = delete;

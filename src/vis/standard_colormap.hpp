@@ -14,7 +14,6 @@ namespace vis
      */
     struct locationizedColor {
         locationizedColor(double const& location, color color)
-        throw (std::out_of_range)
         :   location(location), c(color)
         {
             if (location < 0.0 || location > 1.0)
@@ -56,7 +55,6 @@ namespace vis
              * \param locCol Vector of locationizedColor:s
              */
             explicit StandardColormap(std::vector<locationizedColor> const& locCol)
-            throw (std::invalid_argument)
                 : colors(locCol)
             {
                 if (locCol.empty()) throw std::invalid_argument("Location col array may not be empty!");
@@ -78,7 +76,7 @@ namespace vis
              * \param location
              * \param color
              */
-            void addColor(double const&, color const&) noexcept;
+            void addColor(double const&, color const&);
 
             /**
              * Get color at location.
@@ -87,7 +85,7 @@ namespace vis
              * \return color
              * \throw normalizer exception if location not in range [0;1]
              */
-            color getColor(double const&) const throw(except::normalizer_exception) override;
+            color getColor(double const&) const;
 
             /**
              * Build and get a predefined color map.
@@ -95,7 +93,7 @@ namespace vis
              * \param color map type
              * \return color map
              */
-            static std::shared_ptr<StandardColormap const> getPredefinedColormap(PredefinedColormaps const&) throw(std::out_of_range);
+            static std::shared_ptr<StandardColormap const> getPredefinedColormap(PredefinedColormaps const&);
         protected:
             StandardColormap() = delete;
             StandardColormap(StandardColormap const&) = delete;

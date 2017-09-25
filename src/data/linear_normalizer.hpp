@@ -35,7 +35,7 @@ namespace data
              * Add value to seed.
              * \param value
              */
-            void seed(_T const&) noexcept override;
+            void seed(_T const&) override;
 
             /**
              * Normalize a value.
@@ -44,7 +44,7 @@ namespace data
              * \throw if value not in range
              * \throw if object not initialized
              */
-            double normalize(_T const&) const throw(except::normalizer_exception, except::uninitialized) override;
+            double normalize(_T const&) const override;
         protected:
             LinearNormalizer(LinearNormalizer const&) = delete;
             LinearNormalizer& operator= (LinearNormalizer const&) = delete;

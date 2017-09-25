@@ -2,7 +2,6 @@
 #include "../data/linear_normalizer.hpp"
 
 vis::TextHistogram::TextHistogram(std::shared_ptr<data::Histogram> const& hist)
-throw (std::invalid_argument)
 : histogram(hist)
 {
     if (!hist)

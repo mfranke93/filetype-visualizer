@@ -5,13 +5,18 @@ cmdline::CommandlineInterface::CommandlineInterface()
 {
     this->desc.add_options()
         ("help,h", "Print help messages")
-        ("in,i", po::value<std::string>(&inputFile), "Input file")
-        ("out,o", po::value<std::string>(&outputFile)->default_value("out.bmp"), "Output file")
-        ("upscale,s", po::value<size_t>(&upscaleFactor)->default_value(1), "Size scaling of output image. May not be 0")
-        ("cmap,c", po::value<std::string>(), "Colormap to use. Defaults to heat map. Options are: RdBu, heat, deepsea, gray/grey")
-        ("normalizer,n", po::value<std::string>()->default_value("log"), "Normalizer to use. Defaults to logarithmic. Options are: log, lin")
-        ("ascii,a", po::bool_switch(&useAscii), "Use ASCII (7 bit charset) only")
-        ("force-size", po::bool_switch(&forceSizeOverride), "Force a larger size for image than normally allowed")
+
+        ("in,i",            po::value<std::string>(&inputFile),                             "Input file")
+        ("out,o",           po::value<std::string>(&outputFile)->default_value("out.ppm"),  "Output file")
+        ("upscale,s",       po::value<size_t>(&upscaleFactor)->default_value(1),            "Size scaling of output image. May not be 0")
+        ("cmap,c",          po::value<std::string>(),                                       "Colormap to use. Defaults to heat map."
+                                                                                            " Options are: RdBu, heat, deepsea, gray/grey")
+        ("normalizer,n",    po::value<std::string>()->default_value("log"),                 "Normalizer to use. Defaults to logarithmic."
+                                                                                            " Options are: log, lin")
+        ("ascii,a",         po::bool_switch(&useAscii),                                     "Use ASCII (7 bit charset) only")
+        ("force-size",      po::bool_switch(&forceSizeOverride),                            "Force a larger size for image than normally allowed")
+        ("file-type,T",     po::value<std::string>()->default_value("ppm"),                 "Filetype of output. Defaults to ppm."
+                                                                                            " Options are ppm, png.")
         ;
 }
 
@@ -111,6 +116,27 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
         else
         {
             this->normalizerType = data::NormalizerType::LOGARITHMIC_PLUS_ONE;
+        }
+
+        if (vm.count("file-type"))
+        {
+            std::string name = vm["file-type"].as<std::string>();
+            // lower case
+            std::transform(name.begin(), name.end(), name.begin(), ::tolower);
+            try
+            {
+                this->outputFilewriterGenerator = config::filewriters.at(name);
+            }
+            catch (std::out_of_range& e)
+            {
+                char buf [256];
+                sprintf(buf, "No such output filetype: %s", name.c_str());
+                throw std::invalid_argument(buf);
+            }
+        }
+        else
+        {
+            this->outputFilewriterGenerator = config::filewriters.at("ppm");
         }
     }
     catch (std::exception& e)

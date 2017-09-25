@@ -21,7 +21,7 @@ namespace vis
              *
              * \param Shared pointer to a Histogram object.
              */
-            TextHistogram(std::shared_ptr<data::Histogram> const&) throw(std::invalid_argument);
+            TextHistogram(std::shared_ptr<data::Histogram> const&);
 
             /**
              * Get strings representing lines of histogram.
