@@ -19,7 +19,6 @@ data::LogarithmicPlusOneNormalizer::LogarithmicPlusOneNormalizer(size_t const& m
     
 void
 data::LogarithmicPlusOneNormalizer::seed(size_t const& value)
-noexcept
 {
     if (!this->initialized)
     {
@@ -49,7 +48,6 @@ noexcept
 
 double
 data::LogarithmicPlusOneNormalizer::normalize(size_t const& value) const
-throw(except::normalizer_exception, except::uninitialized)
 {
     if (!this->initialized)
     {

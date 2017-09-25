@@ -18,7 +18,7 @@ namespace data {
              * Copy constructor.
              * \param other
              */
-            Grid(Grid const&) noexcept;
+            Grid(Grid const&);
 
             /**
              * Constructor.
@@ -26,7 +26,7 @@ namespace data {
              * \param width
              * \throw if size is 0
              */
-            explicit Grid(size_t const&) throw (except::illegal_size);
+            explicit Grid(size_t const&);
 
             /**
              * Constructor.
@@ -34,12 +34,12 @@ namespace data {
              * \param height
              * \throw if total size is 0
              */
-            explicit Grid(size_t const&, size_t const&) throw (except::illegal_size);
+            explicit Grid(size_t const&, size_t const&);
 
             /**
              * Destructor.
              */
-            ~Grid() noexcept;
+            ~Grid();
 
             /**
              * Non-const accessor.
@@ -49,7 +49,7 @@ namespace data {
              * \return value at x,y
              * \throw if any coordinate is too large
              */
-            _T& operator() (size_t const&, size_t const&) throw(std::out_of_range);
+            _T& operator() (size_t const&, size_t const&);
 
             /**
              * const accessor.
@@ -59,19 +59,19 @@ namespace data {
              * \return value at x,y
              * \throw if any coordinate is too large
              */
-            _T const& operator() (size_t const&, size_t const&) const throw(std::out_of_range);
+            _T const& operator() (size_t const&, size_t const&) const;
 
             /**
              * Get highest value.
              * \return maximum
              */
-            _T getMaximum() const noexcept;
+            _T getMaximum() const;
 
             /**
              * Flatten to list.
              * \return vector
              */
-            std::shared_ptr<std::vector<_T>> asVector() const noexcept;
+            std::shared_ptr<std::vector<_T>> asVector() const;
         protected:
             Grid() = delete;
             Grid& operator=(Grid const&) = delete;

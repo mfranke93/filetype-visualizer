@@ -2,7 +2,6 @@
 
 void 
 vis::StandardColormap::addColor(double const& location, color const& c) 
-noexcept
 {
     // find index at which to add
     std::vector<vis::locationizedColor>::iterator it = this->colors.begin();
@@ -17,7 +16,6 @@ noexcept
 
 vis::color
 vis::StandardColormap::getColor(double const& location) const 
-throw(except::normalizer_exception)
 {
     if (location < 0.0 || location > 1.0)
     {
@@ -43,7 +41,6 @@ throw(except::normalizer_exception)
 
 std::shared_ptr<vis::StandardColormap const> 
 vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps const& type)
-throw(std::out_of_range)
 {
     switch (type)
     {

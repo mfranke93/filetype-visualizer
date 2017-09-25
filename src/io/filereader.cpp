@@ -1,7 +1,6 @@
 #include "filereader.hpp"
 
-    io::FileReader::FileReader(std::string const& fname)
-throw (std::invalid_argument)
+io::FileReader::FileReader(std::string const& fname)
 {
     this->input = std::make_shared<std::ifstream>(fname, std::ios_base::binary);
     if (!(this->input->good()))
@@ -12,7 +11,6 @@ throw (std::invalid_argument)
 }
 
 io::FileReader::FileReader()
-    noexcept
 {
     /*
      * Initialize this smart pointer with a custom deallocator lambda.
@@ -24,14 +22,12 @@ io::FileReader::FileReader()
 }
 
 io::FileReader::~FileReader()
-    noexcept
 {
     // dtor
     // nothing to do here
 }
 
 io::FileReader::operator bool () const
-noexcept
 {
     char c;
     if (!this->input->get(c))
@@ -47,7 +43,6 @@ noexcept
 
 std::vector<unsigned char>
 io::FileReader::getNext(size_t const& numberBytes)
-noexcept
 {
     std::vector<unsigned char> v;
     char c;

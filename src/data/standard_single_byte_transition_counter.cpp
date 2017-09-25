@@ -2,7 +2,6 @@
 
 template<unsigned char _value_range>
 data::StandardSingleByteTransitionCounter<_value_range>::StandardSingleByteTransitionCounter(std::shared_ptr<io::FileReader> fileReader)
-throw(except::uninitialized)
 :   histogram(_value_range+1), fileReader(fileReader)
 {
     if (!fileReader)
@@ -16,7 +15,6 @@ throw(except::uninitialized)
 template<unsigned char _value_range>
 data::Histogram const&
 data::StandardSingleByteTransitionCounter<_value_range>::getHistogram() const
-noexcept
 {
     return this->histogram;
 }
@@ -24,7 +22,6 @@ noexcept
 template<unsigned char _value_range>
 void
 data::StandardSingleByteTransitionCounter<_value_range>::run()
-noexcept
 {
     if (this->fileReader) // smart pointer filled
     {
@@ -45,7 +42,6 @@ noexcept
 template<unsigned char _value_range>
 void
 data::StandardSingleByteTransitionCounter<_value_range>::setNormalizer(std::shared_ptr<data::Normalizer<size_t>> const& norm)
-throw(except::uninitialized)
 {
     if (!norm)
     {
@@ -57,7 +53,6 @@ throw(except::uninitialized)
 template<unsigned char _value_range>
 void
 data::StandardSingleByteTransitionCounter<_value_range>::handleBlock(std::vector<unsigned char> const& block)
-noexcept
 {
     for (unsigned char const& c : block)
     {
@@ -68,7 +63,6 @@ noexcept
 template<unsigned char _value_range>
 void
 data::StandardSingleByteTransitionCounter<_value_range>::nextChar(unsigned char const& c)
-noexcept
 {
     if (c > _value_range)
     {

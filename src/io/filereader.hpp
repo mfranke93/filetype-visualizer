@@ -15,28 +15,28 @@ namespace io {
          * Default constructor.
          * Reads from stdin.
          */
-        FileReader() noexcept;
+        FileReader();
 
-        ~FileReader() noexcept;
+        ~FileReader();
 
         /**
          * Constructor.
          * \param File name
          */
-        explicit FileReader(std::string const&) throw (std::invalid_argument);
+        explicit FileReader(std::string const&);
 
         /**
          * Convert object to boolean.
          * Returns true if stream not empty.
          */
-        operator bool () const noexcept;
+        operator bool () const;
 
         /**
          * Get next n bytes.
          * \param Number of bytes (n)
          * \return vector of bytes
          */
-        std::vector<unsigned char> getNext(size_t const&) noexcept;
+        std::vector<unsigned char> getNext(size_t const&);
         
     protected:
         FileReader(FileReader const&) = delete;
