@@ -4,6 +4,7 @@
 #include "../vis/standard_colormap.hpp"
 #include "../io/bmp_writer.hpp"
 #include "../io/ppm_writer.hpp"
+#include "../io/png_writer.hpp"
 
 #pragma once
 
@@ -51,6 +52,10 @@ namespace config
         { "ppm"         , [](std::shared_ptr<vis::Image> img) -> std::shared_ptr<io::FileWriter>
             {
                 return std::make_shared<io::PpmWriter>(img);
+            }},
+        { "png"         , [](std::shared_ptr<vis::Image> img) -> std::shared_ptr<io::FileWriter>
+            {
+                return std::make_shared<io::PngWriter>(img);
             }}
     };
 }

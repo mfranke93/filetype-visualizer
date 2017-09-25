@@ -1,5 +1,8 @@
-FIND_PACKAGE(Boost 1.55 COMPONENTS program_options REQUIRED)
+FIND_PACKAGE(Boost REQUIRED COMPONENTS program_options)
 INCLUDE_DIRECTORIES(${Boost_INCLUDE_DIR})
+
+FIND_PACKAGE(PNG REQUIRED)
+INCLUDE_DIRECTORIES(${PNG_INCLUDE_DIR})
 
 include_directories(${VISUALIZER_SOURCE_DIR}/src)
 link_directories(${VISUALIZER_BINARY_DIR}/src)
@@ -7,6 +10,7 @@ link_directories(${VISUALIZER_BINARY_DIR}/src)
 add_executable(main main.cpp
                     io/filereader.cpp
                     io/bmp_writer.cpp
+                    io/png_writer.cpp
                     io/ppm_writer.cpp
                     data/grid.cpp
                     data/histogram.cpp
@@ -19,4 +23,5 @@ add_executable(main main.cpp
                     vis/image_builder.cpp
                     cmdline/options.cpp
               )
-TARGET_LINK_LIBRARIES(main ${Boost_LIBRARIES})
+
+TARGET_LINK_LIBRARIES(main ${Boost_LIBRARIES} ${PNG_LIBRARIES})

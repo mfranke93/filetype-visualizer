@@ -16,7 +16,7 @@ cmdline::CommandlineInterface::CommandlineInterface()
         ("ascii,a",         po::bool_switch(&useAscii),                                     "Use ASCII (7 bit charset) only")
         ("force-size",      po::bool_switch(&forceSizeOverride),                            "Force a larger size for image than normally allowed")
         ("file-type,T",     po::value<std::string>()->default_value("ppm"),                 "Filetype of output. Defaults to ppm."
-                                                                                            " Options are ppm, bmp.")
+                                                                                            " Options are ppm, bmp, png.")
         ;
 }
 
