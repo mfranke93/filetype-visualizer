@@ -9,7 +9,6 @@ link_directories(${VISUALIZER_BINARY_DIR}/src)
 
 add_executable(main main.cpp
                     io/filereader.cpp
-                    io/bmp_writer.cpp
                     io/png_writer.cpp
                     io/ppm_writer.cpp
                     data/grid.cpp

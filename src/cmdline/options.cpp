@@ -7,7 +7,7 @@ cmdline::CommandlineInterface::CommandlineInterface()
         ("help,h", "Print help messages")
 
         ("in,i",            po::value<std::string>(&inputFile),                             "Input file")
-        ("out,o",           po::value<std::string>(&outputFile)->default_value("out.bmp"),  "Output file")
+        ("out,o",           po::value<std::string>(&outputFile)->default_value("out.ppm"),  "Output file")
         ("upscale,s",       po::value<size_t>(&upscaleFactor)->default_value(1),            "Size scaling of output image. May not be 0")
         ("cmap,c",          po::value<std::string>(),                                       "Colormap to use. Defaults to heat map."
                                                                                             " Options are: RdBu, heat, deepsea, gray/grey")
@@ -16,7 +16,7 @@ cmdline::CommandlineInterface::CommandlineInterface()
         ("ascii,a",         po::bool_switch(&useAscii),                                     "Use ASCII (7 bit charset) only")
         ("force-size",      po::bool_switch(&forceSizeOverride),                            "Force a larger size for image than normally allowed")
         ("file-type,T",     po::value<std::string>()->default_value("ppm"),                 "Filetype of output. Defaults to ppm."
-                                                                                            " Options are ppm, bmp, png.")
+                                                                                            " Options are ppm, png.")
         ;
 }
 

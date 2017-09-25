@@ -1,5 +1,3 @@
-#include "io/bmp_writer.hpp"
-#include "io/ppm_writer.hpp"
 #include "io/filereader.hpp"
 #include "data/standard_single_byte_transition_counter.hpp"
 #include <stdio.h>
