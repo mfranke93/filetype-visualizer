@@ -1,0 +1,85 @@
+.\"             -*-Nroff-*-
+.TH FTVIS 1 "2017-09-27" "filetype-visualizer" "User Commands"
+.SH NAME
+ftvis \- Create a heatmap of byte-to-byte transitions in a file
+.SH SYNOPSIS
+.B ftvis
+.RI [ options ]
+.SH DESCRIPTION
+.B \fBftvis\fR
+creates a output image heatmap from the input file\(aqs byte-to-byte transitions. \
+The heatmap can be logarithmic or linear. Using such heatmaps, patterns in
+input files can be discerned that are specific to different file types.
+.SH OPTIONS
+.TP
+\fB\-h\fR, \fB\-\-help\fR
+Display the help.
+.TP
+\fB\-i\fR, \fB\-\-in\fR \fIfile\fR
+Read the input from \fIfile\fR. If this is not specified, \fIstdin\fR is used instead.
+.TP
+\fB\-o\fR, \fB\-\-out\fR \fIfile\fR
+Write the output image to \fIfile\fR. If this is not specified, \fIout.ppm\fR is used instead as default.
+.TP
+\fB\-s\fR, \fB\-\-upscale\fR \fIscale\fR
+Scale each entry of the heatmap to \fIscale\fR x \fIscale\fR pixels.
+.TP
+\fB\-c\fR, \fB\-\-cmap\fR
+Specify the colormap used for the output image. Following colormaps are available.
+.sp
+.nf
+    RdBu        Red to blue via white.
+    heat        Black to white via red, yellow.
+    deepsea     Dark blue to light blue.
+    gray/grey   Black to white.
+.fi  
+.sp
+Default is \fIheat\fR.
+.TP
+\fB\-n\fR, \fB\-\-normalizer\fR \fInorm\fR
+Specify which normalizer to use. Following normalizers are available.
+.sp
+.nf
+    log         Logarithmic normalizer.
+    lin         Linear normalizer.
+.fi
+.sp
+Default is \fIlog\fR.
+.TP
+\fB\-a\fR, \fB\-\-ascii\fR
+Only consider ASCII byte values in input file. This will ignore (but warn) about byte values outside the 7\-bit range, and make the heatmap only contain 128x128 bins. Useful for text\-based files, where only a quarter of the heat map\(aqs area is interesting.
+.TP
+\fB\-\-force\-size\fR
+Force a larger output image size than allowed by default.
+.TP
+\fB\-T\fR, \fB\-\-file\-type\fR \fItype\fR
+Specify the output file\(aqs type. Following filetypes are available.
+.sp
+.nf
+    ppm         Type-6 24 bit color depth \fIPortable Pixmap\fR images.
+    png         24 bit color depth \fIPortable Network Graphics\fR.
+.fi
+.sp
+Default is \fIppm\fR.
+.TP
+\fB\-m\fR, \fB\-\-margin\fR \fIspec\fR
+Specify a margin around the output image. The margin\(aqs \fIspec\fR can have the following formats.
+.sp
+.nf
+    val         Value to be used for all four margins.
+    x,y         Value to be used for left and right, second value to be used for top and bottom.
+    l,r,t,b     Values for left, right, top, bottom.
+.fi
+.sp
+Default is no margin.
+.TP
+\fB\-\-margin\-color\fR \fIcolor\fR
+Specify a color for the margin, as 3 byte hexadecimal number. Default is black (000000).
+.PD
+.PD
+.SH BUGS
+None for now.
+.TP
+Please send bug reports to
+.UR max@mumintroll.org
+.UE

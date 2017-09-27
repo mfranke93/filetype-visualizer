@@ -7,6 +7,8 @@ project(VISUALIZER)
 #find_package(GLUT)
 #find_package(OpenGL)
 
+SET(CONFIGURATION Release)
+SET(CMAKE_INSTALL_PREFIX /usr/local)
 SET (EXECUTABLE_OUTPUT_PATH
    ${PROJECT_BINARY_DIR}
    CACHE PATH
@@ -14,5 +16,6 @@ SET (EXECUTABLE_OUTPUT_PATH
    )
 
 set(CMAKE_CXX_FLAGS "-g -Wall -Wextra -O3 -std=c++11")
+add_subdirectory(man)
 add_subdirectory(src)
 add_subdirectory(src/tests)
