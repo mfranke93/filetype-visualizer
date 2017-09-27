@@ -100,6 +100,12 @@ namespace cmdline
              */
             data::NormalizerType const& getNormalizerType() const { return this->normalizerType; };
 
+            size_t const& getMarginLeft() const { return this->marginLeft; };
+            size_t const& getMarginRight() const { return this->marginRight; };
+            size_t const& getMarginTop() const { return this->marginTop; };
+            size_t const& getMarginBottom() const { return this->marginBottom; };
+            vis::color const& getMarginColor() const { return this->marginColor; };
+
         private:
             /**
              * Use std::cin or file for input?
@@ -115,6 +121,16 @@ namespace cmdline
              * Factor for scaling output image.
              */
             size_t upscaleFactor;
+
+            /**
+             * Image margins.
+             */
+            size_t marginLeft, marginRight, marginTop, marginBottom;
+
+            /**
+             * Image margin color.
+             */
+            vis::color marginColor;
 
             /**
              * Use 7 or 8 bit file input transition counter.

@@ -81,11 +81,11 @@ io::PngScopeguard::operator bool() const
 }
 
 void
-io::PngWriter::write(std::string const& fname, size_t const& scale) const
+io::PngWriter::write(std::string const& fname) const
 {
     size_t const width = image->getWidth();
     size_t const height = image->getHeight();
-    PngScopeguard guard (fname,  width * scale, height * scale);
+    PngScopeguard guard (fname,  width, height);
     if (!guard) 
     {
         std::fprintf(stderr, "Could not write PNG file. Exiting.\n");
@@ -101,15 +101,12 @@ io::PngWriter::write(std::string const& fname, size_t const& scale) const
     setjmp(png_jmpbuf(png_ptr));
 
     /* write image data to row buffer */
-    for (size_t j = 0; j < height * scale; ++j)
+    for (size_t j = 0; j < height; ++j)
     {
         png_byte * row = row_pointers[j];
-        for (size_t i = 0; i < width * scale; ++i)
+        for (size_t i = 0; i < width; ++i)
         {
-            size_t const x = i / scale;
-            size_t const y = j / scale;
-
-            vis::color const& color = (*image)(x,y);
+            vis::color const& color = (*image)(i, j);
             uint8_t const& r = color.R;
             uint8_t const& g = color.G;
             uint8_t const& b = color.B;

@@ -83,6 +83,6 @@ namespace io
              * \param fname     File name
              * \param size      Image upscaling (output pixels per data pixel).
              */
-            void write(std::string const& fname, size_t const& size = 1) const override;
+            void write(std::string const& fname) const override;
     };
 }

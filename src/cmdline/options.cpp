@@ -17,6 +17,12 @@ cmdline::CommandlineInterface::CommandlineInterface()
         ("force-size",      po::bool_switch(&forceSizeOverride),                            "Force a larger size for image than normally allowed")
         ("file-type,T",     po::value<std::string>()->default_value("ppm"),                 "Filetype of output. Defaults to ppm."
                                                                                             " Options are ppm, png.")
+        ("margin,m",        po::value<std::string>()->default_value("0"),                   "Margin of output image, in pixels."
+                                                                                            " Can be given as \"value\";\"valueX,valueY\" or"
+                                                                                            " \"valueLeft,valueRight,valueTop,valueBottom\"."
+                                                                                            " Default value is 0.")
+        ("margin-color",    po::value<std::string>()->default_value("000000"),              "Color of margin. Given as 3 byte hexadecimal string."
+                                                                                            " Default value is \"000000\".")
         ;
 }
 
@@ -137,6 +143,65 @@ cmdline::CommandlineInterface::store(int const& argc, char ** argv)
         else
         {
             this->outputFilewriterGenerator = config::filewriters.at("ppm");
+        }
+
+        if (vm.count("margin"))
+        {
+            std::string marginStr = vm["margin"].as<std::string>();
+            size_t l, r, t, b; l=r=t=b=0;
+            int retVal = std::sscanf(marginStr.c_str(), "%lu,%lu,%lu,%lu", &l, &r, &t, &b);
+
+            if (retVal != 4)
+            {
+                int retVal = std::sscanf(marginStr.c_str(), "%lu,%lu", &l, &t);
+                if (retVal != 2)
+                {
+                    int retVal = std::sscanf(marginStr.c_str(), "%lu", &l);
+                    if (retVal != 1)
+                    {
+                        char buf [256];
+                        std::sprintf(buf, "Could not parse margins from string '%s'.\n", marginStr.c_str());
+                        throw std::invalid_argument(buf);
+                    }
+                    else
+                    {
+                        r = t = b = l;
+                    }
+                }
+                else 
+                {
+                    r = l; b = t;
+                }
+            }
+
+            marginLeft = l; marginRight  = r;
+            marginTop  = t; marginBottom = b;
+        }
+        else
+        {
+            marginLeft = marginRight = marginTop = marginBottom = 0;
+        }
+
+        if (vm.count("margin-color"))
+        {
+            std::string colStr = vm["margin-color"].as<std::string>();
+            uint32_t hex = 0;
+            if (std::sscanf(colStr.c_str(), "%x", &hex) == EOF)
+            {
+                char buf[256];
+                std::sprintf(buf, "Could not parse hex color '%s'.\n", colStr.c_str());
+                throw std::invalid_argument(buf);
+            }
+
+            vis::channel r = (hex >> 16) & 0xFF;
+            vis::channel g = (hex >> 8)  & 0xFF;
+            vis::channel b =  hex        & 0xFF;
+
+            marginColor = vis::color(r, g, b);
+        }
+        else
+        {
+            marginColor = vis::color(0,0,0);
         }
     }
     catch (std::exception& e)

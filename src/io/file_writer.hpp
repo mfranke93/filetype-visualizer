@@ -22,9 +22,8 @@ namespace io
              * Write out the image data.
              *
              * \param fname     File name
-             * \param size      Image upscaling (output pixels per data pixel).
              */
-            virtual void write(std::string const& fname, size_t const& size = 1) const = 0;
+            virtual void write(std::string const& fname) const = 0;
 
         protected:
             FileWriter() = delete;

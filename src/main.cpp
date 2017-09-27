@@ -55,10 +55,13 @@ int main(int argc, char ** argv)
     std::shared_ptr<vis::StandardColormap const> c = vis::StandardColormap::getPredefinedColormap(i.getColormap());
     std::shared_ptr<std::vector<double>> data = transitionCounter->getHistogram().getNormalized().asVector();
     size_t const size = transitionCounter->getHistogram().getNumBins();
-    std::shared_ptr<vis::Image> img = vis::ImageBuilder::buildImageFromData(size, size, data, c);
+    vis::ImageProperties prop (size, size, i.getMarginTop(), i.getMarginBottom(), i.getMarginLeft(), i.getMarginRight());
+    prop.scale = i.getUpscaleFactor();
+    prop.marginColor = i.getMarginColor();
+    std::shared_ptr<vis::Image> img = vis::ImageBuilder::buildImageFromData(prop, data, c);
 
     std::shared_ptr<io::FileWriter> writer = i.getOutputFilewriter(img);
-    writer->write(i.getOutputFile(), i.getUpscaleFactor());
+    writer->write(i.getOutputFile());
 
     return SUCCESS;
 }

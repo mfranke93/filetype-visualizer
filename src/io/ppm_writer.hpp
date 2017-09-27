@@ -12,6 +12,6 @@ namespace io
             explicit PpmWriter(std::shared_ptr<vis::Image> image)
                 : FileWriter(image) {};
 
-            void write(std::string const& fname, size_t const& size = 1) const override;
+            void write(std::string const& fname) const override;
     };
 }

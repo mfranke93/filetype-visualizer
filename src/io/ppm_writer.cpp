@@ -1,15 +1,15 @@
 #include "ppm_writer.hpp"
 
 void
-io::PpmWriter::write(std::string const& fname, size_t const& size) const
+io::PpmWriter::write(std::string const& fname) const
 {
     if (!image)
     {
         throw std::runtime_error("Uninitialized shared_ptr<vis::Image>");
     }
 
-    size_t const width = image->getWidth() * size;
-    size_t const height = image->getHeight() * size;
+    size_t const width = image->getWidth();
+    size_t const height = image->getHeight();
 
     auto file = std::fopen(fname.c_str(), "w");
 
@@ -27,9 +27,7 @@ io::PpmWriter::write(std::string const& fname, size_t const& size) const
         // iterate cols
         for (size_t col = 0; col < width; ++col)
         {
-            size_t const x = col / size;
-            size_t const y = row / size;
-            vis::color const& c = (*image)(x, y);
+            vis::color const& c = (*image)(col, row);
             std::fprintf(file, "%c%c%c", c.R, c.G, c.B);
         }
     }
