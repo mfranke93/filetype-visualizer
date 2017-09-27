@@ -15,10 +15,11 @@ SCENARIO ("vis::ImageBuilder::buildImageFromData")
         values->push_back(0.5);
         values->push_back(1.0);
         std::shared_ptr<vis::Colormap const> colormap = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::RED_BLUE);
+        vis::ImageProperties prop (2);
 
         WHEN ("Building an image from this")
         {
-            std::shared_ptr<vis::Image> img = vis::ImageBuilder::buildImageFromData(2, 2, values, colormap);
+            std::shared_ptr<vis::Image> img = vis::ImageBuilder::buildImageFromData(prop, values, colormap);
 
             THEN ("The upper left pixel is red")
             {
@@ -72,7 +73,8 @@ SCENARIO ("vis::ImageBuilder::buildImageFromData")
         {
             THEN ("an exception should be thrown")
             {
-                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(0, 4, values, colormap), except::illegal_size);
+                vis::ImageProperties prop(0,4);
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(prop, values, colormap), except::illegal_size);
             }
         }
 
@@ -80,7 +82,8 @@ SCENARIO ("vis::ImageBuilder::buildImageFromData")
         {
             THEN ("an exception should be thrown")
             {
-                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(4, 0, values, colormap), except::illegal_size);
+                vis::ImageProperties prop(4,0);
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(prop, values, colormap), except::illegal_size);
             }
         }
 
@@ -88,7 +91,8 @@ SCENARIO ("vis::ImageBuilder::buildImageFromData")
         {
             THEN ("an exception should be thrown")
             {
-                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(4, 4, values, colormap), except::illegal_size);
+                vis::ImageProperties prop(4);
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(prop, values, colormap), except::illegal_size);
             }
         }
 
@@ -96,7 +100,8 @@ SCENARIO ("vis::ImageBuilder::buildImageFromData")
         {
             THEN ("an exception should be thrown")
             {
-                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(2, 1, values, colormap), except::illegal_size);
+                vis::ImageProperties prop(2,1);
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(prop, values, colormap), except::illegal_size);
             }
         }
     }
@@ -109,12 +114,13 @@ SCENARIO ("vis::ImageBuilder::buildImageFromData")
         values->push_back(0.5);
         values->push_back(1.0000001);
         std::shared_ptr<vis::Colormap const> colormap = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::RED_BLUE);
+        vis::ImageProperties prop(2);
 
         WHEN ("trying to get an image from this")
         {
             THEN ("a normalizer error should occur")
             {
-                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(2, 2, values, colormap), except::normalizer_exception);
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(prop, values, colormap), except::normalizer_exception);
             }
         }
     }
@@ -127,12 +133,13 @@ SCENARIO ("vis::ImageBuilder::buildImageFromData")
         values->push_back(0.5);
         values->push_back(1.0);
         std::shared_ptr<vis::Colormap const> colormap = vis::StandardColormap::getPredefinedColormap(vis::PredefinedColormaps::RED_BLUE);
+        vis::ImageProperties prop(2);
 
         WHEN ("trying to get an image from this")
         {
             THEN ("a normalizer error should occur")
             {
-                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(2, 2, values, colormap), except::normalizer_exception);
+                REQUIRE_THROWS_AS(vis::ImageBuilder::buildImageFromData(prop, values, colormap), except::normalizer_exception);
             }
         }
     }

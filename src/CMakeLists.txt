@@ -7,7 +7,11 @@ INCLUDE_DIRECTORIES(${PNG_INCLUDE_DIR})
 include_directories(${VISUALIZER_SOURCE_DIR}/src)
 link_directories(${VISUALIZER_BINARY_DIR}/src)
 
-add_executable(main main.cpp
+SET(BINARY_NAME ftvis)
+SET(CMAKE_INSTALL_PREFIX /home/max/.local)
+
+add_executable(${BINARY_NAME}
+                    main.cpp
                     io/filereader.cpp
                     io/png_writer.cpp
                     io/ppm_writer.cpp
@@ -23,4 +27,4 @@ add_executable(main main.cpp
                     cmdline/options.cpp
               )
 
-TARGET_LINK_LIBRARIES(main ${Boost_LIBRARIES} ${PNG_LIBRARIES})
+TARGET_LINK_LIBRARIES(${BINARY_NAME} ${Boost_LIBRARIES} ${PNG_LIBRARIES})

@@ -7,7 +7,7 @@ namespace vis
     /**
      * typedef for one channel of an RGB pixel value.
      */
-    typedef unsigned char channel;
+    typedef uint8_t channel;
     struct color {
         color()
         :   color(0, 0, 0)

@@ -23,9 +23,9 @@ vis::ImageBuilder::buildImageFromData(vis::ImageProperties const& properties,
     {
         for (size_t y = 0; y < imgHeight; ++y)
         {
-            if (        (x > properties.marginLeft)
+            if (        (x >= properties.marginLeft)
                     &&  (x < imgWidth - properties.marginRight)
-                    &&  (y > properties.marginTop)
+                    &&  (y >= properties.marginTop)
                     &&  (y < imgHeight - properties.marginBottom))
             {
                 size_t const dataX = (x - properties.marginLeft) / properties.scale;
